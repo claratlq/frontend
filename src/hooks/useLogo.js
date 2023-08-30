@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import usePrefersDarkMode from "./usePrefersDarkMode";
 import System from "../models/system";
-import AnythingLLMDark from "../media/logo/anything-llm-dark.png";
-import AnythingLLMLight from "../media/logo/anything-llm-light.png";
+import AnythingLLMDark from "../media/logo/dsta-logo-dark.png";
+import AnythingLLMLight from "../media/logo/dsta-logo-light.png";
 
 export default function useLogo() {
   const [logo, setLogo] = useState("");
@@ -11,7 +11,8 @@ export default function useLogo() {
   useEffect(() => {
     async function fetchInstanceLogo() {
       try {
-        const logoURL = await System.fetchLogo(!prefersDarkMode);
+        // const logoURL = await System.fetchLogo(!prefersDarkMode);
+        const logoURL = null;
         logoURL
           ? setLogo(logoURL)
           : setLogo(prefersDarkMode ? AnythingLLMLight : AnythingLLMDark);

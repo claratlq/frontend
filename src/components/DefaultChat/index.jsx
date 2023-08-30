@@ -36,11 +36,9 @@ export default function DefaultChatContainer() {
       >
         <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
-            Welcome to AnythingLLM, AnythingLLM is an open-source AI tool by
-            Mintplex Labs that turns <i>anything</i> into a trained chatbot you
-            can query and chat with. AnythingLLM is a BYOK (bring-your-own-keys)
-            software so there is no subscription, fee, or charges for this
-            software outside of the services you want to use with it.
+            Welcome to DSTALLM, DSTALLM is an AI tool brought to you by
+            Digital Hub that turns <i>anything</i> into a trained chatbot you
+            can query and chat with.
           </p>
         </div>
       </div>
@@ -54,40 +52,11 @@ export default function DefaultChatContainer() {
       >
         <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
-            AnythingLLM is the easiest way to put powerful AI products like
-            OpenAi, GPT-4, LangChain, PineconeDB, ChromaDB, and other services
+            DSTALLM is an innovative effort to put powerful AI products like open-sourced
+            Large Language models, LangChain, PineconeDB, ChromaDB, and other services
             together in a neat package with no fuss to increase your
             productivity by 100x.
           </p>
-        </div>
-      </div>
-    </React.Fragment>,
-
-    <React.Fragment>
-      <div
-        className={`flex w-full mt-2 justify-start ${
-          popMsg ? "chat__message" : ""
-        }`}
-      >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
-          <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
-            AnythingLLM can run totally locally on your machine with little
-            overhead you wont even notice it's there! No GPU needed. Cloud and
-            on-premises installation is available as well.
-            <br />
-            The AI tooling ecosystem gets more powerful everyday. AnythingLLM
-            makes it easy to use.
-          </p>
-          <a
-            href={paths.github()}
-            target="_blank"
-            className="mt-4 w-fit flex flex-grow gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900 dark:bg-stone-900"
-          >
-            <GitMerge className="h-4 w-4" />
-            <p className="text-slate-800 dark:text-slate-200 text-sm md:text-lg leading-loose">
-              Create an issue on Github
-            </p>
-          </a>
         </div>
       </div>
     </React.Fragment>,
@@ -158,10 +127,10 @@ export default function DefaultChatContainer() {
       >
         <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
-            AnythingLLM is more than a smarter Dropbox.
+            DSTALLM is more than a smarter Dropbox.
             <br />
             <br />
-            AnythingLLM offers two ways of talking with your data:
+            DSTALLM offers two ways of talking with your data:
             <br />
             <br />
             <i>Query:</i> Your chats will return data or inferences found with
@@ -207,22 +176,12 @@ export default function DefaultChatContainer() {
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4">
             <a
-              href={paths.github()}
-              target="_blank"
-              className="mt-4 w-fit flex flex-grow gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900 dark:bg-stone-900"
-            >
-              <GitHub className="h-4 w-4" />
-              <p className="text-slate-800 dark:text-slate-200 text-sm md:text-lg leading-loose">
-                Star on GitHub
-              </p>
-            </a>
-            <a
               href={paths.mailToMintplex()}
               className="mt-4 w-fit flex flex-grow gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900 dark:bg-stone-900"
             >
               <Mail className="h-4 w-4" />
               <p className="text-slate-800 dark:text-slate-200 text-sm md:text-lg leading-loose">
-                Contact Mintplex Labs
+                Contact Digital Hub
               </p>
             </a>
           </div>

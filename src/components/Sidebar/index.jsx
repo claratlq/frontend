@@ -94,38 +94,12 @@ export default function Sidebar() {
                     Feedback form
                   </p>
                 </a>
-                <ManagedHosting />
+                {/* <ManagedHosting /> */}
                 <LogoutButton />
               </div>
 
               {/* Footer */}
               <div className="flex items-end justify-between mt-2">
-                <div className="flex gap-x-1 items-center">
-                  <a
-                    href={paths.github()}
-                    className="transition-all duration-300 p-2 rounded-full bg-slate-200 text-slate-400 dark:bg-slate-800 hover:bg-slate-800 hover:text-slate-200 dark:hover:text-slate-200"
-                  >
-                    <GitHub className="h-4 w-4 " />
-                  </a>
-                  <a
-                    href={paths.docs()}
-                    className="transition-all duration-300 p-2 rounded-full bg-slate-200 text-slate-400 dark:bg-slate-800 hover:bg-slate-800 hover:text-slate-200 dark:hover:text-slate-200"
-                  >
-                    <BookOpen className="h-4 w-4 " />
-                  </a>
-                  <a
-                    href={paths.discord()}
-                    className="transition-all duration-300 p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-800 group"
-                  >
-                    <Discord className="h-4 w-4 stroke-slate-400 group-hover:stroke-slate-200 dark:group-hover:stroke-slate-200" />
-                  </a>
-                </div>
-                <a
-                  href={paths.mailToMintplex()}
-                  className="transition-all duration-300 text-xs text-slate-500 dark:text-slate-600 hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  @MintplexLabs
-                </a>
               </div>
             </div>
           </div>
