@@ -54,6 +54,9 @@ export default function Sidebar() {
                 style={{ objectFit: "contain" }}
               />
             </div> */}
+            <div class="flex items-center py-2 px-4 rounded-lg bg-gray-200">
+              Hi
+            </div>
             <div className="flex gap-x-2 items-center text-slate-500">
               <AdminHome />
               <SettingsButton onClick={showOverlay} />

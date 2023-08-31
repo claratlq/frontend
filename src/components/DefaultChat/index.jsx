@@ -41,8 +41,18 @@ export default function DefaultChatContainer() {
             can query and chat with.
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
-            <ThumbsUp className="h-3 w-3"/>
-            <ThumbsDown className="h-3 w-3"/>
+            <button
+             onClick={() => console.log("thumps up button clicked")}
+             type="button"
+            >
+              <ThumbsUp className="h-3 w-3"/>
+            </button>
+            <button
+             onClick={() => console.log("thumps down button clicked")}
+             type="button"
+            >
+              <ThumbsDown className="h-3 w-3"/>
+            </button>
           </div>
         </div>
       </div>
@@ -62,8 +72,18 @@ export default function DefaultChatContainer() {
             productivity by 100x.
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
-            <ThumbsUp className="h-3 w-3"/>
-            <ThumbsDown className="h-3 w-3"/>
+            <button
+              onClick={() => console.log("thumps up button clicked")}
+              type="button"
+              >
+                <ThumbsUp className="h-3 w-3"/>
+              </button>
+              <button
+              onClick={() => console.log("thumps down button clicked")}
+              type="button"
+              >
+                <ThumbsDown className="h-3 w-3"/>
+              </button>
           </div>
         </div>
       </div>
@@ -109,8 +129,18 @@ export default function DefaultChatContainer() {
             </p>
           </button>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
-            <ThumbsUp className="h-3 w-3"/>
-            <ThumbsDown className="h-3 w-3"/>
+            <button
+              onClick={() => console.log("thumps up button clicked")}
+              type="button"
+              >
+                <ThumbsUp className="h-3 w-3"/>
+              </button>
+              <button
+              onClick={() => console.log("thumps down button clicked")}
+              type="button"
+              >
+                <ThumbsDown className="h-3 w-3"/>
+              </button>
           </div>
         </div>
       </div>
@@ -159,8 +189,18 @@ export default function DefaultChatContainer() {
             You can toggle between either mode <i>in the middle of chatting!</i>
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
-            <ThumbsUp className="h-3 w-3"/>
-            <ThumbsDown className="h-3 w-3"/>
+            <button
+              onClick={() => console.log("thumps up button clicked")}
+              type="button"
+              >
+                <ThumbsUp className="h-3 w-3"/>
+              </button>
+              <button
+              onClick={() => console.log("thumps down button clicked")}
+              type="button"
+              >
+                <ThumbsDown className="h-3 w-3"/>
+              </button>
           </div>
         </div>
       </div>
@@ -202,8 +242,18 @@ export default function DefaultChatContainer() {
             </a>
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
-            <ThumbsUp className="h-3 w-3"/>
-            <ThumbsDown className="h-3 w-3"/>
+            <button
+              onClick={() => console.log("thumps up button clicked")}
+              type="button"
+              >
+                <ThumbsUp className="h-3 w-3"/>
+              </button>
+              <button
+              onClick={() => console.log("thumps down button clicked")}
+              type="button"
+              >
+                <ThumbsDown className="h-3 w-3"/>
+              </button>
           </div>
         </div>
       </div>
