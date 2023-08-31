@@ -6,9 +6,11 @@
   "scripts": {
     "start": "vite --open",
     "build": "vite build",
-    "lint": "yarn prettier --write ./src",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier-check": "prettier --check ./src",
+    "prettier-fix": "prettier --write ./src",
+    "lint-eslint": "eslint . --ext js,jsx,ts,tsx --max-warnings=0 --config .eslintrc.json --no-eslintrc"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
