@@ -23,4 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 bundleinspector.html
+.env
 .env.production
+.env.development
