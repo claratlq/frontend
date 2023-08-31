@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GitHub, GitMerge, Mail, Plus } from "react-feather";
+import { GitHub, GitMerge, Mail, Plus, ThumbsUp, ThumbsDown } from "react-feather";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";
@@ -26,48 +26,56 @@ export default function DefaultChatContainer() {
     };
     fetchData();
   }, []);
-
+  
   const MESSAGES = [
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-start ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-orange-100 dark:bg-stone-700">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             Welcome to DSTALLM, DSTALLM is an AI tool brought to you by
             Digital Hub that turns <i>anything</i> into a trained chatbot you
             can query and chat with.
           </p>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <ThumbsUp className="h-3 w-3"/>
+            <ThumbsDown className="h-3 w-3"/>
+          </div>
         </div>
       </div>
     </React.Fragment>,
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-start ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-orange-100 dark:bg-stone-700">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             DSTALLM is an innovative effort to put powerful AI products like open-sourced
             Large Language models, LangChain, PineconeDB, ChromaDB, and other services
             together in a neat package with no fuss to increase your
             productivity by 100x.
           </p>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <ThumbsUp className="h-3 w-3"/>
+            <ThumbsDown className="h-3 w-3"/>
+          </div>
         </div>
       </div>
     </React.Fragment>,
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-end ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-slate-200 dark:bg-amber-800 rounded-b-2xl rounded-tl-2xl rounded-tr-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-slate-200 dark:bg-grey-800">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             How do I get started?!
           </p>
@@ -77,11 +85,11 @@ export default function DefaultChatContainer() {
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-start ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-orange-100 dark:bg-stone-700">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             It's simple. All collections are organized into buckets we call{" "}
             <b>"Workspaces"</b>. Workspaces are buckets of files, documents,
@@ -100,17 +108,21 @@ export default function DefaultChatContainer() {
               Create your first workspace
             </p>
           </button>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <ThumbsUp className="h-3 w-3"/>
+            <ThumbsDown className="h-3 w-3"/>
+          </div>
         </div>
       </div>
     </React.Fragment>,
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-end ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-slate-200 dark:bg-amber-800 rounded-b-2xl rounded-tl-2xl rounded-tr-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-slate-200 dark:bg-grey-800">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             Is this like an AI dropbox or something? What about chatting? It is
             a chatbot isn't it?
@@ -121,11 +133,11 @@ export default function DefaultChatContainer() {
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-start ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-orange-100 dark:bg-stone-700">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             DSTALLM is more than a smarter Dropbox.
             <br />
@@ -146,17 +158,21 @@ export default function DefaultChatContainer() {
             <br />
             You can toggle between either mode <i>in the middle of chatting!</i>
           </p>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <ThumbsUp className="h-3 w-3"/>
+            <ThumbsDown className="h-3 w-3"/>
+          </div>
         </div>
       </div>
     </React.Fragment>,
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-end ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-slate-200 dark:bg-amber-800 rounded-b-2xl rounded-tl-2xl rounded-tr-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-slate-200 dark:bg-grey-800">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             Wow, this sounds amazing, let me try it out already!
           </p>
@@ -166,24 +182,28 @@ export default function DefaultChatContainer() {
 
     <React.Fragment>
       <div
-        className={`flex w-full mt-2 justify-start ${
+        className={`justify-center text-base lg:px-0 m-auto border-b border-black/10 dark:border-gray-900/50 ${
           popMsg ? "chat__message" : ""
         }`}
       >
-        <div className="p-4 max-w-full md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-b-2xl rounded-tr-2xl rounded-tl-sm">
+        <div className="p-4 max-w-full md:max-w-[100%] bg-orange-100 dark:bg-stone-700">
           <p className="text-slate-800 dark:text-slate-200 font-[500] md:font-semibold text-sm md:text-base">
             Have Fun!
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4">
             <a
               href={paths.mailToMintplex()}
-              className="mt-4 w-fit flex flex-grow gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900 dark:bg-stone-900"
+              className="mt-4 md:max-w-[25%] flex flex-grow gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900 dark:bg-stone-900"
             >
               <Mail className="h-4 w-4" />
               <p className="text-slate-800 dark:text-slate-200 text-sm md:text-lg leading-loose">
                 Contact Digital Hub
               </p>
             </a>
+          </div>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <ThumbsUp className="h-3 w-3"/>
+            <ThumbsDown className="h-3 w-3"/>
           </div>
         </div>
       </div>
@@ -218,7 +238,7 @@ export default function DefaultChatContainer() {
   return (
     <div
       style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-      className="transition-all duration-500 relative md:ml-[2px] md:mr-[8px] md:my-[16px] md:rounded-[26px] bg-white dark:bg-black-900 md:min-w-[82%] p-[18px] h-full overflow-y-scroll"
+      className="transition-all duration-500 relative md:ml-[2px] md:mr-[8px] md:my-[16px] bg-white dark:bg-black-900 md:min-w-[82%] p-[18px] h-full overflow-y-scroll"
     >
       {isMobile && <SidebarMobileHeader />}
       {fetchedMessages.length === 0

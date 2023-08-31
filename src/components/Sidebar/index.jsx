@@ -46,14 +46,14 @@ export default function Sidebar() {
         <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
           {/* Header Information */}
           <div className="flex w-full items-center justify-between">
-            <div className="flex shrink-0 max-w-[50%] items-center justify-start">
+            {/* <div className="flex shrink-0 max-w-[50%] items-center justify-start">
               <img
                 src={logo}
                 alt="Logo"
                 className="rounded max-h-[40px]"
                 style={{ objectFit: "contain" }}
               />
-            </div>
+            </div> */}
             <div className="flex gap-x-2 items-center text-slate-500">
               <AdminHome />
               <SettingsButton onClick={showOverlay} />
