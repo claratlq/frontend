@@ -57,13 +57,31 @@ const Workspace = {
       .catch(() => []);
     return history;
   },
-  sendChat: async function ({ slug }, message, mode = "query") {
-    const chatResult = await fetch(`${API_BASE}/workspace/${slug}/chat`, {
+  // sendChat: async function ({ slug }, message, mode = "query") {
+  //   const chatResult = await fetch(`${API_BASE}/workspace/${slug}/chat`, {
+  //     method: "POST",
+  //     body: JSON.stringify({ message, mode }),
+  //     headers: baseHeaders(),
+  //   })
+  //     .then((res) => {
+  //       console.log(res.headers.get("content-type"));
+  //       return res.json()})
+  //     .catch((e) => {
+  //       console.error(e);
+  //       return null;
+  //     });
+
+  //   return chatResult;
+  // },
+  sendChat: async function ({ slug }, prompt, mode = "query") {
+    var header = baseHeaders();
+    header["Content-Type"] = "application/json";
+    const chatResult = await fetch(`http://localhost:8000/chat`, {
       method: "POST",
-      body: JSON.stringify({ message, mode }),
-      headers: baseHeaders(),
+      body: JSON.stringify({ prompt, mode }),
+      headers: header,
     })
-      .then((res) => res.json())
+      .then((res) => {return res})
       .catch((e) => {
         console.error(e);
         return null;

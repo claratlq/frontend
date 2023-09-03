@@ -1,12 +1,14 @@
 // For handling of synchronous chats that are not utilizing streaming or chat requests.
 export default function handleChat(
-  chatResult,
+  chatResultHeader,
+  message,
   setLoadingResponse,
   setChatHistory,
   remHistory,
   _chatHistory
 ) {
-  const { uuid, textResponse, type, sources = [], error, close } = chatResult;
+  const { uuid, type, sources = [], error, close } = chatResultHeader;
+  const textResponse = message;
 
   if (type === "abort") {
     setLoadingResponse(false);

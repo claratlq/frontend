@@ -35,6 +35,27 @@ export default function Sidebar() {
     hideModal: hideNewWsModal,
   } = useNewWorkspaceModal();
 
+  let firstName, lastName;
+
+  const getInitials = (firstName, lastName) => {
+    return firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+  };
+
+  const user = window.localStorage.getItem("user");
+  if (!!user) {
+    const nameArr = user.split(" ");
+    if (nameArr.length < 2) {
+      firstName = nameArr[0];
+      lastName = firstName.split("").pop();
+    } else {
+      firstName = nameArr[0];
+      lastName = nameArr[1];
+    }
+  } else {
+    firstName = "U";
+    lastName = "S";
+  }
+
   return (
     <>
       <div
@@ -54,9 +75,9 @@ export default function Sidebar() {
                 style={{ objectFit: "contain" }}
               />
             </div> */}
-            <div class="flex items-center py-2 px-4 rounded-lg bg-gray-200">
-              Hi
-            </div>
+            <a class="flex items-center py-1 px-2 rounded-lg dark:bg-gray-200 dark:hover:bg-slate-500" href="##" title={user}>
+              {getInitials(firstName,lastName)}
+            </a>
             <div className="flex gap-x-2 items-center text-slate-500">
               <AdminHome />
               <SettingsButton onClick={showOverlay} />

@@ -42,6 +42,8 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
       const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
       var _chatHistory = [...remHistory];
+      var message = "";
+      var chatResultHeaders = {};
 
       if (!promptMessage || !promptMessage?.userMessage) {
         setLoadingResponse(false);
@@ -54,13 +56,39 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         window.localStorage.getItem(`workspace_chat_mode_${workspace.slug}`) ??
           "chat"
       );
-      handleChat(
-        chatResult,
-        setLoadingResponse,
-        setChatHistory,
-        remHistory,
-        _chatHistory
-      );
+      const reader = chatResult.body
+        .pipeThrough(new TextDecoderStream())
+        .getReader()
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        console.log('Received: ', value);
+
+        message = message + " " + value;
+        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+        chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
+        chatResultHeaders['type'] = chatResult.headers.get("type");
+        chatResultHeaders['close'] = done;
+
+        handleChat(
+          chatResultHeaders,
+          message,
+          setLoadingResponse,
+          setChatHistory,
+          remHistory,
+          _chatHistory
+        );
+      }
+
+      // handleChat(
+      //   chatResultHeaders,
+      //   message,
+      //   setLoadingResponse,
+      //   setChatHistory,
+      //   remHistory,
+      //   _chatHistory
+      // );
     }
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
