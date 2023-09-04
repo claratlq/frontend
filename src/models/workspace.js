@@ -49,7 +49,7 @@ const Workspace = {
   },
   chatHistory: async function (slug) {
     const history = await fetch(`${API_BASE}/workspace/${slug}/chats`, {
-      method: "GET",
+      method: "POST",
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -102,6 +102,7 @@ const Workspace = {
   },
   bySlug: async function (slug = "") {
     const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
+      method: "POST",
       headers: baseHeaders(),
     })
       .then((res) => res.json())
