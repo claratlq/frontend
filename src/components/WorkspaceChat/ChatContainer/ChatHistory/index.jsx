@@ -18,12 +18,10 @@ export default function ChatHistory({ history = [], workspace }) {
     return (
       <div className="flex flex-col h-[89%] md:mt-0 pb-5 w-full justify-center items-center">
         <div className="w-fit flex items-center gap-x-2">
-          <Frown className="h-4 w-4 text-slate-400" />
-          <p className="text-slate-400">No chat history found.</p>
+          <p className="text-slate-400 text-3xl mb-5">DSTALLM</p>
         </div>
-        <p className="text-slate-400 text-xs">
-          Send your first message to get started.
-        </p>
+        <p className="text-slate-400 text-sm">
+          Welcome to DSTALLM, an AI tool brought to you by Digital Hub that turns <i>anything</i> into a trained chatbot you can query and chat with.</p>
       </div>
     );
   }

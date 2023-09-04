@@ -1,0 +1,23 @@
+body{
+    background-color: #242729;
+}
+
+
+.MainContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.Profile{
+    display: flex;
+    justify-self: flex-end;
+    position: absolute;
+    top:0.5vh;
+    width: 0.5vh;
+    height: 0.5vh;
+    background-color: #444A4D;
+}
+
+.Profilename{
+    font: small sans-serif;
+}
