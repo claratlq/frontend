@@ -6,7 +6,7 @@ export default function ResetChat({resetChat}) {
 
     return (
         <div>
-            <button onClick={resetChat}>
+            <button onClick={resetChat} type="button">
                 <PlusSquare/>
             </button>
         </div>

@@ -58,12 +58,12 @@ export default function PromptInput({
         className="flex flex-col gap-y-1 bg-white dark:bg-black-900 md:bg-transparent rounded-t-lg md:w-3/4 w-full mx-auto"
       >
         <div className="flex items-center py-2 px-4 rounded-lg">
-          <CommandMenu
+          {/* <CommandMenu
             workspace={workspace}
             show={showMenu}
             handleClick={setTextCommand}
             hide={() => setShowMenu(false)}
-          />
+          /> */}
           {/* <button
             onClick={() => setShowMenu(!showMenu)}
             type="button"

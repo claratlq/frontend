@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DefaultChatContainer from "../../components/DefaultChat";
 import LandingContainer from "../../components/LandingPage";
 import Sidebar from "../../components/Sidebar";
 import SidebarPlaceholder from "../../components/Sidebar/Placeholder";
 import ChatPlaceholder from "../../components/WorkspaceChat/LoadingChat";
-
 
 import PasswordModal, {
   usePasswordModal,
@@ -12,6 +11,12 @@ import PasswordModal, {
 import { isMobile } from "react-device-detect";
 
 export default function Main() {
+  const [newChat, setNewChat] = useState(false)
+
+  useEffect(() => {
+    setNewChat(window.localStorage.getItem('newChat'))
+  }, [])
+
   const { requiresAuth, mode } = usePasswordModal();
   if (requiresAuth === null || requiresAuth) {
     return (
@@ -29,7 +34,7 @@ export default function Main() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
       {!isMobile && <Sidebar />}
-      <LandingContainer loading={true} /> 
+      <LandingContainer loading={true} newChat={newChat}/> 
     </div>
   );
 }
