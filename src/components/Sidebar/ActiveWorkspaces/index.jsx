@@ -44,7 +44,7 @@ export default function ActiveWorkspaces(name) {
     <>
       {workspaces.map((workspace) => {
         const isActive = workspace.slug === slug;
-        console.log(workspace)
+        // console.log(workspace)
         return (
           <div
             key={workspace.id}
