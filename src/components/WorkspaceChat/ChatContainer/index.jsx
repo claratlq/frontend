@@ -60,7 +60,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         window.localStorage.getItem(`workspace_chat_mode_${workspace.slug}`) ??
           "chat"
       );
-
+      console.log(chatResult)
       // const reader = chatResult.body
       //   .pipeThrough(new TextDecoderStream())
       //   .getReader()
@@ -70,11 +70,11 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
 
       //   console.log('Received: ', value);
 
-      //   message = message + " " + value;
-      //   chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-      //   chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
-      //   chatResultHeaders['type'] = chatResult.headers.get("type");
-      //   chatResultHeaders['close'] = done;
+        // message = message + " " + value;
+        // chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+        // chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
+        // chatResultHeaders['type'] = chatResult.headers.get("type");
+        // chatResultHeaders['close'] = done;
 
       //   handleChat(
       //     chatResultHeaders,

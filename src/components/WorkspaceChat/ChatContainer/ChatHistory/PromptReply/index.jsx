@@ -1,8 +1,35 @@
 import { forwardRef, memo } from "react";
-import { AlertTriangle } from "react-feather";
+import { AlertTriangle , ThumbsUp, ThumbsDown} from "react-feather";
 import Jazzicon from "../../../../UserIcon";
 import renderMarkdown from "../../../../../utils/chat/markdown";
 import Citations from "../Citation";
+import Workspace from "../../../../../models/workspace";
+
+const thumbsUp = async (uuid, slug) => {
+  const ratingJson = {
+    response_id: uuid,
+    rating: 1,
+  };
+
+  await Workspace.rateResponse(
+    slug,
+    ratingJson,
+  );
+};
+
+const thumbsDown = async (uuid, slug) => {
+  const ratingJson = {
+    response_id: uuid,
+    rating: -1,
+  };
+
+  await Workspace.rateResponse(
+    slug,
+    ratingJson,
+  );
+};
+
+
 
 const PromptReply = forwardRef(
   (
@@ -52,6 +79,20 @@ const PromptReply = forwardRef(
             dangerouslySetInnerHTML={{ __html: renderMarkdown(reply) }}
           />
           <Citations sources={sources} />
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+            <button
+              onClick={() => thumbsUp(uuid, workspace.slug)}
+              type="button"
+              >
+                <ThumbsUp className="h-3 w-3"/>
+              </button>
+              <button
+              onClick={() => thumbsDown(uuid, workspace.slug)}
+              type="button"
+              >
+                <ThumbsDown className="h-3 w-3"/>
+              </button>
+          </div>
         </div>
       </div>
     );
