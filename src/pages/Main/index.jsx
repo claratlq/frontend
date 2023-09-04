@@ -1,8 +1,11 @@
 import React from "react";
 import DefaultChatContainer from "../../components/DefaultChat";
+import LandingContainer from "../../components/LandingPage";
 import Sidebar from "../../components/Sidebar";
 import SidebarPlaceholder from "../../components/Sidebar/Placeholder";
 import ChatPlaceholder from "../../components/WorkspaceChat/LoadingChat";
+
+
 import PasswordModal, {
   usePasswordModal,
 } from "../../components/Modals/Password";
@@ -22,10 +25,11 @@ export default function Main() {
     );
   }
 
+
   return (
     <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
       {!isMobile && <Sidebar />}
-      <DefaultChatContainer />
+      <LandingContainer loading={true} /> 
     </div>
   );
 }

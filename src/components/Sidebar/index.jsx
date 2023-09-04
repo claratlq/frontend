@@ -88,7 +88,7 @@ export default function Sidebar() {
           <div className="h-[100%] flex flex-col w-full justify-between pt-4 overflow-y-hidden">
             <div className="h-auto sidebar-items dark:sidebar-items">
               <div className="flex flex-col gap-y-4 h-[65vh] pb-8 overflow-y-scroll no-scroll">
-                <div className="flex gap-x-2 items-center justify-between">
+                {/* <div className="flex gap-x-2 items-center justify-between">
                   <button
                     onClick={showNewWsModal}
                     className="flex flex-grow w-[75%] h-[36px] gap-x-2 py-[5px] px-4 border border-slate-400 rounded-lg text-slate-800 dark:text-slate-200 justify-start items-center hover:bg-slate-100 dark:hover:bg-stone-900"
@@ -98,7 +98,7 @@ export default function Sidebar() {
                       New workspace
                     </p>
                   </button>
-                </div>
+                </div> */}
                 <ActiveWorkspaces />
               </div>
             </div>
