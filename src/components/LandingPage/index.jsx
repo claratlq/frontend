@@ -7,7 +7,7 @@ import paths from "../../utils/paths";
 export default function LandingContainer({ loading }) {
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
-  const [createChatError, setcreateChatError] = useState(false);
+  const [createChatError, setCreateChatError] = useState(false);
   const userID = localStorage.getItem('user')
   
   //workspace will be chatID for future ref
@@ -23,7 +23,7 @@ export default function LandingContainer({ loading }) {
       if (activeChatID === null) {
         activeChatID = await Workspace.new({user_id: userID})['workspace'] //reset_chat
         if (activeChatID === undefined) { //if error in creating chat
-          setcreateChatError(true)
+          setCreateChatError(true)
           setLoadingHistory(false) //must be removed in the future ya
         } else {
           setLoadingHistory(false)
