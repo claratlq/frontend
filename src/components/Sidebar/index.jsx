@@ -42,6 +42,7 @@ export default function Sidebar() {
   };
 
   const user = window.localStorage.getItem("user");
+  console.log('user', user)
   if (!!user) {
     const nameArr = user.split(" ");
     if (nameArr.length < 2) {
@@ -75,7 +76,7 @@ export default function Sidebar() {
                 style={{ objectFit: "contain" }}
               />
             </div> */}
-            <a class="flex items-center py-1 px-2 rounded-lg dark:bg-gray-200 dark:hover:bg-slate-500" href="##" title={user}>
+            <a className="flex items-center py-1 px-2 rounded-lg dark:bg-gray-200 dark:hover:bg-slate-500" href="##" title={user}>
               {getInitials(firstName,lastName)}
             </a>
             <div className="flex gap-x-2 items-center text-slate-500">
@@ -99,7 +100,7 @@ export default function Sidebar() {
                     </p>
                   </button>
                 </div> */}
-                <ActiveWorkspaces />
+                <ActiveWorkspaces name={user}/>
               </div>
             </div>
             <div>
@@ -233,7 +234,7 @@ export function SidebarMobileHeader() {
                       </p>
                     </button>
                   </div>
-                  <ActiveWorkspaces />
+                  <ActiveWorkspaces/>
                 </div>
               </div>
               <div>

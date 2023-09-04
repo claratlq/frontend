@@ -7,62 +7,41 @@ import paths from "../../utils/paths";
 export default function LandingContainer({ loading }) {
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
-
-
+  const [createChatError, setcreateChatError] = useState(false);
+  const userID = localStorage.getItem('user')
+  
   //workspace will be chatID for future ref
+  
+  var workspace = {
+    'id' : 1,
+    'name': userID
+  }
 
+  useEffect(() => {
+    async function getChatID() {
+      var activeChatID = await Workspace.bySlug({user_id: userID}) //get_active_chat
+      if (activeChatID === null) {
+        activeChatID = await Workspace.new({user_id: userID})['workspace'] //reset_chat
+        if (activeChatID === undefined) { //if error in creating chat
+          setcreateChatError(true)
+          setLoadingHistory(false) //must be removed in the future ya
+        } else {
+          setLoadingHistory(false)
+          workspace['id'] = activeChatID
+        }
+      } else {
+        setLoadingHistory(false)
+        workspace['id'] = activeChatID
+      }
+    }
+    getChatID()
+    console.log(workspace)
+  })
 
   
-  useEffect(() => {
-    async function getHistory() {
-      if (loading) return;
-      if (!workspace?.slug) {
-        setLoadingHistory(false);
-        return false;
-      }
-
-      const chatHistory = await Workspace.chatHistory(workspace.slug);
-      setHistory(chatHistory);
-      setLoadingHistory(false);
-    }
-    getHistory();
-  }, [workspace, loading]);
-
   if (loadingHistory) return <LoadingChat />;
-  if (!loading && !loadingHistory && !workspace) {
-    return (
-      <>
-        {loading === false && !workspace && (
-          <dialog
-            open={true}
-            style={{ zIndex: 100 }}
-            className="fixed top-0 flex bg-black bg-opacity-50 w-[100vw] h-full items-center justify-center "
-          >
-            <div className="w-fit px-10 p-4 w-1/4 rounded-lg bg-white shadow dark:bg-stone-700 text-black dark:text-slate-200">
-              <div className="flex flex-col w-full">
-                <p className="font-semibold text-red-500">
-                  We cannot locate this workspace!
-                </p>
-                <p className="text-sm mt-4">
-                  It looks like a workspace by this name is not available.
-                </p>
 
-                <div className="flex w-full justify-center items-center mt-4">
-                  <a
-                    href={paths.home()}
-                    className="border border-gray-800 text-gray-800 hover:bg-gray-100 px-4 py-1 rounded-lg dark:text-slate-200 dark:border-slate-200 dark:hover:bg-stone-900"
-                  >
-                    Go back to homepage
-                  </a>
-                </div>
-              </div>
-            </div>
-          </dialog>
-        )}
-        <LoadingChat />
-      </>
-    );
-  }
+  // might want a if createChatError 
 
   return <ChatContainer workspace={workspace} knownHistory={history} />;
 }

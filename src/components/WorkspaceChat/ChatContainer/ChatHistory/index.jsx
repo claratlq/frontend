@@ -1,4 +1,3 @@
-import { Frown } from "react-feather";
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
 import { useEffect, useRef } from "react";
