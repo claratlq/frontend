@@ -6,7 +6,6 @@ import handleChat from "../../../utils/chat";
 import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useNavigate } from "react-router-dom";
-import ResetChat from "./ResetChat"
 
 export default function ChatContainer({ workspace, knownHistory = [] }) {
   // console.log('workspace', workspace)
@@ -122,8 +121,8 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
           onChange={handleMessageChange}
           inputDisabled={loadingResponse}
           buttonDisabled={loadingResponse}
+          onClick = {resetChat}
         />
-        <ResetChat resetChat={resetChat}/>
       </div>
     </div>
   );

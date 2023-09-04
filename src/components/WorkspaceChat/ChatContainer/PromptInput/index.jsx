@@ -1,6 +1,7 @@
 import React, { useState, useRef, memo, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import { Loader, Menu, X } from "react-feather";
+import ResetChat from "../ResetChat";
 
 export default function PromptInput({
   workspace,
@@ -9,6 +10,7 @@ export default function PromptInput({
   onChange,
   inputDisabled,
   buttonDisabled,
+  onClick,
 }) {
   const [showMenu, setShowMenu] = useState(false);
   const formRef = useRef(null);
@@ -62,13 +64,15 @@ export default function PromptInput({
             handleClick={setTextCommand}
             hide={() => setShowMenu(false)}
           />
-          <button
+          {/* <button
             onClick={() => setShowMenu(!showMenu)}
             type="button"
             className="p-2 text-slate-500 bg-transparent rounded-md hover:bg-gray-200 dark:hover:bg-stone-500 dark:hover:text-slate-200"
           >
             <Menu className="w-4 h-4 md:h-6 md:w-6" />
-          </button>
+          </button> */}
+
+          <ResetChat resetChat={onClick}/>
           <textarea
             onKeyUp={adjustTextArea}
             onKeyDown={captureEnter}
