@@ -42,7 +42,7 @@ export default function Sidebar() {
   };
 
   const user = window.localStorage.getItem("user");
-  console.log('user', user)
+  // console.log('user', user)
   if (!!user) {
     const nameArr = user.split(" ");
     if (nameArr.length < 2) {
