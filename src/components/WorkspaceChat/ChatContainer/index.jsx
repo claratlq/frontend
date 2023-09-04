@@ -56,39 +56,40 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         window.localStorage.getItem(`workspace_chat_mode_${workspace.slug}`) ??
           "chat"
       );
-      const reader = chatResult.body
-        .pipeThrough(new TextDecoderStream())
-        .getReader()
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
 
-        console.log('Received: ', value);
+      // const reader = chatResult.body
+      //   .pipeThrough(new TextDecoderStream())
+      //   .getReader()
+      // while (true) {
+      //   const { value, done } = await reader.read();
+      //   if (done) break;
 
-        message = message + " " + value;
-        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-        chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
-        chatResultHeaders['type'] = chatResult.headers.get("type");
-        chatResultHeaders['close'] = done;
+      //   console.log('Received: ', value);
 
-        handleChat(
-          chatResultHeaders,
-          message,
-          setLoadingResponse,
-          setChatHistory,
-          remHistory,
-          _chatHistory
-        );
-      }
+      //   message = message + " " + value;
+      //   chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+      //   chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
+      //   chatResultHeaders['type'] = chatResult.headers.get("type");
+      //   chatResultHeaders['close'] = done;
 
-      // handleChat(
-      //   chatResultHeaders,
-      //   message,
-      //   setLoadingResponse,
-      //   setChatHistory,
-      //   remHistory,
-      //   _chatHistory
-      // );
+      //   handleChat(
+      //     chatResultHeaders,
+      //     message,
+      //     setLoadingResponse,
+      //     setChatHistory,
+      //     remHistory,
+      //     _chatHistory
+      //   );
+      // }
+
+      handleChat(
+        chatResult,
+        message,
+        setLoadingResponse,
+        setChatHistory,
+        remHistory,
+        _chatHistory
+      );
     }
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
