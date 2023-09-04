@@ -16,7 +16,7 @@ export default function SingleUserAuth() {
     const { valid, token, message } = await System.requestToken(data);
     if (valid && !!token) {
       window.localStorage.setItem(AUTH_TOKEN, token);
-      window.localStorage.setItem("user", AUTH_USER);
+      window.localStorage.setItem("user", data["username"]);
       window.location.reload();
     } else {
       setError(message);
@@ -36,6 +36,20 @@ export default function SingleUserAuth() {
         <div className="p-6 space-y-6 flex h-full w-full">
           <div className="w-full flex flex-col gap-y-4">
             <div>
+              <label
+                htmlFor="username"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Workspace Username
+              </label>
+              <input
+                name="username"
+                type="text"
+                id="username"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-stone-600 dark:border-stone-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required={true}
+                autoComplete="off"
+              />
               <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
