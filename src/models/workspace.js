@@ -57,31 +57,14 @@ const Workspace = {
       .catch(() => []);
     return history;
   },
-  // sendChat: async function ({ slug }, message, mode = "query") {
-  //   const chatResult = await fetch(`${API_BASE}/workspace/${slug}/chat`, {
-  //     method: "POST",
-  //     body: JSON.stringify({ message, mode }),
-  //     headers: baseHeaders(),
-  //   })
-  //     .then((res) => {
-  //       console.log(res.headers.get("content-type"));
-  //       return res.json()})
-  //     .catch((e) => {
-  //       console.error(e);
-  //       return null;
-  //     });
-
-  //   return chatResult;
-  // },
-  sendChat: async function ({ slug }, prompt, mode = "query") {
-    var header = baseHeaders();
-    header["Content-Type"] = "application/json";
-    const chatResult = await fetch(`http://localhost:8000/chat`, {
+  sendChat: async function ({ slug }, message, mode = "query") {
+    const chatResult = await fetch(`${API_BASE}/workspace/${slug}/chat`, {
       method: "POST",
-      body: JSON.stringify({ prompt, mode }),
-      headers: header,
+      body: JSON.stringify({ message, mode }),
+      headers: baseHeaders(),
     })
-      .then((res) => {return res})
+      .then((res) => {
+        return res.json()})
       .catch((e) => {
         console.error(e);
         return null;
@@ -89,6 +72,38 @@ const Workspace = {
 
     return chatResult;
   },
+  rateResponse: async function (slug, ratings = {}) {
+    const { workspace, message } = await fetch(
+      `${API_BASE}/workspace/${slug}/rate_response`,
+      {
+        method: "POST",
+        body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
+        headers: baseHeaders(),
+      }
+    )
+      .then((res) => res.json())
+      .catch((e) => {
+        return { workspace: null, message: e.message };
+      });
+
+    return { workspace, message };
+  },
+  // sendChat: async function ({ slug }, prompt, mode = "query") {
+  //   var header = baseHeaders();
+  //   header["Content-Type"] = "application/json";
+  //   const chatResult = await fetch(`http://localhost:8000/chat`, {
+  //     method: "POST",
+  //     body: JSON.stringify({ prompt, mode }),
+  //     headers: header,
+  //   })
+  //     .then((res) => {return res})
+  //     .catch((e) => {
+  //       console.error(e);
+  //       return null;
+  //     });
+
+  //   return chatResult;
+  // },
   all: async function () {
     const workspaces = await fetch(`${API_BASE}/workspaces`, {
       method: "GET",
