@@ -51,7 +51,7 @@ export default function LandingContainer({ loading, newChat }) {
     }
     getChatID()
   }, [])
-``
+
   // useEffect(() => {
   //   console.log(workspace)
   // }, [workspace])
