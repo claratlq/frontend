@@ -102,7 +102,7 @@ const Workspace = {
   },
   bySlug: async function (slug = "") {
     const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
-      method: "POST",
+      method: "GET",
       headers: baseHeaders(),
     })
       .then((res) => res.json())

@@ -98,9 +98,13 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   }, [loadingResponse, chatHistory, workspace]);
 
   function resetChat() {
-    console.log('resetting')
-    window.localStorage.setItem('newChat', true)
-    location.reload()
+    if (chatHistory.length === 0) {
+      null
+    } else {
+      console.log('resetting')
+      window.localStorage.setItem('newChat', true)
+      location.reload()
+    }
   }
 
   return (

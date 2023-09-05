@@ -20,7 +20,7 @@ export default function LandingContainer({ loading, newChat }) {
   //   'id' : 1,
   //   'name': userID
   // }
-  console.log('newchat',newChat)
+
   async function createNewChat() {
     var newWorkspace =  await Workspace.new({user_id: userID, name:userID}) // name is just the temporary fix, can be removed 
     newWorkspace = newWorkspace.workspace
@@ -32,25 +32,26 @@ export default function LandingContainer({ loading, newChat }) {
       setWorkspace(newWorkspace)
     }
     console.log(newWorkspace)
+    window.localStorage.setItem('newChat', false)
   }
-
+  
   useEffect(() => {
     async function getChatID() {
       if (newChat === 'true') {
         createNewChat()
-      } else {
-        var activeChatID = await Workspace.bySlug(userID) //get_active_chat
-        if (activeChatID === null) {
+      } 
+      else {
+        var activeWorkspace = await Workspace.bySlug("peng-yan") //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
+        if (activeWorkspace === null) {
           createNewChat()
         } else {
           setLoadingHistory(false)
-          workspace['id'] = activeChatID
+          setWorkspace(activeWorkspace)
         }
       }
-      window.localStorage.setItem('newChat', false)
     }
     getChatID()
-  }, [])
+  }, [newChat])
 
   // useEffect(() => {
   //   console.log(workspace)
