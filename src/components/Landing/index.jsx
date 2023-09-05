@@ -20,7 +20,7 @@ export default function LandingContainer({ newChat }) {
 
   async function createNewChat() {
     var activeChatID =  await Workspace.new({"userId": userID}) // name is just the temporary fix, can be removed 
-    if (activeChatID.chatId === null) { //if error in creating chat
+    if (activeChatID.chatId === undefined) { //if error in creating chat
       setCreateChatError(true)
     } else {
       setLoadingHistory(false)
@@ -41,7 +41,7 @@ export default function LandingContainer({ newChat }) {
       } 
       else {
         var activeChatID = await Workspace.bySlug({"userId": userID}) //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
-        if (activeChatID.chatId === null) {
+        if (activeChatID.chatId === undefined) {
           createNewChat()
         } else {
           setLoadingHistory(false)

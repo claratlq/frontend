@@ -21,77 +21,98 @@ export function usePasswordModal() {
     mode: "single",
   });
 
+  // useEffect(() => {
+  //   async function checkAuthReq() {
+  //     if (!window) return;
+  //     const settings = await System.keys();
+
+  //     if (settings?.MultiUserMode) {
+  //       const currentToken = window.localStorage.getItem(AUTH_TOKEN);
+  //       if (!!currentToken) {
+  //         const valid = await System.checkAuth(currentToken);
+  //         if (!valid) {
+  //           setAuth({
+  //             requiresAuth: true,
+  //             mode: "multi",
+  //           });
+  //           window.localStorage.removeItem(AUTH_USER);
+  //           window.localStorage.removeItem(AUTH_TOKEN);
+  //           return;
+  //         } else {
+  //           setAuth({
+  //             requiresAuth: false,
+  //             mode: "multi",
+  //           });
+  //           return;
+  //         }
+  //       } else {
+  //         setAuth({
+  //           requiresAuth: true,
+  //           mode: "multi",
+  //         });
+  //         return;
+  //       }
+  //     } else {
+  //       // Running token check in single user Auth mode.
+  //       // If Single user Auth is disabled - skip check
+  //       const requiresAuth = settings?.RequiresAuth || false;
+  //       if (!requiresAuth) {
+  //         setAuth({
+  //           requiresAuth: false,
+  //           mode: "single",
+  //         });
+  //         return;
+  //       }
+
+  //       const currentToken = window.localStorage.getItem(AUTH_TOKEN);
+  //       console.log(currentToken, !!currentToken)
+  //       if (!!currentToken) {
+  //         const valid = await System.checkAuth(currentToken);
+  //         if (!valid) {
+  //           setAuth({
+  //             requiresAuth: true,
+  //             mode: "single",
+  //           });
+  //           window.localStorage.removeItem(AUTH_TOKEN);
+  //           return;
+  //         } else {
+  //           setAuth({
+  //             requiresAuth: false,
+  //             mode: "single",
+  //           });
+  //           return;
+  //         }
+  //       } else {
+  //         setAuth({
+  //           requiresAuth: true,
+  //           mode: "single",
+  //         });
+  //         return;
+  //       }
+  //     }
+  //   }
+  //   checkAuthReq();
+  // }, []);
+
   useEffect(() => {
-    async function checkAuthReq() {
-      if (!window) return;
-      const settings = await System.keys();
+      async function checkAuthReq() {
+        if (!window) return;
+        const settings = await System.keys();
 
-      if (settings?.MultiUserMode) {
-        const currentToken = window.localStorage.getItem(AUTH_TOKEN);
-        if (!!currentToken) {
-          const valid = await System.checkAuth(currentToken);
-          if (!valid) {
-            setAuth({
-              requiresAuth: true,
-              mode: "multi",
-            });
-            window.localStorage.removeItem(AUTH_USER);
-            window.localStorage.removeItem(AUTH_TOKEN);
-            return;
-          } else {
-            setAuth({
-              requiresAuth: false,
-              mode: "multi",
-            });
-            return;
-          }
-        } else {
-          setAuth({
-            requiresAuth: true,
-            mode: "multi",
-          });
-          return;
-        }
-      } else {
-        // Running token check in single user Auth mode.
-        // If Single user Auth is disabled - skip check
-        const requiresAuth = settings?.RequiresAuth || false;
-        if (!requiresAuth) {
-          setAuth({
-            requiresAuth: false,
-            mode: "single",
-          });
-          return;
-        }
-
-        const currentToken = window.localStorage.getItem(AUTH_TOKEN);
-        if (!!currentToken) {
-          const valid = await System.checkAuth(currentToken);
-          if (!valid) {
+        const CurrentToken = window.localStorage.getItem(AUTH_TOKEN)
+        if (CurrentToken == null) {
             setAuth({
               requiresAuth: true,
               mode: "single",
-            });
-            window.localStorage.removeItem(AUTH_TOKEN);
-            return;
-          } else {
-            setAuth({
-              requiresAuth: false,
-              mode: "single",
-            });
-            return;
-          }
-        } else {
-          setAuth({
-            requiresAuth: true,
-            mode: "single",
           });
-          return;
         }
-      }
     }
     checkAuthReq();
-  }, []);
+    }, []);
+
+  useEffect(()=> {
+    console.log(auth)
+  }, [auth])
 
   return auth;
 }

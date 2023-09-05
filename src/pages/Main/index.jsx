@@ -18,6 +18,8 @@ export default function Main() {
   }, [])
 
   const { requiresAuth, mode } = usePasswordModal();
+
+  console.log(requiresAuth)
   if (requiresAuth === null || requiresAuth) {
     return (
       <>
