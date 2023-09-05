@@ -93,5 +93,9 @@ export function usePasswordModal() {
     checkAuthReq();
   }, []);
 
+  useEffect(()=> {
+    console.log(auth)
+  }, [auth])
+
   return auth;
 }
