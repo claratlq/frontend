@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import System from "../../../models/system";
 import { AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
+import { GoogleLogin } from '@react-oauth/google';
+import { Buffer } from 'buffer';
+
+function parseJwtPayload (token) {
+  return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
+
 
 export default function SingleUserAuth() {
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const handleLogin = async (e) => {
     setError(null);
     setLoading(true);
@@ -24,6 +33,24 @@ export default function SingleUserAuth() {
     }
     setLoading(false);
   };
+
+  const handleGoogleLogin = async (resp) => {
+    setError(null);
+    setLoading(true);
+
+    const { authentication, token } = await System.checkGoogleAuth(resp.credential);
+    
+    if (authentication) {
+      const parsedCredentials = parseJwtPayload(resp.credential); 
+      
+      window.localStorage.setItem(AUTH_TOKEN, token);
+      window.localStorage.setItem("user", parsedCredentials.name);
+      window.location.reload();
+    } else {
+      setLoading(false);
+    }
+    setLoading(false);
+  }
 
   return (
     <form onSubmit={handleLogin}>
@@ -84,6 +111,15 @@ export default function SingleUserAuth() {
           >
             {loading ? "Validating..." : "Submit"}
           </button>
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              console.log(credentialResponse);
+              handleGoogleLogin(credentialResponse);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          />;
         </div>
       </div>
     </form>
