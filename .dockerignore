@@ -1,0 +1,19 @@
+# dev
+.devcontainer/
+.husky/
+node_modules/
+.eslintignore
+.eslintrc.json
+.gitattributes
+.gitignore
+.lintstagedrc.json
+.prettierignore
+.prettierrc.json
+commitlint.config.js
+package-lock.json
+yarn.lock
+README.md
+
+# build
+dist/
+Dockerfile
