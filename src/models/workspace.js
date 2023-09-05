@@ -73,7 +73,6 @@ const Workspace = {
 
     return chatResult;
   },
-<<<<<<< HEAD
   rateResponse: async function (slug, ratings = {}) {
     const { workspace, message } = await fetch(
       `${API_BASE}/workspace/${slug}/rate_response`,
@@ -90,23 +89,6 @@ const Workspace = {
 
     return { workspace, message };
   },
-=======
-  authVerify: async function ({ slug }, authToken) {
-    const isAuth = await fetch(`${API_BASE}/workspace/${slug}/auth`, {
-      method: "GET",
-      headers: baseHeaders(authToken),
-    })
-      .then((res) => {
-        console.log(res.headers.get("content-type"));
-        return res.json()})
-      .catch((e) => {
-        console.error(e);
-        return null;
-      });
-
-    return isAuth;
-  }
->>>>>>> feat(auth): add auth api function
   // sendChat: async function ({ slug }, prompt, mode = "query") {
   //   var header = baseHeaders();
   //   header["Content-Type"] = "application/json";
