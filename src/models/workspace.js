@@ -2,11 +2,11 @@ import { API_BASE } from "../utils/constants";
 import { baseHeaders } from "../utils/request";
 
 const Workspace = {
-  new: async function (data = {}) {
+  new: async function (data = {}, googleAuthToken) {
     const { workspace, message } = await fetch(`${API_BASE}/reset_chat`, {
       method: "POST",
       body: JSON.stringify(data),
-      headers: baseHeaders(),
+      headers: baseHeaders(googleAuthToken),
     })
       .then((res) => res.json())
       .catch((e) => {
@@ -47,10 +47,10 @@ const Workspace = {
 
     return { workspace, message };
   },
-  chatHistory: async function (slug) {
+  chatHistory: async function (slug, googleAuthToken) {
     const history = await fetch(`${API_BASE}/get_chat_history`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: baseHeaders(googleAuthToken),
       body: JSON.stringify(slug)
     })
       .then((res) => res.json())
@@ -58,11 +58,11 @@ const Workspace = {
       .catch(() => []);
     return history;
   },
-  sendChat: async function (data) {
+  sendChat: async function (data, googleAuthToken) {
     const chatResult = await fetch(`${API_BASE}/send_message`, {
       method: "POST",
       body: JSON.stringify(data),
-      headers: baseHeaders(),
+      headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
         return res.json()})
@@ -73,13 +73,13 @@ const Workspace = {
 
     return chatResult;
   },
-  rateResponse: async function (slug, ratings = {}) {
+  rateResponse: async function (slug, ratings = {}, googleAuthToken) {
     const { workspace, message } = await fetch(
       `${API_BASE}/workspace/${slug}/rate_response`,
       {
         method: "POST",
         body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: baseHeaders(),
+        headers: baseHeaders(googleAuthToken),
       }
     )
       .then((res) => res.json())
@@ -136,11 +136,11 @@ const Workspace = {
 
     return result;
   },
-  uploadFile: async function (slug, formData) {
+  uploadFile: async function (slug, formData, googleAuthToken) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload`, {
       method: "POST",
       body: formData,
-      headers: baseHeaders(),
+      headers: baseHeaders(googleAuthToken),
     });
 
     const data = await response.json();
