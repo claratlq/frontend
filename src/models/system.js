@@ -1,4 +1,4 @@
-import { API_BASE } from "../utils/constants";
+import { API_BASE, FILE_TYPES } from "../utils/constants";
 import { baseHeaders } from "../utils/request";
 
 const System = {
@@ -73,7 +73,7 @@ const System = {
     })
       .then((res) => res.json())
       .then((res) => res?.types)
-      .catch(() => null);
+      .catch(() => FILE_TYPES);
   },
   updateSystem: async (data) => {
     return await fetch(`${API_BASE}/system/update-env`, {
