@@ -4,7 +4,7 @@ import LoadingChat from "../WorkspaceChat/LoadingChat";
 import ChatContainer from "../WorkspaceChat/ChatContainer";
 import paths from "../../utils/paths";
 
-export default function LandingContainer({ loading, workspace }) {
+export default function LandingContainer({ loading, newChat }) {
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
 
