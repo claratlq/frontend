@@ -3,7 +3,7 @@ import { baseHeaders } from "../utils/request";
 
 const Workspace = {
   new: async function (data = {}) {
-    const { workspace, message } = await fetch(`${API_BASE}/workspace/new`, {
+    const { workspace, message } = await fetch(`${API_BASE}/reset_chat`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: baseHeaders(),
@@ -100,13 +100,13 @@ const Workspace = {
 
     return workspaces;
   },
-  bySlug: async function (slug = "") {
-    const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
-      method: "GET",
+  bySlug: async function (slug = {}) {
+    const workspace = await fetch(`${API_BASE}/get_active_chat`, {
+      method: "POST",
       headers: baseHeaders(),
+      body: JSON.stringify(slug)
     })
       .then((res) => res.json())
-      .then((res) => res.workspace)
       .catch(() => null);
     return workspace;
   },
