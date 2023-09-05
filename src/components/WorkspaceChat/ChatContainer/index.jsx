@@ -3,7 +3,7 @@ import ChatHistory from "./ChatHistory";
 import PromptInput from "./PromptInput";
 import Workspace from "../../../models/workspace";
 import handleChat from "../../../utils/chat";
-import { isMobile } from "react-device-detect";
+import { ConsoleView, isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useNavigate } from "react-router-dom";
 
@@ -97,13 +97,10 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
 
-  async function resetChat() {
-      var activeChatID = await Workspace.new({user_id: userID})['workspace'] //reset_chat
-      if (activeChatID === undefined) { //if error in creating chat
-          setCreateChatError(true)
-        } else {
-          navigate('/')
-        }
+  function resetChat() {
+    console.log('resetting')
+    window.localStorage.setItem('newChat', true)
+    location.reload()
   }
 
   return (

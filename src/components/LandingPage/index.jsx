@@ -20,7 +20,7 @@ export default function LandingContainer({ loading, newChat }) {
   //   'id' : 1,
   //   'name': userID
   // }
-
+  console.log('newchat',newChat)
   async function createNewChat() {
     var newWorkspace =  await Workspace.new({user_id: userID, name:userID}) // name is just the temporary fix, can be removed 
     newWorkspace = newWorkspace.workspace
@@ -31,11 +31,12 @@ export default function LandingContainer({ loading, newChat }) {
       // workspace['id'] = activeChatID
       setWorkspace(newWorkspace)
     }
+    console.log(newWorkspace)
   }
 
   useEffect(() => {
     async function getChatID() {
-      if (newChat) {
+      if (newChat === 'true') {
         createNewChat()
       } else {
         var activeChatID = await Workspace.bySlug(userID) //get_active_chat
@@ -46,6 +47,7 @@ export default function LandingContainer({ loading, newChat }) {
           workspace['id'] = activeChatID
         }
       }
+      window.localStorage.setItem('newChat', false)
     }
     getChatID()
   }, [])

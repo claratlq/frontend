@@ -1,13 +1,13 @@
 import React, { useState, useRef, memo, useEffect } from "react";
 import { isMobile } from "react-device-detect";
-import { PlusSquare } from "react-feather";
+import { RefreshCcw} from "react-feather";
 
 export default function ResetChat({resetChat}) {
 
     return (
-        <div>
-            <button onClick={resetChat}>
-                <PlusSquare/>
+        <div title="Restart New Chat">
+            <button onClick={resetChat} type="button">
+                <RefreshCcw/>
             </button>
         </div>
   );
