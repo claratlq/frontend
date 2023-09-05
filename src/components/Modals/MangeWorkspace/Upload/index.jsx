@@ -42,7 +42,7 @@ export default function UploadToWorkspace({ workspace, fileTypes }) {
   useEffect(() => {
     async function checkProcessorOnline() {
       const online = await System.checkDocumentProcessorOnline();
-      setReady(online);
+      setReady(process.env.NODE_ENV !== "production" ? true:online);
     }
     checkProcessorOnline();
   }, []);

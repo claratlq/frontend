@@ -16,7 +16,7 @@ export default function WorkspaceChat({ loading, workspace }) {
         return false;
       }
 
-      const chatHistory = await Workspace.chatHistory(workspace.slug);
+      const chatHistory = await Workspace.chatHistory({"userId": workspace.name});
       setHistory(chatHistory);
       setLoadingHistory(false);
     }
