@@ -87,7 +87,7 @@ const Workspace = {
       });
 
     return isAuth;
-  }
+  },
   // sendChat: async function ({ slug }, prompt, mode = "query") {
   //   var header = baseHeaders();
   //   header["Content-Type"] = "application/json";
