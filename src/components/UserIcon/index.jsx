@@ -2,9 +2,10 @@ import React, { useRef, useEffect } from "react";
 import JAZZ from "@metamask/jazzicon";
 
 export default function Jazzicon({ size = 10, user }) {
+  
   const divRef = useRef(null);
   const seed = user?.uid
-    ? toPseudoRandomInteger(user.uid)
+    ? toPseudoRandomInteger(user.uid.toString())
     : Math.floor(100000 + Math.random() * 900000);
   const result = JAZZ(size, seed);
 
@@ -22,6 +23,5 @@ function toPseudoRandomInteger(uidString = "") {
   for (var i = 0; i < uidString.length; i++) {
     numberArray[i] = uidString.charCodeAt(i);
   }
-
   return numberArray.reduce((a, b) => a + b, 0);
 }

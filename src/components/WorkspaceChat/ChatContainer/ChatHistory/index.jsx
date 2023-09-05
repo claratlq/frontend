@@ -9,7 +9,7 @@ export default function ChatHistory({ history = [], workspace }) {
     if (replyRef.current) {
       setTimeout(() => {
         replyRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-      }, 700);
+      }, 0);
     }
   }, [history]);
 
@@ -32,7 +32,6 @@ export default function ChatHistory({ history = [], workspace }) {
     >
       {history.map((props, index) => {
         const isLastMessage = index === history.length - 1;
-        console.log(isLastMessage)
         if (props.role === "assistant" && props.animate) {
           return (
             <PromptReply
