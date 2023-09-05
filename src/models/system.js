@@ -46,6 +46,18 @@ const System = {
       .then((res) => res.ok)
       .catch(() => false);
   },
+  checkGoogleAuth: async function (authToken) {
+    return await fetch(`${API_BASE}/system/auth`, {
+      method: "GET",
+      headers: baseHeaders(authToken),
+    })
+      .then((res) => {
+        return res.json()})
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
+  },
   requestToken: async function (body) {
     return await fetch(`${API_BASE}/request-token`, {
       method: "POST",

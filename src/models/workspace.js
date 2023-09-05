@@ -73,21 +73,6 @@ const Workspace = {
 
     return chatResult;
   },
-  authVerify: async function ({ slug }, authToken) {
-    const isAuth = await fetch(`${API_BASE}/workspace/${slug}/auth`, {
-      method: "GET",
-      headers: baseHeaders(authToken),
-    })
-      .then((res) => {
-        console.log(res.headers.get("content-type"));
-        return res.json()})
-      .catch((e) => {
-        console.error(e);
-        return null;
-      });
-
-    return isAuth;
-  },
   // sendChat: async function ({ slug }, prompt, mode = "query") {
   //   var header = baseHeaders();
   //   header["Content-Type"] = "application/json";
