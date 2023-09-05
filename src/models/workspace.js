@@ -3,7 +3,7 @@ import { baseHeaders } from "../utils/request";
 
 const Workspace = {
   new: async function (data = {}) {
-    const { workspace, message } = await fetch(`${API_BASE}/workspace/new`, {
+    const { workspace, message } = await fetch(`${API_BASE}/reset_chat`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: baseHeaders(),
@@ -48,19 +48,20 @@ const Workspace = {
     return { workspace, message };
   },
   chatHistory: async function (slug) {
-    const history = await fetch(`${API_BASE}/workspace/${slug}/chats`, {
+    const history = await fetch(`${API_BASE}/get_chat_history`, {
       method: "POST",
       headers: baseHeaders(),
+      body: JSON.stringify(slug)
     })
       .then((res) => res.json())
       .then((res) => res.history || [])
       .catch(() => []);
     return history;
   },
-  sendChat: async function ({ slug }, message, mode = "query") {
-    const chatResult = await fetch(`${API_BASE}/workspace/${slug}/chat`, {
+  sendChat: async function (data) {
+    const chatResult = await fetch(`${API_BASE}/send_message`, {
       method: "POST",
-      body: JSON.stringify({ message, mode }),
+      body: JSON.stringify(data),
       headers: baseHeaders(),
     })
       .then((res) => {
@@ -115,13 +116,13 @@ const Workspace = {
 
     return workspaces;
   },
-  bySlug: async function (slug = "") {
-    const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
-      method: "GET",
+  bySlug: async function (slug = {}) {
+    const workspace = await fetch(`${API_BASE}/get_active_chat`, {
+      method: "POST",
       headers: baseHeaders(),
+      body: JSON.stringify(slug)
     })
       .then((res) => res.json())
-      .then((res) => res.workspace)
       .catch(() => null);
     return workspace;
   },

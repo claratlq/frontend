@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DefaultChatContainer from "../../components/DefaultChat";
-import LandingContainer from "../../components/LandingPage";
+import LandingContainer from "../../components/Landing";
 import Sidebar from "../../components/Sidebar";
 import SidebarPlaceholder from "../../components/Sidebar/Placeholder";
 import ChatPlaceholder from "../../components/WorkspaceChat/LoadingChat";
@@ -34,7 +34,7 @@ export default function Main() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
       {!isMobile && <Sidebar />}
-      <LandingContainer loading={true} newChat={newChat}/> 
+      <LandingContainer newChat={newChat}/> 
     </div>
   );
 }

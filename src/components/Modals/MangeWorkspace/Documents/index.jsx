@@ -13,20 +13,21 @@ export default function DocumentSettings({ workspace }) {
   const [saving, setSaving] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [directories, setDirectories] = useState(null);
-  const [originalDocuments, setOriginalDocuments] = useState([]);
+  // const [originalDocuments, setOriginalDocuments] = useState([]);
   const [selectedFiles, setSelectFiles] = useState([]);
   const [hasFiles, setHasFiles] = useState(true);
 
   useEffect(() => {
     async function fetchKeys() {
       const localFiles = await System.localFiles();
-      const originalDocs = workspace.documents.map((doc) => doc.docpath) || [];
+      console.log(localFiles)
+      // const originalDocs = workspace.documents.map((doc) => doc.docpath) || [];
       const hasAnyFiles = localFiles.items.some(
         (folder) => folder?.items?.length > 0
       );
       setDirectories(localFiles);
-      setOriginalDocuments([...originalDocs]);
-      setSelectFiles([...originalDocs]);
+      // setOriginalDocuments([...originalDocs]);
+      // setSelectFiles([...originalDocs]);
       setHasFiles(hasAnyFiles);
       setLoading(false);
     }
@@ -46,44 +47,44 @@ export default function DocumentSettings({ workspace }) {
       : window.location.reload();
   };
 
-  const docChanges = () => {
-    const changes = {
-      adds: [],
-      deletes: [],
-    };
+  // const docChanges = () => {
+  //   const changes = {
+  //     adds: [],
+  //     deletes: [],
+  //   };
 
-    selectedFiles.map((doc) => {
-      const inOriginal = !!originalDocuments.find((oDoc) => oDoc === doc);
-      if (!inOriginal) {
-        changes.adds.push(doc);
-      }
-    });
+  //   selectedFiles.map((doc) => {
+  //     const inOriginal = !!originalDocuments.find((oDoc) => oDoc === doc);
+  //     if (!inOriginal) {
+  //       changes.adds.push(doc);
+  //     }
+  //   });
 
-    originalDocuments.map((doc) => {
-      const selected = !!selectedFiles.find((oDoc) => oDoc === doc);
-      if (!selected) {
-        changes.deletes.push(doc);
-      }
-    });
+  //   originalDocuments.map((doc) => {
+  //     const selected = !!selectedFiles.find((oDoc) => oDoc === doc);
+  //     if (!selected) {
+  //       changes.deletes.push(doc);
+  //     }
+  //   });
 
-    return changes;
-  };
+  //   return changes;
+  // };
 
-  const confirmChanges = (e) => {
-    e.preventDefault();
-    const changes = docChanges();
-    changes.adds.length > 0 ? setShowConfirmation(true) : updateWorkspace(e);
-  };
+  // const confirmChanges = (e) => {
+  //   e.preventDefault();
+  //   const changes = docChanges();
+  //   changes.adds.length > 0 ? setShowConfirmation(true) : updateWorkspace(e);
+  // };
 
-  const updateWorkspace = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    setShowConfirmation(false);
-    const changes = docChanges();
-    await Workspace.modifyEmbeddings(workspace.slug, changes);
-    setSaving(false);
-    window.location.reload();
-  };
+  // const updateWorkspace = async (e) => {
+  //   e.preventDefault();
+  //   setSaving(true);
+  //   setShowConfirmation(false);
+  //   const changes = docChanges();
+  //   await Workspace.modifyEmbeddings(workspace.slug, changes);
+  //   setSaving(false);
+  //   window.location.reload();
+  // };
 
   const isSelected = (filepath) => {
     const isFolder = !filepath.includes("/");
@@ -92,12 +93,12 @@ export default function DocumentSettings({ workspace }) {
       : selectedFiles.some((doc) => doc.includes(filepath));
   };
 
-  const isOriginalDoc = (filepath) => {
-    const isFolder = !filepath.includes("/");
-    return isFolder
-      ? originalDocuments.some((doc) => doc.includes(filepath.split("/")[0]))
-      : originalDocuments.some((doc) => doc.includes(filepath));
-  };
+  // const isOriginalDoc = (filepath) => {
+  //   const isFolder = !filepath.includes("/");
+  //   return isFolder
+  //     ? originalDocuments.some((doc) => doc.includes(filepath.split("/")[0]))
+  //     : originalDocuments.some((doc) => doc.includes(filepath));
+  // };
 
   const toggleSelection = (filepath) => {
     const isFolder = !filepath.includes("/");
@@ -144,8 +145,8 @@ export default function DocumentSettings({ workspace }) {
         <ConfirmationModal
           directories={directories}
           hideConfirm={() => setShowConfirmation(false)}
-          additions={docChanges().adds}
-          updateWorkspace={updateWorkspace}
+          // additions={docChanges().adds}
+          // updateWorkspace={updateWorkspace}
         />
       )}
       <div className="p-6 flex h-full w-full max-h-[80vh] overflow-y-scroll">
@@ -161,9 +162,9 @@ export default function DocumentSettings({ workspace }) {
           )}
 
           <div className="flex flex-col mb-2">
-            <p className="text-gray-800 dark:text-stone-200 text-base ">
+            {/* <p className="text-gray-800 dark:text-stone-200 text-base ">
               Select folders to add or remove from workspace.
-            </p>
+            </p> */}
             <p className="text-gray-800 dark:text-stone-400 text-xs italic">
               {selectedFiles.length} documents in workspace selected.
             </p>
@@ -179,7 +180,7 @@ export default function DocumentSettings({ workspace }) {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between p-4 md:p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+      {/* <div className="flex items-center justify-between p-4 md:p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
         <button
           onClick={deleteWorkspace}
           type="button"
@@ -197,7 +198,7 @@ export default function DocumentSettings({ workspace }) {
             {saving ? "Saving..." : "Confirm Changes"}
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

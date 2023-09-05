@@ -3,7 +3,7 @@ import { baseHeaders } from "../utils/request";
 
 const System = {
   ping: async function () {
-    return await fetch(`${API_BASE}/ping`)
+    return await fetch(`${API_BASE}/ping`, {method:"GET"})
       .then((res) => res.json())
       .then((res) => res?.online || false)
       .catch(() => false);
@@ -20,7 +20,7 @@ const System = {
       .catch(() => 0);
   },
   keys: async function () {
-    return await fetch(`${API_BASE}/setup-complete`)
+    return await fetch(`${API_BASE}/setup-complete`, {method:"GET"})
       .then((res) => {
         if (!res.ok) throw new Error("Could not find setup information.");
         return res.json();

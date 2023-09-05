@@ -55,10 +55,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
       }
 
       const chatResult = await Workspace.sendChat(
-        workspace,
-        promptMessage.userMessage,
-        window.localStorage.getItem(`workspace_chat_mode_${workspace.slug}`) ??
-          "chat"
+        {"userId": workspace.name, "chatId": workspace.slug, "text":promptMessage.userMessage}
       );
       console.log(chatResult)
       // const reader = chatResult.body
@@ -96,6 +93,10 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
     }
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
+
+  // useEffect(() => {
+  //   console.log(chatHistory)
+  // }, [chatHistory])
 
   function resetChat() {
     if (chatHistory.length === 0) {

@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { Book, Settings } from "react-feather";
-import * as Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import Workspace from "../../../models/workspace";
+// import * as Skeleton from "react-loading-skeleton";
+// import "react-loading-skeleton/dist/skeleton.css";
+// import Workspace from "../../../models/workspace";
 import ManageWorkspace, {
   useManageWorkspaceModal,
 } from "../../Modals/MangeWorkspace";
-import paths from "../../../utils/paths";
-import { useParams } from "react-router-dom";
+// import paths from "../../../utils/paths";
+// import { useParams } from "react-router-dom";
 
 export default function ActiveWorkspaces(name) {
-  const { slug } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [workspaces, setWorkspaces] = useState([name]);
+  // const { slug } = useParams();
+  // const [loading, setLoading] = useState(true);
+  // const [workspaces, setWorkspaces] = useState([name]);
   const [selectedWs, setSelectedWs] = useState(null);
   const { showing, showModal, hideModal } = useManageWorkspaceModal();
+
+  const workspaces = [name]
 
   // useEffect(() => {
   //   async function getWorkspaces() {
@@ -43,7 +45,8 @@ export default function ActiveWorkspaces(name) {
   return (
     <>
       {workspaces.map((workspace) => {
-        const isActive = workspace.slug === slug;
+        const isActive = true
+        // workspace.slug === slug;
         // console.log(workspace)
         return (
           <div
@@ -64,10 +67,10 @@ export default function ActiveWorkspaces(name) {
               </p>
             </a>
             <button
-              // onClick={() => {
-              //   setSelectedWs(workspace);
-              //   showModal();
-              // }}
+              onClick={() => {
+                setSelectedWs(workspace);
+                showModal();
+              }}
               className="rounded-md bg-stone-200 p-2 h-[36px] w-[15%] flex items-center justify-center text-slate-800 hover:bg-stone-300 group dark:bg-stone-800 dark:text-slate-200 dark:hover:bg-stone-900 dark:border dark:border-stone-800"
             >
               <Settings className="h-3.5 w-3.5 transition-all duration-300 group-hover:rotate-90" />
