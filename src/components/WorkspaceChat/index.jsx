@@ -17,7 +17,7 @@ export default function WorkspaceChat({ loading, workspace }) {
       }
 
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-      const chatHistory = await Workspace.chatHistory({"userId": workspace.name}, googleAuthToken);
+      const chatHistory = await Workspace.chatHistory(googleAuthToken);
       setHistory(chatHistory);
       setLoadingHistory(false);
     }

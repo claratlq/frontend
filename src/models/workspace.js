@@ -1,63 +1,92 @@
 import { API_BASE } from "../utils/constants";
 import { baseHeaders } from "../utils/request";
+import { reAuthenticate } from "../utils/request";
 
 const Workspace = {
-  new: async function (data = {}, googleAuthToken) {
-    const { workspace, message } = await fetch(`${API_BASE}/reset_chat`, {
-      method: "POST",
-      body: JSON.stringify(data),
+  new: async function (googleAuthToken) {
+    const  chatId = await fetch(`${API_BASE}/reset_chat`, {
+      method: "GET",
+      // body: JSON.stringify(data),
       headers: baseHeaders(googleAuthToken),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return {chatId: null}
+        } else if (res.status === 200) {
+          return res.json()
+        } else {
+          console.log('error', res)
+          return {chatId: null}
+        }
+      })
       .catch((e) => {
-        return { workspace: null, message: e.message };
-      });
-
-    return { workspace, message };
+        console.log(e)
+        return {chatId: null}
+        }
+      );
+    return chatId;
   },
-  update: async function (slug, data = {}) {
-    const { workspace, message } = await fetch(
-      `${API_BASE}/workspace/${slug}/update`,
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: baseHeaders(),
-      }
-    )
-      .then((res) => res.json())
-      .catch((e) => {
-        return { workspace: null, message: e.message };
-      });
+  
+  // update: async function (slug, data = {}) {
+  //   const { workspace, message } = await fetch(
+  //     `${API_BASE}/workspace/${slug}/update`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(data),
+  //       headers: baseHeaders(),
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .catch((e) => {
+  //       return { workspace: null, message: e.message };
+  //     });
 
-    return { workspace, message };
-  },
-  modifyEmbeddings: async function (slug, changes = {}) {
-    const { workspace, message } = await fetch(
-      `${API_BASE}/workspace/${slug}/update-embeddings`,
-      {
-        method: "POST",
-        body: JSON.stringify(changes), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: baseHeaders(),
-      }
-    )
-      .then((res) => res.json())
-      .catch((e) => {
-        return { workspace: null, message: e.message };
-      });
+  //   return { workspace, message };
+  // },
+  
+  // modifyEmbeddings: async function (slug, changes = {}) {
+  //   const { workspace, message } = await fetch(
+  //     `${API_BASE}/workspace/${slug}/update-embeddings`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(changes), // contains 'adds' and 'removes' keys that are arrays of filepaths
+  //       headers: baseHeaders(),
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .catch((e) => {
+  //       return { workspace: null, message: e.message };
+  //     });
 
-    return { workspace, message };
-  },
-  chatHistory: async function (slug, googleAuthToken) {
+  //   return { workspace, message };
+  // },
+
+  chatHistory: async function (googleAuthToken) {
     const history = await fetch(`${API_BASE}/get_chat_history`, {
-      method: "POST",
+      method: "GET",
       headers: baseHeaders(googleAuthToken),
-      body: JSON.stringify(slug)
+      // body: JSON.stringify(slug)
     })
-      .then((res) => res.json())
-      .then((res) => res.history || [])
-      .catch(() => []);
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return []
+        } else if (res.status === 200) {
+          return (res.json().history || [])
+        } else {
+          console.log('error', res)
+          return []
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+        return []
+        }
+      );
     return history;
   },
+
   sendChat: async function (data, googleAuthToken) {
     const chatResult = await fetch(`${API_BASE}/send_message`, {
       method: "POST",
@@ -65,30 +94,54 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
-        return res.json()})
+        if (res.status === 403) {
+          reAuthenticate()
+          return null
+        } else if (res.status === 200) {
+          return res.json()
+        } else {
+          console.log('error', res)
+          return res.json()
+        }
+      })
       .catch((e) => {
-        console.error(e);
-        return null;
-      });
-
+        console.log(e)
+        return null
+        }
+      );
     return chatResult;
   },
-  rateResponse: async function (slug, ratings = {}, googleAuthToken) {
-    const { workspace, message } = await fetch(
-      `${API_BASE}/workspace/${slug}/rate_response`,
+
+
+  rateResponse: async function (ratings = {}, googleAuthToken) {
+    const status = await fetch(
+      `${API_BASE}/rate_response`,
       {
         method: "POST",
         body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
         headers: baseHeaders(googleAuthToken),
       }
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return null
+        } else if (res.status === 200) {
+          return res
+        } else {
+          console.log('error', res)
+          return res
+        }
+      })
       .catch((e) => {
-        return { workspace: null, message: e.message };
-      });
-
-    return { workspace, message };
+        console.log(e)
+        return null
+        }
+      );
+    return status;
   },
+
+
   // sendChat: async function ({ slug }, prompt, mode = "query") {
   //   var header = baseHeaders();
   //   header["Content-Type"] = "application/json";
@@ -105,46 +158,80 @@ const Workspace = {
 
   //   return chatResult;
   // },
-  all: async function () {
-    const workspaces = await fetch(`${API_BASE}/workspaces`, {
+
+  // all: async function () {
+  //   const workspaces = await fetch(`${API_BASE}/workspaces`, {
+  //     method: "GET",
+  //     headers: baseHeaders(),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => res.workspaces || [])
+  //     .catch(() => []);
+
+  //   return workspaces;
+  // },
+
+  bySlug: async function () {
+    const workspace = await fetch(`${API_BASE}/get_active_chat`, {
       method: "GET",
       headers: baseHeaders(),
+      // body: JSON.stringify(slug)
     })
-      .then((res) => res.json())
-      .then((res) => res.workspaces || [])
-      .catch(() => []);
-
-    return workspaces;
-  },
-  bySlug: async function (slug = {}) {
-    const workspace = await fetch(`${API_BASE}/get_active_chat`, {
-      method: "POST",
-      headers: baseHeaders(),
-      body: JSON.stringify(slug)
-    })
-      .then((res) => res.json())
-      .catch(() => null);
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return {chatId: null}
+        } else if (res.status === 200) {
+          return res.json()
+        } else {
+          console.log('error', res)
+          return {chatId: null}
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+        return {chatId: null}
+        }
+      );
     return workspace;
   },
-  delete: async function (slug) {
-    const result = await fetch(`${API_BASE}/workspace/${slug}`, {
-      method: "DELETE",
-      headers: baseHeaders(),
-    })
-      .then((res) => res.ok)
-      .catch(() => false);
 
-    return result;
-  },
-  uploadFile: async function (slug, formData, googleAuthToken) {
-    const response = await fetch(`${API_BASE}/workspace/${slug}/upload`, {
+
+  // delete: async function (slug) {
+  //   const result = await fetch(`${API_BASE}/workspace/${slug}`, {
+  //     method: "DELETE",
+  //     headers: baseHeaders(),
+  //   })
+  //     .then((res) => res.ok)
+  //     .catch(() => false);
+
+  //   return result;
+  // },
+
+
+  uploadFile: async function (formData, googleAuthToken) {
+    const response = await fetch(`${API_BASE}/pdf_upload`, {
       method: "POST",
       body: formData,
       headers: baseHeaders(googleAuthToken),
-    });
-
-    const data = await response.json();
-    return { response, data };
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return null
+        } else if (res.status === 200) {
+          return res
+        } else {
+          console.log('error', res)
+          return res
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+        return e
+      }
+      );
+    return response;
   },
 };
 

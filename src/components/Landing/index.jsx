@@ -21,8 +21,8 @@ export default function LandingContainer({ newChat }) {
   async function createNewChat() {
 
     const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-    var activeChatID =  await Workspace.new({"userId": userID}, googleAuthToken) // name is just the temporary fix, can be removed 
-    if (activeChatID.chatId === undefined) { //if error in creating chat
+    var activeChatID =  await Workspace.new(googleAuthToken) 
+    if (activeChatID.chatId === null) { //if error in creating chat
       setCreateChatError(true)
     } else {
       setLoadingHistory(false)
@@ -42,8 +42,8 @@ export default function LandingContainer({ newChat }) {
         createNewChat()
       } 
       else {
-        var activeChatID = await Workspace.bySlug({"userId": userID}) //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
-        if (activeChatID.chatId === undefined) {
+        var activeChatID = await Workspace.bySlug() //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
+        if (activeChatID.chatId === null) {
           createNewChat()
         } else {
           setLoadingHistory(false)
@@ -60,7 +60,7 @@ export default function LandingContainer({ newChat }) {
   }, [newChat])
 
   useEffect(() => {
-    console.log(workspace)
+    console.log("Workspace", workspace)
   }, [workspace])
 
 

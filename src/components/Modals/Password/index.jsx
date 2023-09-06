@@ -19,7 +19,9 @@ export function usePasswordModal() {
   const [auth, setAuth] = useState({
     required: false,
     mode: "single",
+    effectRan: false,
   });
+
 
   // useEffect(() => {
   //   async function checkAuthReq() {
@@ -100,19 +102,28 @@ export function usePasswordModal() {
         const settings = await System.keys();
 
         const CurrentToken = window.localStorage.getItem(AUTH_TOKEN)
+        
         if (CurrentToken == null) {
             setAuth({
               requiresAuth: true,
               mode: "single",
+              effectRan: true
           });
+        } else {
+          setAuth({
+            requiresAuth: false,
+            mode: "single",
+            effectRan: true
+        });
         }
+        
     }
     checkAuthReq();
     }, []);
 
-  useEffect(()=> {
-    console.log(auth)
-  }, [auth])
+  // useEffect(()=> {
+  //   console.log(auth)
+  // }, [auth])
 
   return auth;
 }

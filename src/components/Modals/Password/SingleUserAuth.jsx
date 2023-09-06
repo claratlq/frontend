@@ -39,7 +39,7 @@ export default function SingleUserAuth() {
     setLoading(true);
 
     const { authentication, token } = await System.checkGoogleAuth(resp.credential);
-    console.log(authentication, token)
+    // console.log(authentication, token)
 
     if (authentication) {
       const parsedCredentials = parseJwtPayload(resp.credential); 

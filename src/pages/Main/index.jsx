@@ -17,26 +17,34 @@ export default function Main() {
     setNewChat(window.localStorage.getItem('newChat'))
   }, [])
 
-  const { requiresAuth, mode } = usePasswordModal();
+  const { requiresAuth, mode, effectRan } = usePasswordModal();
 
   console.log(requiresAuth)
-  if (requiresAuth === null || requiresAuth) {
+
+  if (effectRan) {
+    if (requiresAuth === null || requiresAuth) {
+      return (
+        <>
+          {requiresAuth && <PasswordModal mode={mode} />}
+          <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
+            {!isMobile && <SidebarPlaceholder />}
+            <ChatPlaceholder />
+          </div>
+        </>
+      );
+    }
+  
+  
     return (
-      <>
-        {requiresAuth && <PasswordModal mode={mode} />}
-        <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
-          {!isMobile && <SidebarPlaceholder />}
-          <ChatPlaceholder />
-        </div>
-      </>
+      <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
+        {!isMobile && <Sidebar />}
+        <LandingContainer newChat={newChat}/> 
+      </div>
     );
-  }
-
-
-  return (
+  } else {
     <div className="w-screen h-screen overflow-hidden bg-orange-100 dark:bg-stone-700 flex">
-      {!isMobile && <Sidebar />}
-      <LandingContainer newChat={newChat}/> 
-    </div>
-  );
+      {!isMobile && <SidebarPlaceholder />}
+      <ChatPlaceholder />
+    </div>  
+  }
 }

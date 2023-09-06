@@ -25,3 +25,12 @@ export function baseHeaders(providedToken = null) {
     Authorization: token ? `Bearer ${token}` : null,
   };
 }
+
+
+export function reAuthenticate() {
+  window.localStorage.removeItem('googleAuthToken')
+  window.localStorage.removeItem(AUTH_TOKEN)
+  window.localStorage.removeItem('user')
+  location.reload()
+  console.log('reauthenticated!')
+}
