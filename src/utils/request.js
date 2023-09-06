@@ -32,4 +32,5 @@ export function reAuthenticate() {
   window.localStorage.removeItem(AUTH_TOKEN)
   window.localStorage.removeItem('user')
   location.reload()
+  console.log('reauthenticated!')
 }

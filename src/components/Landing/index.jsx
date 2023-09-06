@@ -60,7 +60,7 @@ export default function LandingContainer({ newChat }) {
   }, [newChat])
 
   useEffect(() => {
-    console.log(workspace)
+    console.log("Workspace", workspace)
   }, [workspace])
 
 

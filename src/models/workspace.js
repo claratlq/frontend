@@ -16,7 +16,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return res.json()
         } else {
-          // console.log(res)
+          console.log('error', res)
           return {chatId: null}
         }
       })
@@ -75,7 +75,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return (res.json().history || [])
         } else {
-          // console.log(res)
+          console.log('error', res)
           return []
         }
       })
@@ -100,7 +100,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return res.json()
         } else {
-          // console.log(res)
+          console.log('error', res)
           return res.json()
         }
       })
@@ -129,7 +129,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return res
         } else {
-          // console.log(res)
+          console.log('error', res)
           return res
         }
       })
@@ -184,7 +184,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return res.json()
         } else {
-          // console.log(res)
+          console.log('error', res)
           return {chatId: null}
         }
       })
@@ -222,6 +222,7 @@ const Workspace = {
         } else if (res.status === 200) {
           return res
         } else {
+          console.log('error', res)
           return res
         }
       })

@@ -110,9 +110,9 @@ export function usePasswordModal() {
     checkAuthReq();
     }, []);
 
-  useEffect(()=> {
-    console.log(auth)
-  }, [auth])
+  // useEffect(()=> {
+  //   console.log(auth)
+  // }, [auth])
 
   return auth;
 }
