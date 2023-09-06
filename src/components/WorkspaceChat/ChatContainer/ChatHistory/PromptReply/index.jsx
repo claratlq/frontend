@@ -10,10 +10,11 @@ const thumbsUp = async (uuid, slug) => {
     response_id: uuid,
     rating: 1,
   };
-
+  const googleAuthToken = window.localStorage.getItem("googleAuthToken");
   await Workspace.rateResponse(
     slug,
     ratingJson,
+    googleAuthToken
   );
 };
 
@@ -23,9 +24,11 @@ const thumbsDown = async (uuid, slug) => {
     rating: -1,
   };
 
+  const googleAuthToken = window.localStorage.getItem("googleAuthToken");
   await Workspace.rateResponse(
     slug,
     ratingJson,
+    googleAuthToken
   );
 };
 

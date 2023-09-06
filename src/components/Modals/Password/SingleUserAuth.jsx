@@ -45,6 +45,7 @@ export default function SingleUserAuth() {
       const parsedCredentials = parseJwtPayload(resp.credential); 
       window.localStorage.setItem(AUTH_TOKEN, token);
       window.localStorage.setItem("user", parsedCredentials.name);
+      window.localStorage.setItem("googleAuthToken", resp.credential);
       window.location.reload();
     } else {
       setLoading(false);

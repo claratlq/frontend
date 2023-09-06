@@ -19,7 +19,9 @@ export default function LandingContainer({ newChat }) {
   // }
 
   async function createNewChat() {
-    var activeChatID =  await Workspace.new({"userId": userID}) // name is just the temporary fix, can be removed 
+
+    const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+    var activeChatID =  await Workspace.new({"userId": userID}, googleAuthToken) // name is just the temporary fix, can be removed 
     if (activeChatID.chatId === undefined) { //if error in creating chat
       setCreateChatError(true)
     } else {

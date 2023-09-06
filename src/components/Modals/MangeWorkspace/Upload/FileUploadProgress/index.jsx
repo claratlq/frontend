@@ -25,8 +25,9 @@ function FileUploadProgressComponent({
         setTimerMs(Number(new Date()) - start);
       }, 100);
 
+      const googleAuthToken = window.localStorage.getItem("googleAuthToken");
       // Chunk streaming not working in production so we just sit and wait
-      const { response, data } = await Workspace.uploadFile(slug, formData);
+      const { response, data } = await Workspace.uploadFile(slug, formData, googleAuthToken);
       if (!response.ok) {
         setStatus("failed");
         clearInterval(timer);

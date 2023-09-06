@@ -54,8 +54,10 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         return false;
       }
 
+      const googleAuthToken = window.localStorage.getItem("googleAuthToken");
       const chatResult = await Workspace.sendChat(
-        {"userId": workspace.name, "chatId": workspace.slug, "text":promptMessage.userMessage}
+        {"userId": workspace.name, "chatId": workspace.slug, "text":promptMessage.userMessage},
+        googleAuthToken
       );
       console.log(chatResult)
       // const reader = chatResult.body
