@@ -11,22 +11,26 @@ const thumbsUp = async (uuid, slug) => {
     rating: 1,
   };
 
-  await Workspace.rateResponse(
-    slug,
+  const success = await Workspace.rateResponse(
     ratingJson,
-  );
+  ); 
+  if (success.ok) {
+    console.log('success')
+  }
 };
 
-const thumbsDown = async (uuid, slug) => {
+const thumbsDown = async (uuid) => {
   const ratingJson = {
     response_id: uuid,
     rating: -1,
   };
 
-  await Workspace.rateResponse(
-    slug,
+  const success = await Workspace.rateResponse(
     ratingJson,
   );
+  if (success.ok) {
+    console.log('success')
+  }
 };
 
 
@@ -81,13 +85,13 @@ const PromptReply = forwardRef(
           <Citations sources={sources} />
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
             <button
-              onClick={() => thumbsUp(uuid, workspace.slug)}
+              onClick={() => thumbsUp(uuid)}
               type="button"
               >
                 <ThumbsUp className="h-3 w-3"/>
               </button>
               <button
-              onClick={() => thumbsDown(uuid, workspace.slug)}
+              onClick={() => thumbsDown(uuid)}
               type="button"
               >
                 <ThumbsDown className="h-3 w-3"/>
