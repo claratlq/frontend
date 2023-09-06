@@ -38,10 +38,11 @@ export default function SingleUserAuth() {
     setError(null);
     setLoading(true);
 
-    const { authentication, token } = await System.checkGoogleAuth(resp.credential);
-    // console.log(authentication, token)
+    const { authenticated } = await System.checkGoogleAuth(resp.credential);
+    console.log(authenticated)
+    const token = "anything"
 
-    if (authentication) {
+    if (authenticated) {
       const parsedCredentials = parseJwtPayload(resp.credential); 
       window.localStorage.setItem(AUTH_TOKEN, token);
       window.localStorage.setItem("user", parsedCredentials.name);
