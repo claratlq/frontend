@@ -43,7 +43,7 @@ export default function LandingContainer({ newChat }) {
       } 
       else {
         var activeChatID = await Workspace.bySlug() //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
-        if (activeChatID.chatId === undefined) {
+        if (activeChatID.chatId === null) {
           createNewChat()
         } else {
           setLoadingHistory(false)

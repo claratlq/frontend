@@ -9,16 +9,22 @@ const Workspace = {
       // body: JSON.stringify(data),
       headers: baseHeaders(googleAuthToken),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        if (e.response.status === 403) {
+      .then((res) => {
+        if (res.status === 403) {
           reAuthenticate()
-          return { 'chatId': null}
+          return {chatId: null}
+        } else if (res.status === 200) {
+          return res.json()
         } else {
-          return { 'chatId': null}
+          // console.log(res)
+          return {chatId: null}
         }
-      });
-
+      })
+      .catch((e) => {
+        console.log(e)
+        return {chatId: null}
+        }
+      );
     return chatId;
   },
   
@@ -62,17 +68,25 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
       // body: JSON.stringify(slug)
     })
-      .then((res) => res.json())
-      .then((res) => res.history || [])
-      .catch((e) => {
-        if (e.response.status === 403) {
+      .then((res) => {
+        if (res.status === 403) {
           reAuthenticate()
-          return null
-        } else {
           return []
-        }});
+        } else if (res.status === 200) {
+          return (res.json().history || [])
+        } else {
+          // console.log(res)
+          return []
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+        return []
+        }
+      );
     return history;
   },
+
   sendChat: async function (data, googleAuthToken) {
     const chatResult = await fetch(`${API_BASE}/send_message`, {
       method: "POST",
@@ -80,17 +94,21 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
-        return res.json()})
-      .catch((e) => {
-        console.error(e);
-        if (e.response.status === 403) {
+        if (res.status === 403) {
           reAuthenticate()
           return null
+        } else if (res.status === 200) {
+          return res.json()
         } else {
-          return null
+          // console.log(res)
+          return res.json()
         }
-      });
-
+      })
+      .catch((e) => {
+        console.log(e)
+        return null
+        }
+      );
     return chatResult;
   },
 
@@ -104,17 +122,22 @@ const Workspace = {
         headers: baseHeaders(googleAuthToken),
       }
     )
-      .then((res) => res.json())
-      .catch((e) => {
-        if (e.response.status === 403) {
+      .then((res) => {
+        if (res.status === 403) {
           reAuthenticate()
           return null
+        } else if (res.status === 200) {
+          return res
         } else {
-          console.log(e)
-          return null
+          // console.log(res)
+          return res
         }
-      });
-
+      })
+      .catch((e) => {
+        console.log(e)
+        return null
+        }
+      );
     return status;
   },
 
@@ -154,17 +177,23 @@ const Workspace = {
       headers: baseHeaders(),
       // body: JSON.stringify(slug)
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        if (e.response.status === 403) {
+      .then((res) => {
+        if (res.status === 403) {
           reAuthenticate()
-          return null
+          return {chatId: null}
+        } else if (res.status === 200) {
+          return res.json()
         } else {
-          console.log(e)
-          return null
+          // console.log(res)
+          return {chatId: null}
         }
-      });
-      return workspace;
+      })
+      .catch((e) => {
+        console.log(e)
+        return {chatId: null}
+        }
+      );
+    return workspace;
   },
 
 
@@ -186,16 +215,21 @@ const Workspace = {
       body: formData,
       headers: baseHeaders(googleAuthToken),
     })
-      .then(() => {})
-      .catch((e) => {
-        if (e.response.status === 403) {
+      .then((res) => {
+        if (res.status === 403) {
           reAuthenticate()
           return null
+        } else if (res.status === 200) {
+          return res
         } else {
-          console.log(e)
-          return e.response
+          return res
         }
-      });
+      })
+      .catch((e) => {
+        console.log(e)
+        return e
+      }
+      );
     return response;
   },
 };

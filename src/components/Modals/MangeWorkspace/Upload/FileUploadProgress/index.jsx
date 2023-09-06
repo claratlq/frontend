@@ -31,7 +31,7 @@ function FileUploadProgressComponent({
       if (!response.ok) {
         setStatus("failed");
         clearInterval(timer);
-        onUploadError(response.error);
+        onUploadError(response.json().error);
       } else {
         setStatus("complete");
         clearInterval(timer);
