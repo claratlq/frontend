@@ -171,10 +171,10 @@ const Workspace = {
   //   return workspaces;
   // },
 
-  bySlug: async function () {
+  bySlug: async function (googleAuthToken) {
     const workspace = await fetch(`${API_BASE}/get_active_chat`, {
       method: "GET",
-      headers: baseHeaders(),
+      headers: baseHeaders(googleAuthToken),
       // body: JSON.stringify(slug)
     })
       .then((res) => {

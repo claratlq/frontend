@@ -20,7 +20,8 @@ export function userFromStorage() {
 }
 
 export function baseHeaders(providedToken = null) {
-  const token = providedToken || window.localStorage.getItem(AUTH_TOKEN);
+  console.log(`Header: ${providedToken}`)
+  const token = providedToken ? providedToken:window.localStorage.getItem(AUTH_TOKEN);
   return {
     Authorization: token ? `Bearer ${token}` : null,
   };

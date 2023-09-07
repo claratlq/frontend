@@ -47,7 +47,7 @@ const System = {
       .catch(() => false);
   },
   checkGoogleAuth: async function (authToken) {
-    return await fetch(`${API_BASE}/system/auth`, {
+    return await fetch(`${API_BASE}/auth`, {
       method: "GET",
       headers: baseHeaders(authToken),
     })

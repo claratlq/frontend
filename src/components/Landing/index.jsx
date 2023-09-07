@@ -42,7 +42,7 @@ export default function LandingContainer({ newChat }) {
         createNewChat()
       } 
       else {
-        var activeChatID = await Workspace.bySlug() //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
+        var activeChatID = await Workspace.bySlug(window.localStorage.getItem("googleAuthToken")) //get_active_chat //Temporary is a hardcode value, will convert to actual id from backend after integration
         if (activeChatID.chatId === null) {
           createNewChat()
         } else {
