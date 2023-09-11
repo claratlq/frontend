@@ -4,7 +4,7 @@ import { reAuthenticate } from "../utils/request";
 
 const Workspace = {
   new: async function (googleAuthToken) {
-    const  chatId = await fetch(`${API_BASE}/reset_chat`, {
+    const chatId = await fetch(`${API_BASE}/reset_chat`, {
       method: "GET",
       // body: JSON.stringify(data),
       headers: baseHeaders(googleAuthToken),
@@ -12,22 +12,22 @@ const Workspace = {
       .then((res) => {
         if (res.status === 403) {
           reAuthenticate()
-          return {chatId: null}
+          return { chatId: null }
         } else if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
-          return {chatId: null}
+          return { chatId: null }
         }
       })
       .catch((e) => {
         console.log(e)
-        return {chatId: null}
-        }
+        return { chatId: null }
+      }
       );
     return chatId;
   },
-  
+
   // update: async function (slug, data = {}) {
   //   const { workspace, message } = await fetch(
   //     `${API_BASE}/workspace/${slug}/update`,
@@ -44,7 +44,7 @@ const Workspace = {
 
   //   return { workspace, message };
   // },
-  
+
   // modifyEmbeddings: async function (slug, changes = {}) {
   //   const { workspace, message } = await fetch(
   //     `${API_BASE}/workspace/${slug}/update-embeddings`,
@@ -82,7 +82,7 @@ const Workspace = {
       .catch((e) => {
         console.log(e)
         return []
-        }
+      }
       );
     return history;
   },
@@ -107,7 +107,7 @@ const Workspace = {
       .catch((e) => {
         console.log(e)
         return null
-        }
+      }
       );
     return chatResult;
   },
@@ -136,7 +136,7 @@ const Workspace = {
       .catch((e) => {
         console.log(e)
         return null
-        }
+      }
       );
     return status;
   },
@@ -180,18 +180,18 @@ const Workspace = {
       .then((res) => {
         if (res.status === 403) {
           reAuthenticate()
-          return {chatId: null}
+          return { chatId: null }
         } else if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
-          return {chatId: null}
+          return { chatId: null }
         }
       })
       .catch((e) => {
         console.log(e)
-        return {chatId: null}
-        }
+        return { chatId: null }
+      }
       );
     return workspace;
   },
