@@ -36,7 +36,7 @@ export default function PromptInput({
   };
 
   return (
-    <div>
+    <div className="prompt-input">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-y-1 bg-white dark:bg-black-900 md:bg-transparent rounded-t-lg md:w-3/4 w-full mx-auto"
