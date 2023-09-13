@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import usePrefersDarkMode from "./usePrefersDarkMode";
-import System from "../models/system";
 import AnythingLLMDark from "../media/logo/dsta-logo-dark.png";
 import AnythingLLMLight from "../media/logo/dsta-logo-light.png";
 

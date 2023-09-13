@@ -1,113 +1,65 @@
-import { useEffect, useState } from "react";
+import HistoricalMessage from "../WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage";
+import PromptReply from "../WorkspaceChat/ChatContainer/ChatHistory/PromptReply";
+import { useEffect, useRef } from "react";
 
-export default function ChatContainer({knownHistory = [] }) {
-    const [message, setMessage] = useState("");
-    const [loadingResponse, setLoadingResponse] = useState(false);
-    const [chatHistory, setChatHistory] = useState(knownHistory);
-  
-    const handleMessageChange = (event) => {
-      setMessage(event.target.value);
-    };
-  
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      if (!message || message === "") return false;
-  
-      const prevChatHistory = [
-        ...chatHistory,
-        { content: message, role: "user" },
-        {
-          content: "",
-          role: "assistant",
-          pending: true,
-          userMessage: message,
-          animate: true,
-        },
-      ];
-  
-      setChatHistory(prevChatHistory);
-      setMessage("");
-      setLoadingResponse(true);
-    };
-  
-    useEffect(() => {
-      async function fetchReply() {
-        const promptMessage =
-          chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
-        const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
-        var _chatHistory = [...remHistory];
-  
-        if (!promptMessage || !promptMessage?.userMessage) {
-          setLoadingResponse(false);
-          return false;
-        }
-  
-        const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-        const chatResult = await Workspace.sendChat(
-          {"userId": workspace.name, "chatId": workspace.slug, "text":promptMessage.userMessage},
-          googleAuthToken
-        );
-        console.log(chatResult)
-        // const reader = chatResult.body
-        //   .pipeThrough(new TextDecoderStream())
-        //   .getReader()
-        // while (true) {
-        //   const { value, done } = await reader.read();
-        //   if (done) break;
-  
-        //   console.log('Received: ', value);
-  
-          // message = message + " " + value;
-          // chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-          // chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
-          // chatResultHeaders['type'] = chatResult.headers.get("type");
-          // chatResultHeaders['close'] = done;
-  
-        //   handleChat(
-        //     chatResultHeaders,
-        //     message,
-        //     setLoadingResponse,
-        //     setChatHistory,
-        //     remHistory,
-        //     _chatHistory
-        //   );
-        // }
+export default function ChatHistory({ history = [] }) {
+  const replyRef = useRef(null);
 
-        handleChat(
-          chatResult,
-          setLoadingResponse,
-          setChatHistory,
-          remHistory,
-          _chatHistory
-        );
-      }
-      loadingResponse === true && fetchReply();
-    }, [loadingResponse, chatHistory, workspace]);
-  
-    function resetChat() {
-      if (chatHistory.length === 0) {
-        null
-      } else {
-        console.log('resetting')
-        window.localStorage.setItem('newChat', true)
-        location.reload()
-      }
+  useEffect(() => {
+    if (replyRef.current) {
+      setTimeout(() => {
+        replyRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 0);
     }
-  
+  }, [history]);
+
+  if (history.length === 0) {
     return (
-      <div
-        className="chatContainer"
-      >
-        <div className="flex flex-col h-full w-full flex">
-          {/* <PromptInput
-            message={message}
-            submit={handleSubmit}
-            onChange={handleMessageChange}
-            inputDisabled={loadingResponse}
-            buttonDisabled={loadingResponse}
-            onClick = {resetChat}
-          /> */}
+      <div className="flex flex-col h-[92%] md:mt-0 pb-5 w-full justify-center items-center">
+        <div className="w-fit flex items-center gap-x-2">
+          <p className="text-slate-400 text-3xl mb-5">DSTALLM</p>
         </div>
+        <p className="text-slate-400 text-sm">
+          Welcome to DSTALLM, an AI tool brought to you by Digital Hub that you can query and chat with.</p>
       </div>
     );
   }
+
+  return (
+    <div
+      className="h-[92%] pb-[100px] md:pt-[50px] md:pt-0 md:pb-5 mx-2 md:mx-0 overflow-y-scroll flex flex-col justify-start no-scroll"
+      id="chat-history"
+    >
+      {history.map((props, index) => {
+        const isLastMessage = index === history.length - 1;
+        if (props.role === "assistant" && props.animate) {
+          return (
+            <PromptReply
+              key={props.uuid}
+              ref={isLastMessage ? replyRef : null}
+              uuid={props.uuid}
+              reply={props.content}
+              pending={props.pending}
+              sources={props.sources}
+              error={props.error}
+              workspace={workspace}
+              closed={props.closed}
+            />
+          );
+        }
+
+        return (
+          <HistoricalMessage
+            key={index}
+            ref={isLastMessage ? replyRef : null}
+            message={props.content}
+            role={props.role}
+            workspace={workspace}
+            sources={props.sources}
+            error={props.error}
+          />
+        );
+      })}
+    </div>
+  );
+}
