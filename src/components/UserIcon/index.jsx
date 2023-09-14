@@ -1,27 +1,31 @@
-import React, { useRef, useEffect } from "react";
-import JAZZ from "@metamask/jazzicon";
 
-export default function Jazzicon({ size = 10, user }) {
-  
-  const divRef = useRef(null);
-  const seed = user?.uid
-    ? toPseudoRandomInteger(user.uid.toString())
-    : Math.floor(100000 + Math.random() * 900000);
-  const result = JAZZ(size, seed);
+import "../../styles/ChatBubble.css"
 
-  useEffect(() => {
-    if (!divRef || !divRef.current) return null;
+let firstName, lastName;
 
-    divRef.current.appendChild(result);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+const getInitials = (firstName) => {
+    return firstName.charAt(0).toUpperCase();
+};
 
-  return <div className="flex" ref={divRef} />;
+const user = window.localStorage.getItem("user");
+
+if (user) {
+    const nameArr = user.split(" ");
+    if (nameArr.length < 2) {
+        firstName = nameArr[0];
+    } else {
+        firstName = nameArr[0];
+    }
+} else {
+    firstName = "U";
 }
 
-function toPseudoRandomInteger(uidString = "") {
-  var numberArray = [uidString.length];
-  for (var i = 0; i < uidString.length; i++) {
-    numberArray[i] = uidString.charCodeAt(i);
-  }
-  return numberArray.reduce((a, b) => a + b, 0);
+export default function UserIcon() {
+    return (
+      <div className="user-icon">
+        <a className="user-icon-content" href="##" title={user}>
+            {getInitials(firstName)}
+        </a>
+      </div>
+    );
 }

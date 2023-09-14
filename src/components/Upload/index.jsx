@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import Workspace from "../../../../models/workspace";
-import paths from "../../../../utils/paths";
+import Workspace from "../../models/workspace";
+import paths from "../../utils/paths";
 import FileUploadProgress from "./FileUploadProgress";
 import { useDropzone } from "react-dropzone";
 import { v4 } from "uuid";
-import System from "../../../../models/system";
+import System from "../../models/system";
 import { Frown } from "react-feather";
-import showToast from "../../../../utils/toast";
+import showToast from "../../utils/toast";
 
 export default function UploadToWorkspace({ workspace, fileTypes }) {
   const [ready, setReady] = useState(null);

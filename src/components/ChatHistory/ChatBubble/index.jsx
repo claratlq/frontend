@@ -1,11 +1,11 @@
 import { forwardRef, memo } from "react";
 import { AlertTriangle , ThumbsUp, ThumbsDown} from "react-feather";
-import Jazzicon from "../../../../UserIcon";
-import renderMarkdown from "../../../../../utils/chat/markdown";
-import Citations from "../Citation";
-import Workspace from "../../../../../models/workspace";
+import renderMarkdown from "../../../utils/chat/markdown";
+import Workspace from "../../../models/workspace";
+import UserIcon from "../../UserIcon";
+import "../../../styles/ChatBubble.css"
 
-const thumbsUp = async (uuid, slug) => {
+const thumbsUp = async (uuid) => {
   const ratingJson = {
     response_id: uuid,
     rating: 1,
@@ -40,18 +40,18 @@ const thumbsDown = async (uuid) => {
 
 const PromptReply = forwardRef(
   (
-    { uuid, reply, pending, error, workspace, sources = [], closed = true },
+    { uuid, message, pending, role, error, closed = true },
     ref
   ) => {
-    if (!reply && !sources.length === 0 && !pending && !error) return null;
+    if (!message && !pending && !error) return null;
+
     if (pending) {
       return (
         <div
           ref={ref}
           className="chat__message flex justify-start mb-4 items-end"
         >
-          <Jazzicon size={30} user={{ uid: workspace.slug }} />
-          <div className="ml-2 pt-2 px-6 w-fit md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-t-2xl rounded-br-2xl rounded-bl-sm">
+          <div className="ml-2 pt-2 px-6 w-fit md:max-w-[75%] bg-slate-200 rounded-t-2xl rounded-br-2xl rounded-bl-sm">
             <span className={`inline-block p-2`}>
               <div className="dot-falling"></div>
             </span>
@@ -63,7 +63,6 @@ const PromptReply = forwardRef(
     if (error) {
       return (
         <div className="chat__message flex justify-start mb-4 items-center">
-          <Jazzicon size={30} user={{ uid: workspace.slug }} />
           <div className="ml-2 py-3 px-4 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-slate-100 ">
             <div className="bg-red-50 text-red-500 rounded-lg w-fit flex flex-col p-2">
               <span className={`inline-block`}>
@@ -77,15 +76,32 @@ const PromptReply = forwardRef(
       );
     }
 
+    if (role === "user") {
+      return (
+        <div key={uuid} ref={ref} className="user-query">
+          <div className="user-query-container">
+            <UserIcon/>
+            <div className="query-content">
+              <h2 className="query-text">
+                {message}
+              </h2>
+            </div>
+            
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div key={uuid} ref={ref} className="mb-4 flex justify-start items-end">
-        <Jazzicon size={30} user={{ uid: workspace.slug }} />
-        <div className="ml-2 py-3 px-4 overflow-x-scroll w-fit md:max-w-[75%] bg-orange-100 dark:bg-stone-700 rounded-t-2xl rounded-br-2xl rounded-bl-sm">
+      <div key={uuid} ref={ref} className="llm-reply">
+        <div className="llm-reply-container">
+          <div>
+            
+          </div>
           <span
-            className="whitespace-pre-line text-slate-800 dark:text-slate-200 flex flex-col gap-y-1 font-[500] md:font-semibold text-sm md:text-base"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(reply) }}
+            className="llm-reply-content"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(message) }}
           />
-          <Citations sources={sources} />
           <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
             <button
               onClick={() => thumbsUp(uuid)}

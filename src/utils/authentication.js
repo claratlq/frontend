@@ -9,7 +9,7 @@ function parseJwtPayload (token) {
 }
   
 const Authentication = {
-    checkGoogleAuth: async function (resp, authenticate) {
+    checkGoogleAuth: async function (resp) {
         if(isDev){
             const parsedCredentials = parseJwtPayload(resp.credential); 
             window.localStorage.setItem("user", parsedCredentials.name);

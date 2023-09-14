@@ -1,9 +1,10 @@
-import HistoricalMessage from "../WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage";
-import PromptReply from "../WorkspaceChat/ChatContainer/ChatHistory/PromptReply";
+import ChatBubble from "./ChatBubble";
 import { useEffect, useRef } from "react";
+import "../../styles/App.css"
 
 export default function ChatHistory({ history = [] }) {
   const replyRef = useRef(null);
+  console.log(history)
 
   useEffect(() => {
     if (replyRef.current) {
@@ -27,39 +28,42 @@ export default function ChatHistory({ history = [] }) {
 
   return (
     <div
-      className="h-[92%] pb-[100px] md:pt-[50px] md:pt-0 md:pb-5 mx-2 md:mx-0 overflow-y-scroll flex flex-col justify-start no-scroll"
+      className="chat-history h-[92%] md:mt-0 pb-5 w-full"
       id="chat-history"
     >
-      {history.map((props, index) => {
-        const isLastMessage = index === history.length - 1;
-        if (props.role === "assistant" && props.animate) {
+      <div className="chat-log-container">
+        {history.map((props, index) => {
+          const isLastMessage = index === history.length - 1;
+          if (props.role === "assistant" && props.animate) {
+            console.log(props)
+            return (
+              <ChatBubble
+                key={props.uuid}
+                ref={isLastMessage ? replyRef : null}
+                uuid={props.uuid}
+                message={props.content}
+                pending={props.pending}
+                role={props.role}
+                error={props.error}
+                closed={props.closed}
+              />
+            );
+          }
+
           return (
-            <PromptReply
-              key={props.uuid}
+            <ChatBubble
+              key={index}
               ref={isLastMessage ? replyRef : null}
               uuid={props.uuid}
-              reply={props.content}
-              pending={props.pending}
-              sources={props.sources}
+              message={props.content}
+              pending={false}
+              role={props.role}
               error={props.error}
-              workspace={workspace}
-              closed={props.closed}
+              closed={true}
             />
           );
-        }
-
-        return (
-          <HistoricalMessage
-            key={index}
-            ref={isLastMessage ? replyRef : null}
-            message={props.content}
-            role={props.role}
-            workspace={workspace}
-            sources={props.sources}
-            error={props.error}
-          />
-        );
-      })}
+        })}
+      </div>
     </div>
   );
 }

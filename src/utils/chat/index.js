@@ -9,7 +9,7 @@ export default function handleChat(
   _chatHistory
 ) {
   // const { uuid, type, sources = [], error, close } = chatResultHeader;
-  const { uuid, textResponse, type, sources = [], error, close } = chatResult;
+  const { uuid, textResponse, type, error, close } = chatResult;
   // const textResponse = message;
   if (type === "abort") {
     setLoadingResponse(false);
@@ -19,7 +19,6 @@ export default function handleChat(
         uuid,
         content: textResponse,
         role: "assistant",
-        sources,
         closed: true,
         error,
         animate: true,
@@ -29,7 +28,6 @@ export default function handleChat(
       uuid,
       content: textResponse,
       role: "assistant",
-      sources,
       closed: true,
       error,
       animate: true,
@@ -42,7 +40,6 @@ export default function handleChat(
         uuid,
         content: textResponse,
         role: "assistant",
-        sources,
         closed: close,
         error,
         animate: true,
@@ -52,17 +49,9 @@ export default function handleChat(
       uuid,
       content: textResponse,
       role: "assistant",
-      sources,
       closed: close,
       error,
       animate: true,
     });
   }
-}
-
-export function chatPrompt(workspace) {
-  return (
-    workspace?.openAiPrompt ??
-    "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed."
-  );
 }

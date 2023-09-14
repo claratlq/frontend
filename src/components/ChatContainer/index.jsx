@@ -26,8 +26,7 @@ export default function ChatContainer() {
 
     useEffect(() => {
       async function fetchReply() {
-        const promptMessage =
-          chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+        const promptMessage = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
         const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
         var _chatHistory = [...remHistory];
         // var message = "";
@@ -52,6 +51,8 @@ export default function ChatContainer() {
           remHistory,
           _chatHistory
         );
+        console.log("done handling chat")
+        console.log(chatHistory)
 
         // const reader = chatResult.body
         //   .pipeThrough(new TextDecoderStream())
