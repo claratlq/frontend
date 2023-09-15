@@ -3,7 +3,7 @@ services:
   frontend-proxy:
     container_name: frontend-proxy
     image: haproxy:2.8
-    # image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy24:v2.4.24 # harden
+    # image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31 # harden
     ports:
       - "8080:8080"
     volumes:
