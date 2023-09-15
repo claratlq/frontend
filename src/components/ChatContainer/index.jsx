@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChatContainer() {
-    const classes = useStyles();
-    const [acknowledgedTerms, setAcknowledgedTerms] = useState(window.localStorage.getItem("acknowledgedTerms")? true: false);
     const [message, setMessage] = useState("");
     const [loadingResponse, setLoadingResponse] = useState(false);
     const [chatHistory, setChatHistory] = useState([]);
@@ -131,17 +129,7 @@ export default function ChatContainer() {
 
     return (
       <div className="chat-container">
-        if (!acknowledgedTerms) {
-          <Backdrop
-            className={classes.backdrop}
-            open={!acknowledgedTerms}
-            onClick={() => {
-              setAcknowledgedTerms(true);
-              window.localStorage.setItem("acknowledgedTerms", true)
-            }}
-          > 
-          </Backdrop>
-        }
+        <AcknowledgeTermsModal/>
         <ChatHistory
             history = {chatHistory}
         />
@@ -155,4 +143,24 @@ export default function ChatContainer() {
         />
       </div>
     );
+}
+
+function AcknowledgeTermsModal() {
+  const classes = useStyles();
+  const [acknowledgedTerms, setAcknowledgedTerms] = useState(window.localStorage.getItem("acknowledgedTerms")? true: false);
+
+  if (!acknowledgedTerms) {
+    return(
+      <Backdrop
+        className={classes.backdrop}
+        open={!acknowledgedTerms}
+        onClick={() => {
+          setAcknowledgedTerms(true);
+          window.localStorage.setItem("acknowledgedTerms", true)
+        }}
+      > 
+      </Backdrop>
+    )
+  }
+  return null;
 }
