@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
 import ChatHistory from "../ChatHistory";
 import PromptInput from "../PromptInput";
 import LoadingChat from "../LoadingChat";
@@ -6,7 +9,16 @@ import Workspace from "../../models/workspace";
 import handleChat from "../../utils/chat";
 import "../../styles/App.css"
 
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    color: "#fff",
+    zIndex: theme.zIndex.drawer + 1,
+  },
+}));
+
 export default function ChatContainer() {
+    const classes = useStyles();
+    const [acknowledgedTerms, setAcknowledgedTerms] = useState(window.localStorage.getItem("acknowledgedTerms")? true: false);
     const [message, setMessage] = useState("");
     const [loadingResponse, setLoadingResponse] = useState(false);
     const [chatHistory, setChatHistory] = useState([]);
@@ -51,8 +63,6 @@ export default function ChatContainer() {
           remHistory,
           _chatHistory
         );
-        console.log("done handling chat")
-        console.log(chatHistory)
 
         // const reader = chatResult.body
         //   .pipeThrough(new TextDecoderStream())
@@ -121,6 +131,17 @@ export default function ChatContainer() {
 
     return (
       <div className="chat-container">
+        if (!acknowledgedTerms) {
+          <Backdrop
+            className={classes.backdrop}
+            open={!acknowledgedTerms}
+            onClick={() => {
+              setAcknowledgedTerms(true);
+              window.localStorage.setItem("acknowledgedTerms", true)
+            }}
+          > 
+          </Backdrop>
+        }
         <ChatHistory
             history = {chatHistory}
         />

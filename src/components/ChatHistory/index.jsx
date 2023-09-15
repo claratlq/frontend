@@ -4,7 +4,6 @@ import "../../styles/App.css"
 
 export default function ChatHistory({ history = [] }) {
   const replyRef = useRef(null);
-  console.log(history)
 
   useEffect(() => {
     if (replyRef.current) {
@@ -18,10 +17,10 @@ export default function ChatHistory({ history = [] }) {
     return (
       <div className="flex flex-col h-[92%] md:mt-0 pb-5 w-full justify-center items-center">
         <div className="w-fit flex items-center gap-x-2">
-          <p className="text-slate-400 text-3xl mb-5">DSTALLM</p>
+          <p className="text-slate-400 text-3xl mb-5">AIDE-LLM</p>
         </div>
         <p className="text-slate-400 text-sm">
-          Welcome to DSTALLM, an AI tool brought to you by Digital Hub that you can query and chat with.</p>
+          Welcome to AIDE-LLM, an AI tool brought to you by Digital Hub that you can query and chat with.</p>
       </div>
     );
   }
@@ -35,7 +34,6 @@ export default function ChatHistory({ history = [] }) {
         {history.map((props, index) => {
           const isLastMessage = index === history.length - 1;
           if (props.role === "assistant" && props.animate) {
-            console.log(props)
             return (
               <ChatBubble
                 key={props.uuid}

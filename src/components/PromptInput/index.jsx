@@ -48,7 +48,7 @@ export default function PromptInput({
             onKeyDown={captureEnter}
             onChange={onChange}
             required={true}
-            maxLength={240}
+            maxLength={512}
             disabled={inputDisabled}
             onFocus={() => setFocused(true)}
             onBlur={(e) => {
@@ -97,7 +97,7 @@ const Disclaimer = memo(() => {
     <div className="flex flex-col md:flex-row w-full justify-center items-center gap-2 mb-2 px-4 mx:px-0">
       <p className="text-slate-500 text-xs text-center">
         Responses from system may produce inaccurate or invalid responses - use
-        with caution.
+        with caution. For any issues please contact APILI1@dsta.gov.sg
       </p>
     </div>
   );
