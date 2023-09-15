@@ -10,7 +10,10 @@ dns.setDefaultResultOrder('verbatim')
 export default defineConfig({
   server: {
     port: 3000,
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    watch: {
+      usePolling: true
+    }
   },
   define: {
     'process.env': process.env
