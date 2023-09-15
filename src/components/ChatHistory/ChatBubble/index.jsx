@@ -95,25 +95,29 @@ const PromptReply = forwardRef(
     return (
       <div key={uuid} ref={ref} className="llm-reply">
         <div className="llm-reply-container">
-          <div>
-            
+          <div className="llm-reply-content">
+            <div className="llm-icon">
+              <img src="../../../public/llm.svg" alt="LLM SVG" className="llm-icon-content"/>
+            </div>
+            <span
+              className="llm-reply-text"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(message) }}
+            />
           </div>
-          <span
-            className="llm-reply-content"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(message) }}
-          />
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4 md:justify-end">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-2 md:justify-end">
             <button
+              className="rate-button"
               onClick={() => thumbsUp(uuid)}
               type="button"
               >
-                <ThumbsUp className="h-3 w-3"/>
+                <ThumbsUp className="h-5 w-5"/>
               </button>
               <button
+              className="rate-button"
               onClick={() => thumbsDown(uuid)}
               type="button"
               >
-                <ThumbsDown className="h-3 w-3"/>
+                <ThumbsDown className="h-5 w-5"/>
               </button>
           </div>
         </div>

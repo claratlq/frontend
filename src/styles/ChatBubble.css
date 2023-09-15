@@ -31,6 +31,19 @@
     white-space: pre-wrap;
     word-break: break-word;
 }
+.user-icon {
+    color: #1f1f1f;
+    display: block;
+    margin: 20px 0 16px 4px;
+    margin-inline-end: 10px;
+}
+.user-icon-content {
+    color: #1f1f1f;
+    background-color: aquamarine;
+    font-size: 20px;
+    padding: 8px 16px;
+    border-radius: 12px;
+}
 .llm-reply {
     color: rgb(243 246 252 / 0%);
 }
@@ -44,25 +57,43 @@
     position: relative;
 }
 .llm-reply-content {
+    display: flex;
+    flex-direction: row;
+    row-gap: 4px;
+}
+.llm-reply-text {
     white-space: pre-line;
     color: #1f1f1f;
-    display: flex;
-    flex-direction: column;
+    display: block;
     row-gap: 4px;
     font-weight: 500;
     font-size: 16px;
     font-family: "Google Sans","Helvetica Neue","sans-serif";
+    justify-content: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    padding-left: 10px;
+    margin-top: 20px;
 }
-.user-icon {
+.llm-icon {
     color: #1f1f1f;
     display: block;
     margin: 20px 0 16px 4px;
     margin-inline-end: 10px;
 }
-.user-icon-content {
+.llm-icon-content {
     color: #1f1f1f;
-    background-color: aquamarine;
-    font-size: 20px;
-    padding: 8px 16px;
+    background-color: orange;
+    padding: 8px;
     border-radius: 12px;
+    display: flex;
+    min-width: 40px;
+}
+.rate-button {
+    background-color: #FFF;
+    border-radius: 12px;
+    border-color: #c4c7c5;
+    border-width: 1.5px;
+    color: #1f1f1f;
+    padding: 8px 10px;
 }
