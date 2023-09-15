@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import "../../styles/App.css"
+import "../Header/headerStyles.css"
 
 let firstName, lastName;
 
@@ -26,6 +25,10 @@ if (!!user) {
 export default function ChatHeader() {
     return (
       <div className="chat-header">
+        <div className="left-container">
+            <div className="logo"></div>
+            <p className="AIDE">AIDE</p>
+        </div>
         <a className="flex items-center py-4 px-4 mt-2 mr-4 rounded-lg bg-gray-200 hover:bg-slate-200" href="##" title={user}>
             {getInitials(firstName,lastName)}
         </a>
