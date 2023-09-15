@@ -1,0 +1,44 @@
+version: '3'
+services:
+  frontend-proxy:
+    container_name: frontend-proxy
+    image: haproxy:2.8
+    # image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy24:v2.4.24 # harden
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
+    networks:
+      - frontend-network
+      - host-network
+    depends_on:
+      - frontend
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    networks:
+      - frontend-network
+
+  frontend-cadvisor:
+    container_name: frontend-cadvisor
+    image: google/cadvisor:latest
+    command: --port=9090
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - frontend-network
+      - monitoring-network
+
+networks:
+  host-network:
+    name: host-network
+  frontend-network:
+    name: frontend-network
+  monitoring-network:
+    name: monitoring-network

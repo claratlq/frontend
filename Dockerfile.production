@@ -1,0 +1,7 @@
+FROM registry1.dso.mil/ironbank/opensource/nodejs/debian/nodejs:18.17.1 as build
+
+WORKDIR /llm-frontend
+COPY --chown=node:0 . /llm-frontend
+RUN npm install ci && npm run build
+
+ENTRYPOINT ["npx", "vite", "serve", "--port", "3000"]
