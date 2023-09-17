@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from "@material-ui/core/Backdrop";
 import ChatHistory from "../ChatHistory";
 import PromptInput from "../PromptInput";
 import LoadingChat from "../LoadingChat";
 import Workspace from "../../models/workspace";
 import handleChat from "../../utils/chat";
+import AcknowledgeTermsModal from "../ChatModals/AcknowledgeTerms"
 import "../../styles/App.css"
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    color: "#fff",
-    zIndex: theme.zIndex.drawer + 1,
-  },
-}));
 
 export default function ChatContainer() {
     const [message, setMessage] = useState("");
@@ -145,22 +136,3 @@ export default function ChatContainer() {
     );
 }
 
-function AcknowledgeTermsModal() {
-  const classes = useStyles();
-  const [acknowledgedTerms, setAcknowledgedTerms] = useState(window.localStorage.getItem("acknowledgedTerms")? true: false);
-
-  if (!acknowledgedTerms) {
-    return(
-      <Backdrop
-        className={classes.backdrop}
-        open={!acknowledgedTerms}
-        onClick={() => {
-          setAcknowledgedTerms(true);
-          window.localStorage.setItem("acknowledgedTerms", true)
-        }}
-      > 
-      </Backdrop>
-    )
-  }
-  return null;
-}
