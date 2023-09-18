@@ -123,6 +123,7 @@ export default function ChatContainer() {
         <AcknowledgeTermsModal/>
         <ChatHistory
             history = {chatHistory}
+            setMessage={setMessage}
         />
         <PromptInput
           message={message}

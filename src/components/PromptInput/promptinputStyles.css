@@ -16,6 +16,7 @@
 }
 
 .text-input{
+    background-color: white;
     display: flex;
     flex-grow: 1;
     height: 45px;
