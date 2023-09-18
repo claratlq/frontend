@@ -8,7 +8,7 @@
     justify-content: center;
     background-color: white;
 }
-.chat-container {
+/* .chat-container {
     margin: 24px 56px 24px;
     border-radius: 24px;
     background-color: #f3f6fc;
@@ -16,7 +16,7 @@
     flex-direction: column;
     flex-grow: 1;
     flex-shrink: 1;
-}
+} */
 .loading-container {
     margin: 24px 56px 24px;
     border-radius: 24px;
@@ -33,12 +33,12 @@
     display: flex;
     justify-content: flex-start;
 }
-.chat-header {
+/* .chat-header {
     padding: 4px;
     height: fit-content;
     display: flex;
     justify-content: flex-end;
-}
+} */
 .chat-history {
     align-items: center;
     color: rgb(243 246 252 / 0%);

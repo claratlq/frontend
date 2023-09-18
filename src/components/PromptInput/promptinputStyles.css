@@ -1,0 +1,56 @@
+.prompt-input{
+    margin: 8px 20vw 32px 20vw ;
+    position:absolute;
+    bottom: 0px;
+}
+
+.prompt-container{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    width: 60vw;
+    font: 500 14px "Open Sans";
+    color: var(--black);
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.text-input{
+    background-color: white;
+    display: flex;
+    flex-grow: 1;
+    height: 45px;
+    min-height: 45px;
+    resize: none;
+    padding: 15px 20px;
+    text-align: left;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.text-input:focus{
+    outline: none;
+}
+
+.pdf-upload{
+    display: flex;
+    border: 2px solid var(--button_border);
+    padding: 5px 5px 5px 6px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.disclaimer-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+}
+
+.msg-container{
+    font: 500 12px 'Open Sans';
+    color: var(--medium_gray);
+    margin-left:8px;
+}

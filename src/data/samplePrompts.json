@@ -1,0 +1,26 @@
+[
+    {
+      "key": 1,
+      "header": "Write an email to announce a new campaign in DSTA",
+      "paragraph": "and make it sound informative and exciting",
+      "prompt": "Help me draft an email to announce a new campaign. The email should be informative and exciting, including key details such as the time, data and venue of the event."
+    },
+    {
+      "key": 2,
+      "header": "Brainstorm key strategies",
+      "paragraph": "for enhancing national defense",
+      "prompt": "Help me brainstorm some key strategies for enhancing the national defense of Singapore."
+    },
+    {
+      "key": 3,
+      "header": "Recommend me a running route around DSTA",
+      "paragraph": "that is both scenic and safe",
+      "prompt": "Recommend me a scenic and safe running route around the Telok Blangah area."
+    },
+    {
+      "key": 4,
+      "header": "Explain to me the latest slangs",
+      "paragraph": "and how to use them",
+      "prompt": "What does the slang 'slay' means and how can I apply it in normal conversation?"
+    }
+]

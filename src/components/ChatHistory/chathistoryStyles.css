@@ -1,0 +1,53 @@
+.welcome-container{
+    width: 60vw;
+    margin: 40px 20vw;
+}
+.header-text{
+    font: 400 36px "Open Sans";
+    color: var(--black)
+}
+.para-text{
+    font: 400 16px "Open Sans";
+    margin: 24px 4px;
+}
+
+.sample-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start
+}
+
+.data-pair{
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sample-prompt{
+    width:calc(30vw - 8px);
+    background-color: var(--white);
+    border-radius: 10px;
+    margin: 8px;
+}
+
+.sample-prompt:hover{
+    background-color: var(--hover_button_light_gray);
+    cursor: pointer;
+}
+
+.header-prompt{
+    font: 700 14px "Open Sans";
+    color: var(--dark_gray);
+    padding: 16px;
+    padding-bottom: 4px;
+}
+
+.para-prompt{
+    font: 500 14px "Open Sans";
+    color: var(--dark_gray);
+    padding: 0 16px;
+    padding-bottom: 16px;
+}

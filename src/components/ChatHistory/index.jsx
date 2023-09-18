@@ -1,9 +1,24 @@
 import ChatBubble from "./ChatBubble";
-import { useEffect, useRef } from "react";
-import "../../styles/App.css"
+import { useEffect, useRef, useState } from "react";
+import "../ChatHistory/chathistoryStyles.css"
+import SamplePromptsJson from "../../data/SamplePrompts.json"
 
-export default function ChatHistory({ history = [] }) {
+export default function ChatHistory({ history = [], setMessage }) {
   const replyRef = useRef(null);
+  const [promptPairs, setPromptPairs] = useState([])
+  const [rendered, setRendered] = useState(false)
+  
+  useEffect(() => {
+    var existingData = promptPairs
+    for (let i = 0; i < SamplePromptsJson.length; i += 2) {
+      if (promptPairs.length <2) {
+        const pair = [SamplePromptsJson[i], SamplePromptsJson[i + 1]];
+        existingData.push(pair)
+      }
+    }
+    setPromptPairs(existingData);
+    setRendered(true)
+  }, [])
 
   useEffect(() => {
     if (replyRef.current) {
@@ -13,14 +28,30 @@ export default function ChatHistory({ history = [] }) {
     }
   }, [history]);
 
-  if (history.length === 0) {
+  const inputPrompt = (key) => {
+    const promptMessage = SamplePromptsJson[key-1]['prompt']
+    setMessage(promptMessage)
+  }
+
+  const renderSamplePrompts = (entry) => (
+    <div className="sample-prompt" key={entry.key} onClick={() => inputPrompt(entry.key)}>
+      <p className="header-prompt">{entry.header}</p>
+      <p className="para-prompt">{entry.paragraph}</p>
+    </div>
+  )
+
+  if (history.length === 0 && rendered) {
     return (
-      <div className="flex flex-col h-[92%] md:mt-0 pb-5 w-full justify-center items-center">
-        <div className="w-fit flex items-center gap-x-2">
-          <p className="text-slate-400 text-3xl mb-5">AIDE-LLM</p>
+      <div className="welcome-container">
+        <p className="header-text">Welcome to AIDE, your work aid on eHab!</p>
+        <p className="para-text">Try some sample prompts to get you started:</p>
+        <div className="sample-container">
+          {promptPairs.map((pair, index) => (
+          <div key={index} className="data-pair">
+            {pair.map(renderSamplePrompts)}
+          </div>
+          ))}
         </div>
-        <p className="text-slate-400 text-sm">
-          Welcome to AIDE-LLM, an AI tool brought to you by Digital Hub that you can query and chat with.</p>
       </div>
     );
   }

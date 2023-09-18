@@ -6,6 +6,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    padding: 1.5vh 0;
+    z-index: 1;
 }
 
 .left-container{
@@ -15,17 +18,33 @@
     align-items: center;
 }
 
-.logo{
-    width:30px;
-    height:30px;
+.AIDE-logo{
+    width: 24px;
+    height:24px;
     object-fit: cover;
-    background-color: var(--medium_gray);
+    background-color: var(--inactive_button);
     border-radius: 50%;
-    margin: 0 0.75vw 0 1.5vw;
+    margin: 0 0.5vw 0 1.5vw;
 }
 
 .AIDE{
     color: var(--dark_blue);
     font-family: "Varela Round";
-    font-size: 1.4em;
+    font-size: 22px;
+    line-height: 22px;
+}
+
+.initials-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--active_button);
+    width:32px;
+    height:32px;
+    object-fit: contain;
+    margin: 0 1.5vw;
+    color: var(--white);
+    font: 700 12px 'Open Sans';
+    border-radius: 50%;
+    letter-spacing: 1px;
 }
