@@ -5,7 +5,7 @@ import LoadingChat from "../LoadingChat";
 import Workspace from "../../models/workspace";
 import handleChat from "../../utils/chat";
 import AcknowledgeTermsModal from "../ChatModals/AcknowledgeTerms"
-import "../../styles/App.css"
+import "../ChatContainer/chatcontainerStyles.css"
 
 export default function ChatContainer() {
     const [message, setMessage] = useState("");

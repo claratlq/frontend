@@ -1,0 +1,12 @@
+.welcome-container{
+    width: 60vw;
+    margin: 40px 20vw;
+}
+.header-text{
+    font: 400 36px "open Sans";
+    color: var(--black)
+}
+.para-text{
+    font: 400 16px "open Sans";
+    margin: 24px 4px;
+}

@@ -1,6 +1,7 @@
 import ChatBubble from "./ChatBubble";
 import { useEffect, useRef } from "react";
-import "../../styles/App.css"
+import "../ChatHistory/chathistoryStyles.css"
+import SamplePromptsJson from "../../data/SamplePrompts.json"
 
 export default function ChatHistory({ history = [] }) {
   const replyRef = useRef(null);
@@ -13,14 +14,25 @@ export default function ChatHistory({ history = [] }) {
     }
   }, [history]);
 
+  const renderSamplePrompts = (entry) => (
+    <div className="sample-prompt" key={entry.key}>
+      <p className="header-prompt">{entry.header}</p>
+      <p className="para-prompt">{entry.paragraph}</p>
+    </div>
+  )
+
   if (history.length === 0) {
     return (
-      <div className="flex flex-col h-[92%] md:mt-0 pb-5 w-full justify-center items-center">
-        <div className="w-fit flex items-center gap-x-2">
-          <p className="text-slate-400 text-3xl mb-5">AIDE-LLM</p>
+      <div className="welcome-container">
+        <p className="header-text">Welcome to AIDE, your work aid on eHab!</p>
+        <p className="para-text">Try some sample prompts to get you started:</p>
+
+        <div className="sample-container">
+          {SamplePromptsJson.map((pair, index) => (
+          <div key={index} className="data-pair">
+            {renderSamplePrompts(pair)}
+          </div>))}
         </div>
-        <p className="text-slate-400 text-sm">
-          Welcome to AIDE-LLM, an AI tool brought to you by Digital Hub that you can query and chat with.</p>
       </div>
     );
   }
