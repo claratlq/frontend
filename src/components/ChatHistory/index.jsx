@@ -1,12 +1,13 @@
 import ChatBubble from "./ChatBubble";
 import { useEffect, useRef, useState } from "react";
 import "../ChatHistory/chathistoryStyles.css"
-import SamplePromptsJson from "../../data/SamplePrompts.json"
+import SamplePromptsJson from "../../data/samplePrompts.json"
 
 export default function ChatHistory({ history = [], setMessage }) {
   const replyRef = useRef(null);
   const [promptPairs, setPromptPairs] = useState([])
   const [rendered, setRendered] = useState(false)
+  console.log(history)
   
   useEffect(() => {
     var existingData = promptPairs
