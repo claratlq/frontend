@@ -17,16 +17,7 @@
     flex-grow: 1;
     flex-shrink: 1;
 } */
-.loading-container {
-    margin: 24px 56px 24px;
-    border-radius: 24px;
-    background-color: #f3f6fc;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    flex-shrink: 1;
-    justify-content: center;
-}
+
 .login-header {
     padding: 4px;
     height: fit-content;
