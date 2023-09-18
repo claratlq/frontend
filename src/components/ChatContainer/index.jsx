@@ -33,8 +33,8 @@ export default function ChatContainer() {
         const promptMessage = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
         const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
         var _chatHistory = [...remHistory];
-        // var message = "";
-        // var chatResultHeaders = {};
+        var message = "";
+        var chatResultHeaders = {};
   
         if (!promptMessage || !promptMessage?.userMessage) {
           setLoadingResponse(false);
@@ -42,44 +42,78 @@ export default function ChatContainer() {
         }
   
         const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-        const chatResult = await Workspace.sendChat(
-          {"userId": userID, "chatId": chatID, "text":promptMessage.userMessage},
+        const chatResult = await Workspace.streamingSendChat(
+          {"chatId": chatID, "text":promptMessage.userMessage},
           googleAuthToken
         );
         console.log(chatResult)
 
-        handleChat(
-          chatResult,
-          setLoadingResponse,
-          setChatHistory,
-          remHistory,
-          _chatHistory
-        );
+        // handleChat(
+        //   chatResult,
+        //   setLoadingResponse,
+        //   setChatHistory,
+        //   remHistory,
+        //   _chatHistory
+        // );
+        if (chatResult.status === 200) {
+          const reader = chatResult.body
+            .pipeThrough(new TextDecoderStream())
+            .getReader()
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+    
+            console.log('Received: ', value);
+    
+            message = message + " " + value;
+            chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+            chatResultHeaders['error'] = null;
+            chatResultHeaders['type'] = chatResult.headers.get("type");
+            chatResultHeaders['close'] = done;
+    
+            handleChat(
+              chatResultHeaders,
+              message,
+              setLoadingResponse,
+              setChatHistory,
+              remHistory,
+              _chatHistory
+            );
+          }
+        } else if (chatResult.status === 403) {
+          message = "";
+          chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+          chatResultHeaders['error'] = "Your session has timed out, please reauthenticate again.";
+          chatResultHeaders['type'] = "abort";
+          chatResultHeaders['close'] = true;
 
-        // const reader = chatResult.body
-        //   .pipeThrough(new TextDecoderStream())
-        //   .getReader()
-        // while (true) {
-        //   const { value, done } = await reader.read();
-        //   if (done) break;
-  
-        //   console.log('Received: ', value);
-  
-          // message = message + " " + value;
-          // chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-          // chatResultHeaders['error'] = chatResult.headers.get("error")==="false" ? false:true;
-          // chatResultHeaders['type'] = chatResult.headers.get("type");
-          // chatResultHeaders['close'] = done;
-  
-        //   handleChat(
-        //     chatResultHeaders,
-        //     message,
-        //     setLoadingResponse,
-        //     setChatHistory,
-        //     remHistory,
-        //     _chatHistory
-        //   );
-        // }
+          handleChat(
+            chatResultHeaders,
+            message,
+            setLoadingResponse,
+            setChatHistory,
+            remHistory,
+            _chatHistory
+          );
+        } else {
+          message = "";
+          chatResultHeaders['uuid'] = chatResult.headers.get("id");
+          chatResultHeaders['error'] = chatResult.headers.get("error");
+          chatResultHeaders['type'] = chatResult.headers.get("type");
+          chatResultHeaders['close'] = true;
+
+          console.log(chatResultHeaders)
+
+          handleChat(
+            chatResultHeaders,
+            message,
+            setLoadingResponse,
+            setChatHistory,
+            remHistory,
+            _chatHistory
+          );
+        }
+        
       }
       loadingResponse === true && fetchReply();
     }, [loadingResponse, chatHistory, userID, chatID]);
