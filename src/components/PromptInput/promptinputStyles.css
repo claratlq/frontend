@@ -67,6 +67,10 @@
     opacity: 0.5;
 }
 
+.pdf-upload-disabled{
+    cursor: default;
+}
+
 .disclaimer-container{
     display: flex;
     flex-direction: row;

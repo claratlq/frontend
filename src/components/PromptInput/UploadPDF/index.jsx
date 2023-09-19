@@ -3,34 +3,57 @@ import "../../PromptInput/promptinputStyles.css"
 import WarningModals from "../../WarningModals"
 import Workspace from "../../../models/workspace";
 
-export default function UploadPDF({documents, setDocuments, setDocumentStatus}) {
+export default function UploadPDF({history, disabled, reset, documents, setDocuments, setDocumentStatus}) {
     
     const [errorMessage, setErrorMessage] = useState(null)
+    const [clearChat, setClearChat] = useState(false)
 
-    useEffect(() => {
-        const inputFile = document.getElementById('uploadPDFinput')
+    function updatingButton(disabled) {
         const pdfButton = document.getElementById("uploadPDFbutton")
-        
-        if (documents.length === 0) {
-            if (pdfButton.classList.contains('pdf-upload-disabled')) { 
-                pdfButton.classList.remove('pdf-upload-disabled') //changing styles
-            }
-            pdfButton.classList.add('pdf-upload-enabled') 
 
-            pdfButton.disabled = false //enable button
-            inputFile.value = null //remove file name such that can reupload same file
-            //event listeners
-            pdfButton.addEventListener('click', openDialog); 
-            inputFile.addEventListener('change', uploadFile)
-        } else {
+        if (disabled) {
             if (pdfButton.classList.contains('pdf-upload-enabled')) {
                 pdfButton.classList.remove('pdf-upload-enabled') //changing styles
             }
             pdfButton.classList.add('pdf-upload-disabled') 
             pdfButton.replaceWith(pdfButton.cloneNode(true)); //reset event listeners on buttons
             pdfButton.disabled = true; //disable button
+        } else {
+            if (pdfButton.classList.contains('pdf-upload-disabled')) { 
+                pdfButton.classList.remove('pdf-upload-disabled') //changing styles
+            }
+            pdfButton.classList.add('pdf-upload-enabled') 
+            pdfButton.disabled = false //enable button
+        }
+
+    }
+
+
+    useEffect(() => {
+        const inputFile = document.getElementById('uploadPDFinput')
+        const pdfButton = document.getElementById("uploadPDFbutton")
+        
+        if (documents.length === 0) {
+            updatingButton(false)
+            inputFile.value = null //remove file name such that can reupload same file
+           
+            //event listeners
+            inputFile.addEventListener('change', uploadFile);
+            pdfButton.addEventListener('click', openDialog); 
+        } else {
+            updatingButton(true)
         }
     }, [documents])
+
+
+    useEffect(() => {
+        if (!disabled) {
+            updatingButton(disabled)
+            document.getElementById("uploadPDFbutton").addEventListener('click', openDialog); 
+        } else {
+            updatingButton(disabled)
+        }
+    }, [disabled])
 
 
     useEffect(() => {
@@ -41,7 +64,12 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
 
 
     function openDialog() {
-        document.getElementById('uploadPDFinput').click()
+        console.log('clicked')
+        if (history.length === 0) {
+            document.getElementById('uploadPDFinput').click()
+        } else {
+            setClearChat(true)
+        }
     }
 
     function uploadFile() {
@@ -70,12 +98,12 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
         //     setDocumentStatus('Error')
         //     console.log("PDF Upload Failed", response.json().error)
         // }
-        setTimeout(setDocumentStatus('Error'), 5000)
+        setTimeout(setDocumentStatus('Success'), 5000)
     }
 
     return (
         <>
-            <WarningModals errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+            <WarningModals display={clearChat} setDisplay={setClearChat} pdf={true} reset={reset} error={true} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
             <div title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data">
                 <input type="file" id="uploadPDFinput" name="filename" accept="application/pdf" hidden/>
                 <button  type="button" id="uploadPDFbutton">

@@ -12,9 +12,15 @@ export default function PromptInput({
   buttonDisabled,
   documents,
   setDocuments,
+  history,
+  resetChat,
+  documentStatus,
+  setDocumentStatus
 }) {
 
-  const [documentStatus, setDocumentStatus] = useState(null)
+  console.log(history)
+
+  // const [documentStatus, setDocumentStatus] = useState(null)
   const formRef = useRef(null);
   const promptRef = useRef(null)
   const [_, setFocused] = useState(false);
@@ -23,9 +29,11 @@ export default function PromptInput({
     submit(e);
   };
   const captureEnter = (event) => {
-    if (event.keyCode == 13) {
-      if (!event.shiftKey) {
-        submit(event);
+    if (documentStatus != "Error") {
+      if (event.keyCode == 13) {
+        if (!event.shiftKey) {
+          submit(event);
+        }
       }
     }
   };
@@ -71,7 +79,7 @@ export default function PromptInput({
         onSubmit={handleSubmit}
       >
         <div className="prompt-container">
-          <UploadPDF documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
+          <UploadPDF reset={resetChat} history={history} disabled={buttonDisabled} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
           <div className="prompt-box">
             <textarea
               onKeyDown={captureEnter}
@@ -96,8 +104,8 @@ export default function PromptInput({
             title="Submit"
             ref={formRef}
             type="submit"
-            disabled={buttonDisabled}
             id="submitBtn"
+            disabled={buttonDisabled}
           >
               <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled ? `var(--inactive_button)` : `var(--active_button)`}/>
