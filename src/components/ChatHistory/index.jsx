@@ -7,12 +7,12 @@ export default function ChatHistory({ history = [], setMessage }) {
   const replyRef = useRef(null);
   const [promptPairs, setPromptPairs] = useState([])
   const [rendered, setRendered] = useState(false)
-  // console.log(history)
-  
+  console.log(history)
+
   useEffect(() => {
     var existingData = promptPairs
     for (let i = 0; i < SamplePromptsJson.length; i += 2) {
-      if (promptPairs.length <2) {
+      if (promptPairs.length < 2) {
         const pair = [SamplePromptsJson[i], SamplePromptsJson[i + 1]];
         existingData.push(pair)
       }
@@ -30,7 +30,7 @@ export default function ChatHistory({ history = [], setMessage }) {
   }, [history]);
 
   const inputPrompt = (key) => {
-    const promptMessage = SamplePromptsJson[key-1]['prompt']
+    const promptMessage = SamplePromptsJson[key - 1]['prompt']
     setMessage(promptMessage)
   }
 
@@ -47,9 +47,9 @@ export default function ChatHistory({ history = [], setMessage }) {
         <p className="para-text">Try some sample prompts to get you started:</p>
         <div className="sample-container">
           {promptPairs.map((pair, index) => (
-          <div key={index} className="data-pair">
-            {pair.map(renderSamplePrompts)}
-          </div>
+            <div key={index} className="data-pair">
+              {pair.map(renderSamplePrompts)}
+            </div>
           ))}
         </div>
       </div>

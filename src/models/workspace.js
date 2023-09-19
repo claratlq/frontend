@@ -37,18 +37,17 @@ const Workspace = {
       .then((res) => {
         if (res.status === 403) {
           reAuthenticate()
-          return []
+          return { "textHistory": [] }
         } else if (res.status === 200) {
-          const { chatId, textHistory } = res.json()
-          return (textHistory || [])
+          return res.json()
         } else {
           console.log('error', res)
-          return []
+          return { "textHistory": [] }
         }
       })
       .catch((e) => {
         console.log(e)
-        return []
+        return { "textHistory": [] }
       }
       );
     return history;

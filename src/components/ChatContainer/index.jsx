@@ -54,7 +54,7 @@ export default function ChatContainer() {
     async function getHistory() {
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
       const textHistory = await Workspace.chatHistory(googleAuthToken);
-      setChatHistory(textHistory);
+      setChatHistory(textHistory.textHistory);
       setLoadingHistory(false);
     }
     getHistory();
