@@ -194,6 +194,7 @@ export default function ChatContainer() {
     setDisplay(false)
     console.log('resetting')
     window.localStorage.setItem('newChat', true)
+    setChatHistory([])
     location.reload()
   }
 
