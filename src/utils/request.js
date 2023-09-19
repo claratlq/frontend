@@ -14,14 +14,14 @@ export function userFromStorage() {
   try {
     const userString = window.localStorage.getItem('user')
     if (!userString) return null;
-    return {'username': userString}
-  } catch {}
+    return { 'username': userString }
+  } catch { }
   return {};
 }
 
 export function baseHeaders(providedToken = null) {
   console.log(`Header: ${providedToken}`)
-  const token = providedToken ? providedToken:window.localStorage.getItem(AUTH_TOKEN);
+  const token = providedToken ? providedToken : window.localStorage.getItem(AUTH_TOKEN);
   return {
     Authorization: token ? `Bearer ${token}` : null,
   };

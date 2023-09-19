@@ -27,6 +27,7 @@ export default function ChatContainer() {
     } else {
       window.localStorage.setItem('chatID', activeChatID.chatId)
       setChatID(activeChatID.chatId)
+      window.localStorage.setItem("newChat", false)
     }
   }
 
@@ -36,7 +37,6 @@ export default function ChatContainer() {
       const newChat = window.localStorage.getItem("newChat")
       if (newChat === 'true') {
         createNewChat();
-        window.localStorage.setItem("newChat", false)
       } else if (!chatID) {
         const activeChatID = await Workspace.getActiveChat(googleAuthToken);
         if (activeChatID.chatId === null) {
@@ -52,13 +52,19 @@ export default function ChatContainer() {
 
   useEffect(() => {
     async function getHistory() {
-      const googleAuthToken = setTimeout(window.localStorage.getItem("googleAuthToken"), 999999);
+      const googleAuthToken = window.localStorage.getItem("googleAuthToken");
       const textHistory = await Workspace.chatHistory(googleAuthToken);
-      setChatHistory(textHistory.textHistory);
-      setLoadingHistory(false);
+      if (textHistory.chatId === Number(chatID)) {
+        setChatHistory(textHistory.textHistory);
+        setLoadingHistory(false);
+      } else {
+        setChatHistory([]);
+        setLoadingHistory(false);
+      }
+
     }
     getHistory();
-  }, []);
+  }, [chatID]);
 
   useEffect(() => {
     async function fetchReply() {
@@ -195,6 +201,7 @@ export default function ChatContainer() {
     console.log('resetting')
     window.localStorage.setItem('newChat', true)
     setChatHistory([])
+    setLoadingHistory(true)
     location.reload()
   }
 
