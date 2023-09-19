@@ -2,16 +2,18 @@
     background-color: var(--light_gray);
     display: flex;
     flex-direction: row;
-    margin: 16px 20vw 0px 20vw ;
+    margin: 0px 20vw 0px 20vw ;
+    scroll-margin-bottom: 50px;
 }
 .user-query-container {
     color: var(--black);
     display: flex;
     align-items: flex-start;
-    padding: 16px 0;
+    padding: 24px 0;
 }
 
 .query-text {
+    margin-top: 5px;
     color: var(--black);
     font: 400 16px "Open Sans";
     line-height: 24px;
@@ -42,44 +44,80 @@
 .llm-reply {
     background-color: var(--hover_button_light_gray);
     display: flex;
-    flex-direction: row;
-    margin: 16px 20vw 0px 20vw ;
+    flex-direction: column;
+    scroll-margin-bottom: 25px;
 }
 .llm-reply-container{
     color: var(--black);
-    display: flex;
-    align-items: flex-start;
-    padding: 16px 0;
+    margin: 12px 20vw 0px 20vw ;
 }
+
+.llm-reply-content{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 0 0 0;
+}
+
 .llm-reply-text {
+    max-width: calc(60vw - 32px - 40px);
+    margin-top: 5px;
     font: 400 16px "Open Sans";
     line-height: 24px;
     margin-block-end: 0px;
     white-space: pre-wrap;
     word-break: break-word;
+    margin-bottom: -8px;
 }
+
 .llm-icon {
-    display: flex;
-    align-items:center;
-    justify-content: center;
-    margin-right: 32px;
-}
-.llm-icon-content {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--dark_blue);
     width:40px;
     height:40px;
-    object-fit: contain;
     border-radius: 50%;
+    margin-right: 32px;
+}
+.llm-icon-content {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.llm-feedback{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
 }
 
 .rate-button {
-    background-color: #FFF;
-    border-radius: 12px;
-    border-color: #c4c7c5;
-    border-width: 1.5px;
-    color: #1f1f1f;
-    padding: 8px 10px;
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+}
+
+.rate-button:hover{
+    background-color: var(--hover_button_light_gray);
+}
+
+.feedback-container {
+    background-color: var(--white);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.feedback-text{
+    font: 600 16px "Open Sans";
+    color: var(--black);
+    padding: 16px 4px 16px 32px;
 }
