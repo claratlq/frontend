@@ -29,7 +29,7 @@ export default function ChatHeader() {
             <div className="AIDE-logo"></div>
             <p className="AIDE">AIDE</p>
         </div>
-        <a className="initials-logo" href="##" title={user}>
+        <a className="initials-logo" title={user}>
             {getInitials(firstName,lastName)}
         </a>
       </div>

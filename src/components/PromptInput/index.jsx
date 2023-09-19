@@ -18,8 +18,6 @@ export default function PromptInput({
   setDocumentStatus
 }) {
 
-  console.log(history)
-
   // const [documentStatus, setDocumentStatus] = useState(null)
   const formRef = useRef(null);
   const promptRef = useRef(null)
@@ -29,7 +27,7 @@ export default function PromptInput({
     submit(e);
   };
   const captureEnter = (event) => {
-    if (documentStatus != "Error") {
+    if (documentStatus != "Error" || documentStatus != "Uploading") {
       if (event.keyCode == 13) {
         if (!event.shiftKey) {
           submit(event);

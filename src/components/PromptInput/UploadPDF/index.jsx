@@ -91,14 +91,13 @@ export default function UploadPDF({history, disabled, reset, documents, setDocum
         const googleAuthToken = window.localStorage.getItem("googleAuthToken");
         setDocumentStatus('Uploading')
         setDocuments(fileName)
-        // const response = await Workspace.uploadFile(formData, googleAuthToken);
-        // if (response.ok) {
-        //     setDocumentStatus('Success')
-        // } else {
-        //     setDocumentStatus('Error')
-        //     console.log("PDF Upload Failed", response.json().error)
-        // }
-        setTimeout(setDocumentStatus('Success'), 5000)
+        const response = await Workspace.uploadFile(formData, googleAuthToken);
+        if (response.ok) {
+            setDocumentStatus('Success')
+        } else {
+            setDocumentStatus('Error')
+            console.log("PDF Upload Failed", response.json().error)
+        }
     }
 
     return (
