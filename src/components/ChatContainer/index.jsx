@@ -95,7 +95,7 @@ export default function ChatContainer() {
           message = message + " " + value;
           chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
           chatResultHeaders['error'] = null;
-          chatResultHeaders['type'] = chatResult.headers.get("type");
+          chatResultHeaders['type'] = "textResponse";
           chatResultHeaders['close'] = done;
 
           handleChat(
@@ -109,7 +109,8 @@ export default function ChatContainer() {
         }
       } else if (chatResult.status === 403) {
         message = "";
-        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+        const chatResultData = await chatResult.json()
+        chatResultHeaders['uuid'] = chatResultData.id;
         chatResultHeaders['error'] = "Your session has timed out, please reauthenticate again.";
         chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
@@ -124,9 +125,9 @@ export default function ChatContainer() {
         );
       } else if (chatResult.status === 500) {
         message = "";
+
         const chatResultData = await chatResult.json()
 
-        console.log(chatResultData)
         chatResultHeaders['uuid'] = chatResultData.id;
         chatResultHeaders['error'] = chatResultData.error;
         chatResultHeaders['type'] = chatResultData.type;
