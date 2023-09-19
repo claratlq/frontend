@@ -39,7 +39,9 @@ const Workspace = {
           reAuthenticate()
           return []
         } else if (res.status === 200) {
-          return (res.json().history || [])
+          const { chatId, textHistory } = res.json()
+          window.localStorage.setItem('chatID', chatId ? chatId : 0)
+          return (textHistory || [])
         } else {
           console.log('error', res)
           return []
@@ -79,6 +81,7 @@ const Workspace = {
   },
 
   streamingSendChat: async function (data, googleAuthToken) {
+    console.log(API_BASE)
     var header = baseHeaders(googleAuthToken);
     header["Content-Type"] = "application/json";
     const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
