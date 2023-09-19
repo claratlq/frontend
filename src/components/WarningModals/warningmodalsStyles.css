@@ -29,7 +29,6 @@
 .Error-Message{
     color: var(--black);
     font: 400 16px "Open Sans";
-    margin-bottom: 62px;
 }
 
 .Button-Container{
@@ -42,15 +41,23 @@
 
 .Reupload{
     background-color: var(--red);
-    padding: 12px 14px;
+    width: 92px;
+    height:45px;
     border-radius: 10px;
     margin-right: 8px;
+    position: absolute;
+    bottom: 16px;
+    right: 120px;
 }
 
 .Cancel{
     background-color: var(--button_border);
-    padding: 12px 25px;
+    width: 92px;
+    height:45px;
     border-radius: 10px;
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
 }
 
 .Reupload:hover{

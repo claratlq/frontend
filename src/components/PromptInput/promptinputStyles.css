@@ -40,7 +40,7 @@
     outline: none;
 }
 
-.pdf-upload{
+.pdf-upload-enabled{
     display: flex;
     border: 2px solid var(--button_border);
     padding: 5px 5px 5px 6px;
@@ -51,8 +51,24 @@
     background-color: transparent;
 }
 
-.pdf-upload:hover{
+.pdf-upload-enabled:hover{
     background-color: var(--hover_button_light_gray);
+}
+
+.pdf-upload-disabled{
+    display: flex;
+    border: 2px solid var(--button_border);
+    padding: 5px 5px 5px 6px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    background-color: transparent;
+    opacity: 0.5;
+}
+
+.pdf-upload-disabled{
+    cursor: default;
 }
 
 .disclaimer-container{

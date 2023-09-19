@@ -16,6 +16,7 @@ export default function ChatContainer() {
   const [documents, setDocuments] = useState([])
   const userID = window.localStorage.getItem('user')
   const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'))
+  const [documentStatus, setDocumentStatus] = useState(null)
 
   async function createNewChat() {
 
@@ -172,6 +173,7 @@ export default function ChatContainer() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setDocumentStatus(null)
     if (!message || message === "") return false;
 
     const prevChatHistory = [
@@ -191,15 +193,14 @@ export default function ChatContainer() {
     setLoadingResponse(true);
   };
 
-  function resetChat() {
-    if (chatHistory.length === 0) {
-      null
-    } else {
+
+  function resetChat(setDisplay) {
+      setDisplay(false)
       console.log('resetting')
       window.localStorage.setItem('newChat', true)
       location.reload()
-    }
   }
+
 
   if (loadingHistory) return <LoadingChat />;
 
@@ -207,7 +208,9 @@ export default function ChatContainer() {
       <div className="chat-container">
         <AcknowledgeTermsModal/>
         <ChatHeader
+            documents = {documents}
             history = {chatHistory}
+            reset = {resetChat}
         />
         <ChatHistory
             history = {chatHistory}
@@ -222,6 +225,10 @@ export default function ChatContainer() {
           onClick = {resetChat}
           documents={documents}
           setDocuments={setDocuments}
+          history = {chatHistory}
+          resetChat={resetChat}
+          documentStatus ={documentStatus}
+          setDocumentStatus = {setDocumentStatus}
         />
       </div>
     );

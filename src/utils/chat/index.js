@@ -12,7 +12,6 @@ export default function handleChat(
   // const { uuid, textResponse, type, error, close } = chatResult;
   const textResponse = message;
   if (type === "abort") {
-    console.log("HIIIII")
     setLoadingResponse(false);
     setChatHistory([
       ...remHistory,
