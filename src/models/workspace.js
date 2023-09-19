@@ -40,7 +40,6 @@ const Workspace = {
           return []
         } else if (res.status === 200) {
           const { chatId, textHistory } = res.json()
-          window.localStorage.setItem('chatID', chatId ? chatId : 0)
           return (textHistory || [])
         } else {
           console.log('error', res)
