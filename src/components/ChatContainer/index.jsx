@@ -13,15 +13,15 @@ export default function ChatContainer() {
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
-  const [documents, setDocuments] = useState([])
-  const userID = window.localStorage.getItem('user')
-  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'))
-  const [documentStatus, setDocumentStatus] = useState(null)
+  const [documents, setDocuments] = useState([]);
+  const userID = window.localStorage.getItem('user');
+  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'));
+  const [documentStatus, setDocumentStatus] = useState(null);
 
   async function createNewChat() {
 
     const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-    var activeChatID =  await Workspace.new(googleAuthToken) 
+    var activeChatID = await Workspace.new(googleAuthToken)
     if (activeChatID.chatId === null) { //if error in creating chat
       console.log("Error in creating new chat!!!")
     } else {
@@ -33,7 +33,11 @@ export default function ChatContainer() {
   useEffect(() => {
     async function getChatID() {
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-      if (!chatID) {
+      const newChat = window.localStorage.getItem("newChat")
+      if (newChat === 'true') {
+        createNewChat();
+        window.localStorage.setItem("newChat", false)
+      } else if (!chatID) {
         const activeChatID = await Workspace.getActiveChat(googleAuthToken);
         if (activeChatID.chatId === null) {
           createNewChat()
@@ -187,41 +191,41 @@ export default function ChatContainer() {
 
 
   function resetChat(setDisplay) {
-      setDisplay(false)
-      console.log('resetting')
-      window.localStorage.setItem('newChat', true)
-      location.reload()
+    setDisplay(false)
+    console.log('resetting')
+    window.localStorage.setItem('newChat', true)
+    location.reload()
   }
 
 
   if (loadingHistory) return <LoadingChat />;
 
-    return (
-      <div className="chat-container">
-        <AcknowledgeTermsModal/>
-        <ChatHeader
-            documents = {documents}
-            history = {chatHistory}
-            reset = {resetChat}
-        />
-        <ChatHistory
-            history = {chatHistory}
-            setMessage={setMessage}
-        />
-        <PromptInput
-          message={message}
-          submit={handleSubmit}
-          onChange={handleMessageChange}
-          inputDisabled={loadingResponse}
-          buttonDisabled={loadingResponse}
-          onClick = {resetChat}
-          documents={documents}
-          setDocuments={setDocuments}
-          history = {chatHistory}
-          resetChat={resetChat}
-          documentStatus ={documentStatus}
-          setDocumentStatus = {setDocumentStatus}
-        />
-      </div>
-    );
+  return (
+    <div className="chat-container">
+      <AcknowledgeTermsModal />
+      <ChatHeader
+        documents={documents}
+        history={chatHistory}
+        reset={resetChat}
+      />
+      <ChatHistory
+        history={chatHistory}
+        setMessage={setMessage}
+      />
+      <PromptInput
+        message={message}
+        submit={handleSubmit}
+        onChange={handleMessageChange}
+        inputDisabled={loadingResponse}
+        buttonDisabled={loadingResponse}
+        onClick={resetChat}
+        documents={documents}
+        setDocuments={setDocuments}
+        history={chatHistory}
+        resetChat={resetChat}
+        documentStatus={documentStatus}
+        setDocumentStatus={setDocumentStatus}
+      />
+    </div>
+  );
 }
