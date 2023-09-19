@@ -52,6 +52,7 @@ export default function ChatContainer() {
 
   useEffect(() => {
     async function getHistory() {
+      setLoadingHistory(true)
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
       const textHistory = await Workspace.chatHistory(googleAuthToken);
       if (textHistory.chatId === Number(chatID)) {
