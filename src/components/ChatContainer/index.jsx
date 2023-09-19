@@ -13,7 +13,7 @@ export default function ChatContainer() {
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
-    const [documents, setDocuments] = useState([])
+  const [documents, setDocuments] = useState([])
   const userID = window.localStorage.getItem('user')
   const chatID = window.localStorage.getItem('chatID')
 
