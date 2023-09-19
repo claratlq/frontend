@@ -1,7 +1,8 @@
 import { useState, useRef, memo, useEffect } from "react";
-import { Loader, X } from "react-feather";
+import { Loader } from "react-feather";
 import UploadPDF from "./UploadPDF/index.jsx"
 import "../PromptInput/promptinputStyles.css"
+import PDFStatus from "./PDFStatus"
 
 export default function PromptInput({
   message,
@@ -9,7 +10,11 @@ export default function PromptInput({
   onChange,
   inputDisabled,
   buttonDisabled,
+  documents,
+  setDocuments,
 }) {
+
+  const [documentStatus, setDocumentStatus] = useState(null)
   const formRef = useRef(null);
   const promptRef = useRef(null)
   const [_, setFocused] = useState(false);
@@ -26,7 +31,7 @@ export default function PromptInput({
   };
 
   const adjustTextArea = (textarea) => {
-    textarea.style.height = '45px';
+    textarea.style.height = '50px';
     if (textarea.scrollHeight > 150) {
       textarea.style.height = `150px`;
     } else {
@@ -39,29 +44,47 @@ export default function PromptInput({
     adjustTextArea(textarea)
   })
 
+  useEffect(() => {
+    const PromptArea = document.getElementById('text-input')
+    if (documentStatus == "Uploading" || documentStatus == "Success") {
+      PromptArea.style.paddingTop = `70px`
+      PromptArea.style.height = `${PromptArea.scrollHeight}px`;
+    } else if (documentStatus == "Error" ) {
+      PromptArea.style.paddingTop = `100px`
+      PromptArea.style.height = `${PromptArea.scrollHeight}px`; 
+    }
+  }, [documentStatus])
+
+  useEffect(()=>{
+    console.log(documentStatus)
+}, [documentStatus])
+
   return (
     <div className="prompt-input">
       <form
         onSubmit={handleSubmit}
       >
         <div className="prompt-container">
-          <UploadPDF/>
-          <textarea
-            onKeyDown={captureEnter}
-            onChange={e => {onChange(e)}}
-            required={true}
-            disabled={inputDisabled}
-            onFocus={() => setFocused(true)}
-            onBlur={(e) => {
-              setFocused(false);
-              adjustTextArea(e);
-            }}
-            ref = {promptRef}
-            value={message}
-            className="text-input"
-            placeholder="Enter a prompt (Shift + Enter for newline)"
-            
-          />
+          <UploadPDF documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
+          <div className="prompt-box">
+            <textarea
+              onKeyDown={captureEnter}
+              onChange={e => {onChange(e)}}
+              required={true}
+              disabled={inputDisabled}
+              onFocus={() => setFocused(true)}
+              onBlur={(e) => {
+                setFocused(false);
+                adjustTextArea(e);
+              }}
+              ref = {promptRef}
+              value={message}
+              id="text-input"
+              className="text-input"
+              placeholder="Enter a prompt (Shift + Enter for newline)"
+            />
+            <PDFStatus documentstatus={documentStatus} documents={documents}/>
+          </div>
           <button
             className="send-message"
             title="Submit"
@@ -72,7 +95,7 @@ export default function PromptInput({
             {buttonDisabled ? (
               <Loader className="w-6 h-6 animate-spin" />
             ) : (
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 ? `var(--inactive_button)` : `var(--active_button)`}/>
                   <path fillRule="evenodd" clipRule="evenodd" d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z" fill={message.length < 1 ? `var(--inactive_button)`: `var(--active_button)`}/>
                 </svg>

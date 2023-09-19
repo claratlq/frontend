@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ChatHeader from "./ChatHeader";
 import ChatHistory from "../ChatHistory";
 import PromptInput from "../PromptInput";
 import LoadingChat from "../LoadingChat";
@@ -12,6 +13,7 @@ export default function ChatContainer() {
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [documents, setDocuments] = useState([])
   const userID = window.localStorage.getItem('user')
   const chatID = window.localStorage.getItem('chatID')
 
@@ -173,22 +175,27 @@ export default function ChatContainer() {
 
   if (loadingHistory) return <LoadingChat />;
 
-  return (
-    <div className="chat-container">
-      <AcknowledgeTermsModal />
-      <ChatHistory
-        history={chatHistory}
-        setMessage={setMessage}
-      />
-      <PromptInput
-        message={message}
-        submit={handleSubmit}
-        onChange={handleMessageChange}
-        inputDisabled={loadingResponse}
-        buttonDisabled={loadingResponse}
-        onClick={resetChat}
-      />
-    </div>
-  );
+    return (
+      <div className="chat-container">
+        <AcknowledgeTermsModal/>
+        <ChatHeader
+            history = {chatHistory}
+        />
+        <ChatHistory
+            history = {chatHistory}
+            setMessage={setMessage}
+        />
+        <PromptInput
+          message={message}
+          submit={handleSubmit}
+          onChange={handleMessageChange}
+          inputDisabled={loadingResponse}
+          buttonDisabled={loadingResponse}
+          onClick = {resetChat}
+          documents={documents}
+          setDocuments={setDocuments}
+        />
+      </div>
+    );
 }
 

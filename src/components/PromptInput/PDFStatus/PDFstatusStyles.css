@@ -1,0 +1,50 @@
+.PDF-container{
+    background-color: var(--light_gray);
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    padding: 10px 16px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.PDF-name{
+    font: 400 14px "Open Sans";
+    color: var(--black);
+    padding-right: 10px;
+}
+
+.error-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.error{
+    padding-right: 20px;
+}
+
+.loadermain {
+    display: flex;
+}
+
+.loader {
+    border: 3px solid var(--pdf_line); /* Light grey */
+    border-top: 3px solid var(--active_button); /* Blue */
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: animate 2s linear infinite;
+}
+
+
+@keyframes animate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

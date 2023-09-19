@@ -44,7 +44,6 @@ export default function ChatHistory({ history = [], setMessage }) {
   if (history.length === 0 && rendered) {
     return (
       <div className="welcome-container">
-        <p className="header-text">Welcome to AIDE, your work aid on eHab!</p>
         <p className="para-text">Try some sample prompts to get you started:</p>
         <div className="sample-container">
           {promptPairs.map((pair, index) => (
