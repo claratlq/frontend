@@ -163,15 +163,13 @@ export default function ChatContainer() {
     setLoadingResponse(true);
   };
 
+
   function resetChat() {
-    if (chatHistory.length === 0) {
-      null
-    } else {
       console.log('resetting')
       window.localStorage.setItem('newChat', true)
       location.reload()
-    }
   }
+
 
   if (loadingHistory) return <LoadingChat />;
 
@@ -179,7 +177,9 @@ export default function ChatContainer() {
       <div className="chat-container">
         <AcknowledgeTermsModal/>
         <ChatHeader
+            documents = {documents}
             history = {chatHistory}
+            reset = {resetChat}
         />
         <ChatHistory
             history = {chatHistory}

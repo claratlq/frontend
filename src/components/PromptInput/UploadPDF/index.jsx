@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../PromptInput/promptinputStyles.css"
-import WarningModals from "../WarningErrors"
+import WarningModals from "../../WarningModals"
 import Workspace from "../../../models/workspace";
 
 export default function UploadPDF({documents, setDocuments, setDocumentStatus}) {
@@ -8,23 +8,30 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
+        const inputFile = document.getElementById('uploadPDFinput')
+        const pdfButton = document.getElementById("uploadPDFbutton")
+        
         if (documents.length === 0) {
-            document.getElementById("uploadPDFbutton").disabled = false
-            if (document.getElementById("uploadPDFbutton").classList.contains('pdf-upload-disabled')) {
-                document.getElementById("uploadPDFbutton").classList.remove('pdf-upload-disabled')
+            if (pdfButton.classList.contains('pdf-upload-disabled')) { 
+                pdfButton.classList.remove('pdf-upload-disabled') //changing styles
             }
-            document.getElementById("uploadPDFbutton").classList.add('pdf-upload-enabled')
-            document.getElementById("uploadPDFbutton").addEventListener('click', openDialog);
-            document.getElementById('uploadPDFinput').addEventListener('change', uploadFile)
+            pdfButton.classList.add('pdf-upload-enabled') 
+
+            pdfButton.disabled = false //enable button
+            inputFile.value = null //remove file name such that can reupload same file
+            //event listeners
+            pdfButton.addEventListener('click', openDialog); 
+            inputFile.addEventListener('change', uploadFile)
         } else {
-            document.getElementById("uploadPDFbutton").disabled = true;
-            if (document.getElementById("uploadPDFbutton").classList.contains('pdf-upload-enabled')) {
-                document.getElementById("uploadPDFbutton").classList.remove('pdf-upload-enabled')
+            if (pdfButton.classList.contains('pdf-upload-enabled')) {
+                pdfButton.classList.remove('pdf-upload-enabled') //changing styles
             }
-            document.getElementById("uploadPDFbutton").classList.add('pdf-upload-disabled')
-            document.getElementById("uploadPDFbutton").removeEventListener('click', openDialog);
+            pdfButton.classList.add('pdf-upload-disabled') 
+            pdfButton.replaceWith(pdfButton.cloneNode(true)); //reset event listeners on buttons
+            pdfButton.disabled = true; //disable button
         }
     }, [documents])
+
 
     useEffect(() => {
         if(document.getElementById('Reupload')){
@@ -40,7 +47,6 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
     function uploadFile() {
         var fileList = document.getElementById('uploadPDFinput').files
         var file = fileList[0]
-        console.log(fileList)
         if (file.type !== "application/pdf") {
             setErrorMessage("File uploaded is not a valid PDF. Please re-upload a PDF.")
         } else if (file.size > 5 * 1024 * 1024) {
@@ -64,7 +70,7 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
         //     setDocumentStatus('Error')
         //     console.log("PDF Upload Failed", response.json().error)
         // }
-        setTimeout(setDocumentStatus('Error'), 1000)
+        setTimeout(setDocumentStatus('Error'), 5000)
     }
 
     return (

@@ -49,19 +49,21 @@ export default function PromptInput({
     if (documentStatus == "Uploading" || documentStatus == "Success") {
       PromptArea.style.paddingTop = `70px`
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
+      document.getElementById('submitBtn').disabled = false;
     } else if (documentStatus == "Error" ) {
       PromptArea.style.paddingTop = `100px`
       PromptArea.style.height = `${PromptArea.scrollHeight}px`; 
+      document.getElementById('submitBtn').disabled = true;
     } else if (documentStatus == null) {
       PromptArea.style.paddingTop = `18px`
       PromptArea.style.height = `50px`; 
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
+      document.getElementById('submitBtn').disabled = false;
+    } else {
+      document.getElementById('submitBtn').disabled = false;
     }
   }, [documentStatus])
 
-  useEffect(()=>{
-    console.log(documentStatus)
-}, [documentStatus])
 
   return (
     <div className="prompt-input">
@@ -95,15 +97,12 @@ export default function PromptInput({
             ref={formRef}
             type="submit"
             disabled={buttonDisabled}
+            id="submitBtn"
           >
-            {buttonDisabled ? (
-              <Loader className="w-6 h-6 animate-spin" />
-            ) : (
-                <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 ? `var(--inactive_button)` : `var(--active_button)`}/>
-                  <path fillRule="evenodd" clipRule="evenodd" d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z" fill={message.length < 1 ? `var(--inactive_button)`: `var(--active_button)`}/>
-                </svg>
-            )}
+              <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled ? `var(--inactive_button)` : `var(--active_button)`}/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled  ? `var(--inactive_button)`: `var(--active_button)`}/>
+              </svg>
           </button>
         </div>
         <Disclaimer/>

@@ -1,6 +1,6 @@
 import "../chatcontainerStyles.css"
 
-export default function ChatHeader({documents, history}) {
+export default function ChatHeader({documents, history, reset}) {
 
     return (
     <div className="sticky-header">

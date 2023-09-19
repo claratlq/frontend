@@ -3,7 +3,7 @@
     position: absolute;
     top: 15px;
     left: 20px;
-    padding: 10px 16px;
+    padding: 10px 8px 10px 16px;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
@@ -14,6 +14,10 @@
     font: 400 14px "Open Sans";
     color: var(--black);
     padding-right: 10px;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Remove-PDF{
