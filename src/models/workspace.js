@@ -39,7 +39,9 @@ const Workspace = {
           reAuthenticate()
           return []
         } else if (res.status === 200) {
-          return (res.json().history || [])
+          const { chatId, textHistory } = res.json()
+          window.localStorage.setItem('chatID', chatId ? chatId : 0)
+          return (textHistory || [])
         } else {
           console.log('error', res)
           return []
@@ -78,22 +80,33 @@ const Workspace = {
     return chatResult;
   },
 
-  // sendChat: async function ({ slug }, prompt, mode = "query") {
-  //   var header = baseHeaders();
-  //   header["Content-Type"] = "application/json";
-  //   const chatResult = await fetch(`http://localhost:8000/chat`, {
-  //     method: "POST",
-  //     body: JSON.stringify({ prompt, mode }),
-  //     headers: header,
-  //   })
-  //     .then((res) => {return res})
-  //     .catch((e) => {
-  //       console.error(e);
-  //       return null;
-  //     });
+  streamingSendChat: async function (data, googleAuthToken) {
+    console.log(API_BASE)
+    var header = baseHeaders(googleAuthToken);
+    header["Content-Type"] = "application/json";
+    const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: header,
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return null
+        } else if (res.status === 200) {
+          return res
+        } else {
+          console.log('error', res)
+          return res
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
 
-  //   return chatResult;
-  // },
+    return chatResult;
+  },
 
   rateResponse: async function (ratings = {}, googleAuthToken) {
     const status = await fetch(
