@@ -10,10 +10,19 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
     useEffect(() => {
         if (documents.length === 0) {
             document.getElementById("uploadPDFbutton").disabled = false
+            if (document.getElementById("uploadPDFbutton").classList.contains('pdf-upload-disabled')) {
+                document.getElementById("uploadPDFbutton").classList.remove('pdf-upload-disabled')
+            }
+            document.getElementById("uploadPDFbutton").classList.add('pdf-upload-enabled')
             document.getElementById("uploadPDFbutton").addEventListener('click', openDialog);
             document.getElementById('uploadPDFinput').addEventListener('change', uploadFile)
         } else {
             document.getElementById("uploadPDFbutton").disabled = true;
+            if (document.getElementById("uploadPDFbutton").classList.contains('pdf-upload-enabled')) {
+                document.getElementById("uploadPDFbutton").classList.remove('pdf-upload-enabled')
+            }
+            document.getElementById("uploadPDFbutton").classList.add('pdf-upload-disabled')
+            document.getElementById("uploadPDFbutton").removeEventListener('click', openDialog);
         }
     }, [documents])
 
@@ -31,6 +40,7 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
     function uploadFile() {
         var fileList = document.getElementById('uploadPDFinput').files
         var file = fileList[0]
+        console.log(fileList)
         if (file.type !== "application/pdf") {
             setErrorMessage("File uploaded is not a valid PDF. Please re-upload a PDF.")
         } else if (file.size > 5 * 1024 * 1024) {
@@ -60,7 +70,7 @@ export default function UploadPDF({documents, setDocuments, setDocumentStatus}) 
     return (
         <>
             <WarningModals errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
-            <div title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data" className="pdf-upload">
+            <div title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data">
                 <input type="file" id="uploadPDFinput" name="filename" accept="application/pdf" hidden/>
                 <button  type="button" id="uploadPDFbutton">
                     <svg width="36" height="36" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">

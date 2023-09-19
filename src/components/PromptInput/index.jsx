@@ -42,7 +42,7 @@ export default function PromptInput({
   useEffect(()=> {
     const textarea = promptRef.current;
     adjustTextArea(textarea)
-  })
+  }, [message])
 
   useEffect(() => {
     const PromptArea = document.getElementById('text-input')
@@ -52,6 +52,10 @@ export default function PromptInput({
     } else if (documentStatus == "Error" ) {
       PromptArea.style.paddingTop = `100px`
       PromptArea.style.height = `${PromptArea.scrollHeight}px`; 
+    } else if (documentStatus == null) {
+      PromptArea.style.paddingTop = `18px`
+      PromptArea.style.height = `50px`; 
+      PromptArea.style.height = `${PromptArea.scrollHeight}px`;
     }
   }, [documentStatus])
 
@@ -83,7 +87,7 @@ export default function PromptInput({
               className="text-input"
               placeholder="Enter a prompt (Shift + Enter for newline)"
             />
-            <PDFStatus documentstatus={documentStatus} documents={documents}/>
+            <PDFStatus documentstatus={documentStatus} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
           </div>
           <button
             className="send-message"

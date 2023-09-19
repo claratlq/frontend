@@ -16,14 +16,46 @@
     padding-right: 10px;
 }
 
+.Remove-PDF{
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.Remove-PDF:hover{
+    cursor: pointer;
+    background-color: var(--hover_button_light_gray);
+}
+
 .error-container{
+    background-color: var(--light_gray);
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.error-icons{
+    padding: 8px 8px 4px 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
 .error{
-    padding-right: 20px;
+    padding-right: 12px;
+}
+
+.border-line{
+    display: flex;
+    border: 0.5px solid var(--pdf_line);
+}
+
+.error-message{
+    font: 400 12px "Open Sans";
+    color: var(--red);
+    padding: 4px 16px 4px 16px;
 }
 
 .loadermain {
