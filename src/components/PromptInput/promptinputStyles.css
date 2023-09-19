@@ -15,14 +15,21 @@
     justify-content: center;
 }
 
-.text-input{
+.prompt-box{
     background-color: white;
     display: flex;
     flex-grow: 1;
-    height: 45px;
-    min-height: 45px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.text-input{
+    display: flex;
+    flex-grow: 1;
+    height: 50px;
+    min-height: 50px;
     resize: none;
-    padding: 15px 20px;
+    padding: 18px 20px;
     text-align: left;
     border-radius: 10px;
     font-family: inherit;
@@ -41,6 +48,11 @@
     align-items: center;
     justify-content: center;
     margin-right: 16px;
+    background-color: transparent;
+}
+
+.pdf-upload:hover{
+    background-color: var(--hover_button_light_gray);
 }
 
 .disclaimer-container{
@@ -53,4 +65,13 @@
     font: 500 12px 'Open Sans';
     color: var(--medium_gray);
     margin-left:8px;
+}
+
+.loading-text{
+    color: var(--medium_gray);
+    font:500 32px 'Open Sans';
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

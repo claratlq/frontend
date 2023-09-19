@@ -7,3 +7,29 @@
     flex-grow: 1;
     flex-shrink: 1;
 }
+
+.header-text{
+    font: 400 36px "Open Sans";
+    color: var(--black)
+}
+
+.sticky-header{
+    position: sticky;
+    width: 60vw;
+    margin: 40px 20vw 0 20vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.clear-chat{
+    background-color: var(--active_button);
+    border-radius: 10px;
+    padding: 0 16px;
+    color: var(--white);
+    font: 400 16px "Open Sans"
+}
+
+.clear-chat:hover{
+    background-color: var(--hover_button_blue);
+}

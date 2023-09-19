@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ChatHeader from "./ChatHeader";
 import ChatHistory from "../ChatHistory";
 import PromptInput from "../PromptInput";
 import LoadingChat from "../LoadingChat";
@@ -12,13 +13,15 @@ export default function ChatContainer() {
     const [loadingResponse, setLoadingResponse] = useState(false);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(true);
+    const [documents, setDocuments] = useState([])
     const userID = localStorage.getItem('user')
     const chatID = localStorage.getItem('chatID')
 
     useEffect(() => {
         async function getHistory() {
             const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-            const chatHistory = await Workspace.chatHistory(googleAuthToken);
+            // const chatHistory = await Workspace.chatHistory(googleAuthToken);
+            const chatHistory = []
             setChatHistory(chatHistory);
             setLoadingHistory(false);
         }
@@ -121,6 +124,9 @@ export default function ChatContainer() {
     return (
       <div className="chat-container">
         <AcknowledgeTermsModal/>
+        <ChatHeader
+            history = {chatHistory}
+        />
         <ChatHistory
             history = {chatHistory}
             setMessage={setMessage}
@@ -132,6 +138,8 @@ export default function ChatContainer() {
           inputDisabled={loadingResponse}
           buttonDisabled={loadingResponse}
           onClick = {resetChat}
+          documents={documents}
+          setDocuments={setDocuments}
         />
       </div>
     );
