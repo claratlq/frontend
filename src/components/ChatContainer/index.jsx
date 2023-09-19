@@ -117,9 +117,33 @@ export default function ChatContainer() {
             _chatHistory
           );
         }
+<<<<<<< HEAD
       } else if (chatResult.status === 500) {
         message = "";
         const chatResultData = await chatResult.json();
+=======
+      } else if (chatResult.status === 403) {
+        message = "";
+        const chatResultData = await chatResult.json()
+        chatResultHeaders['uuid'] = chatResultData.id;
+        chatResultHeaders['error'] = "Your session has timed out, please reauthenticate again.";
+        chatResultHeaders['type'] = "abort";
+        chatResultHeaders['close'] = true;
+
+        handleChat(
+          chatResultHeaders,
+          message,
+          setLoadingResponse,
+          setChatHistory,
+          remHistory,
+          _chatHistory
+        );
+      } else if (chatResult.status === 500) {
+        message = "";
+
+        const chatResultData = await chatResult.json()
+
+>>>>>>> fixed: chat response for status 200
         chatResultHeaders['uuid'] = chatResultData.id;
         chatResultHeaders['error'] = chatResultData.error;
         chatResultHeaders['type'] = "abort";
