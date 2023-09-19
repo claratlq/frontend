@@ -62,7 +62,7 @@ const PromptReply = forwardRef(
 
     if (error) {
       return (
-        <div className="chat__message flex justify-start mb-4 items-center">
+        <div className="llm-reply">
           <div className="ml-2 py-3 px-4 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-slate-100 ">
             <div className="bg-red-50 text-red-500 rounded-lg w-fit flex flex-col p-2">
               <span className={`inline-block`}>
@@ -81,11 +81,9 @@ const PromptReply = forwardRef(
         <div key={uuid} ref={ref} className="user-query">
           <div className="user-query-container">
             <UserIcon/>
-            <div className="query-content">
-              <h2 className="query-text">
-                {message}
-              </h2>
-            </div>
+            <p className="query-text">
+              {message}
+            </p>
             
           </div>
         </div>

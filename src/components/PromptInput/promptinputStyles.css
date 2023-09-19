@@ -2,6 +2,7 @@
     margin: 8px 20vw 32px 20vw ;
     position:absolute;
     bottom: 0px;
+    background-color: var(--light_gray);
 }
 
 .prompt-container{
@@ -87,7 +88,34 @@
     color: var(--medium_gray);
     font:500 32px 'Open Sans';
     position: absolute;
-    top: 62%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.loader-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    position: absolute;
+    top:45%;
+    border: 8px solid var(--pdf_line); /* Light grey */
+    border-top: 8px solid var(--medium_gray); /* Blue */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: animate 1.5s linear infinite;
+}
+
+
+@keyframes animate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

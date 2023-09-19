@@ -58,7 +58,7 @@ export default function ChatHistory({ history = [], setMessage }) {
 
   return (
     <div
-      className="chat-history h-[92%] md:mt-0 pb-5 w-full"
+      className="chat-history"
       id="chat-history"
     >
       <div className="chat-log-container">
