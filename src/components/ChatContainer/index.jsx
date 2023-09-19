@@ -25,8 +25,8 @@ export default function ChatContainer() {
     if (activeChatID.chatId === null) { //if error in creating chat
       console.log("Error in creating new chat!!!")
     } else {
-      window.localStorage.setItem('chatID', activeChatID)
-      setChatID(activeChatID)
+      window.localStorage.setItem('chatID', activeChatID.chatId)
+      setChatID(activeChatID.chatId)
     }
   }
 
@@ -38,8 +38,8 @@ export default function ChatContainer() {
         if (activeChatID.chatId === null) {
           createNewChat()
         } else {
-          window.localStorage.setItem('chatID', activeChatID)
-          setChatID(activeChatID)
+          window.localStorage.setItem('chatID', activeChatID.chatId)
+          setChatID(activeChatID.chatId)
         }
       }
     }
