@@ -1,0 +1,9 @@
+version: "3"
+services:
+  llm-frontend:
+    image: llm-frontend:stream
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/llm_frontend
+    command: ['npx', 'vite', 'serve']
