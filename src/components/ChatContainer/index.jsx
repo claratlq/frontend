@@ -15,7 +15,35 @@ export default function ChatContainer() {
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [documents, setDocuments] = useState([])
   const userID = window.localStorage.getItem('user')
-  const chatID = window.localStorage.getItem('chatID')
+  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'))
+
+  async function createNewChat() {
+
+    const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+    var activeChatID =  await Workspace.new(googleAuthToken) 
+    if (activeChatID.chatId === null) { //if error in creating chat
+      console.log("Error in creating new chat!!!")
+    } else {
+      window.localStorage.setItem('chatID', activeChatID)
+      setChatID(activeChatID)
+    }
+  }
+
+  useEffect(() => {
+    async function getChatID() {
+      const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+      if (!chatID) {
+        const activeChatID = await Workspace.getActiveChat(googleAuthToken);
+        if (activeChatID.chatId === null) {
+          createNewChat()
+        } else {
+          window.localStorage.setItem('chatID', activeChatID)
+          setChatID(activeChatID)
+        }
+      }
+    }
+    getChatID();
+  }, [chatID]);
 
   useEffect(() => {
     async function getHistory() {
@@ -198,4 +226,3 @@ export default function ChatContainer() {
       </div>
     );
 }
-
