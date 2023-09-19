@@ -75,14 +75,23 @@ export default function ChatContainer() {
       );
       console.log(chatResult)
 
-      // handleChat(
-      //   chatResult,
-      //   setLoadingResponse,
-      //   setChatHistory,
-      //   remHistory,
-      //   _chatHistory
-      // );
-      if (chatResult.status === 200) {
+      if (!chatResult) {
+        let date = new Date().toISOString();
+        message = "";
+        chatResultHeaders['uuid'] = "err0r" + date;
+        chatResultHeaders['error'] = "Error occurred, invalid response from server.";
+        chatResultHeaders['type'] = "abort";
+        chatResultHeaders['close'] = true;
+
+        handleChat(
+          chatResultHeaders,
+          message,
+          setLoadingResponse,
+          setChatHistory,
+          remHistory,
+          _chatHistory
+        );
+      } else if (chatResult.status === 200) {
         const reader = chatResult.body
           .pipeThrough(new TextDecoderStream())
           .getReader()
@@ -107,31 +116,13 @@ export default function ChatContainer() {
             _chatHistory
           );
         }
-      } else if (chatResult.status === 403) {
-        message = "";
-        const chatResultData = await chatResult.json()
-        chatResultHeaders['uuid'] = chatResultData.id;
-        chatResultHeaders['error'] = "Your session has timed out, please reauthenticate again.";
-        chatResultHeaders['type'] = "abort";
-        chatResultHeaders['close'] = true;
-
-        handleChat(
-          chatResultHeaders,
-          message,
-          setLoadingResponse,
-          setChatHistory,
-          remHistory,
-          _chatHistory
-        );
       } else if (chatResult.status === 500) {
         message = "";
-
-        const chatResultData = await chatResult.json()
-
+        const chatResultData = await chatResult.json();
         chatResultHeaders['uuid'] = chatResultData.id;
         chatResultHeaders['error'] = chatResultData.error;
-        chatResultHeaders['type'] = chatResultData.type;
-        chatResultHeaders['close'] = chatResultData.close;
+        chatResultHeaders['type'] = "abort";
+        chatResultHeaders['close'] = true;
 
         console.log(chatResultHeaders)
 
@@ -146,9 +137,9 @@ export default function ChatContainer() {
       }
       else {
         message = "";
-        chatResultHeaders['uuid'] = chatResult.headers.get("id");
+        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
         chatResultHeaders['error'] = chatResult.headers.get("error");
-        chatResultHeaders['type'] = chatResult.headers.get("type");
+        chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 
         console.log(chatResultHeaders)
