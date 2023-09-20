@@ -1,11 +1,11 @@
-.prompt-input{
-    margin: 8px 20vw 32px 20vw ;
-    position:absolute;
+.prompt-input {
+    margin: 8px 20vw 32px 20vw;
+    position: absolute;
     bottom: 0px;
     background-color: var(--light_gray);
 }
 
-.prompt-container{
+.prompt-container {
     display: flex;
     flex-grow: 1;
     flex-direction: row;
@@ -16,7 +16,7 @@
     justify-content: center;
 }
 
-.prompt-box{
+.prompt-box {
     background-color: white;
     display: flex;
     flex-grow: 1;
@@ -24,7 +24,7 @@
     position: relative;
 }
 
-.text-input{
+.text-input {
     display: flex;
     flex-grow: 1;
     height: 50px;
@@ -37,11 +37,11 @@
     font-size: inherit;
 }
 
-.text-input:focus{
+.text-input:focus {
     outline: none;
 }
 
-.pdf-upload-enabled{
+.pdf-upload-enabled {
     display: flex;
     border: 2px solid var(--button_border);
     padding: 5px 5px 5px 6px;
@@ -52,11 +52,11 @@
     background-color: transparent;
 }
 
-.pdf-upload-enabled:hover{
+.pdf-upload-enabled:hover {
     background-color: var(--hover_button_light_gray);
 }
 
-.pdf-upload-disabled{
+.pdf-upload-disabled {
     display: flex;
     border: 2px solid var(--button_border);
     padding: 5px 5px 5px 6px;
@@ -68,25 +68,25 @@
     opacity: 0.5;
 }
 
-.pdf-upload-disabled{
+.pdf-upload-disabled {
     cursor: default;
 }
 
-.disclaimer-container{
+.disclaimer-container {
     display: flex;
     flex-direction: row;
     margin-top: 12px;
 }
 
-.msg-container{
+.msg-container {
     font: 500 12px 'Open Sans';
     color: var(--medium_gray);
-    margin-left:8px;
+    margin-left: 8px;
 }
 
-.loading-text{
+.loading-text {
     color: var(--medium_gray);
-    font:500 32px 'Open Sans';
+    font: 500 32px 'Open Sans';
     position: absolute;
     top: 60%;
     left: 50%;
@@ -101,13 +101,26 @@
 
 .loading {
     position: absolute;
-    top:45%;
-    border: 8px solid var(--pdf_line); /* Light grey */
-    border-top: 8px solid var(--medium_gray); /* Blue */
+    top: 45%;
+    border: 8px solid var(--pdf_line);
+    /* Light grey */
+    border-top: 8px solid var(--medium_gray);
+    /* Blue */
     border-radius: 50%;
     width: 80px;
     height: 80px;
     animation: animate 1.5s linear infinite;
+}
+
+.backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 
@@ -115,6 +128,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }

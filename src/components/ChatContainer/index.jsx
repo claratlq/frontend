@@ -19,8 +19,8 @@ export default function ChatContainer() {
   const [documentStatus, setDocumentStatus] = useState(null);
 
   async function createNewChat() {
-
     const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+    console.log("Resetting chat!!!")
     var activeChatID = await Workspace.new(googleAuthToken)
     if (activeChatID.chatId === null) { //if error in creating chat
       console.log("Error in creating new chat!!!")
@@ -29,32 +29,28 @@ export default function ChatContainer() {
       setChatID(activeChatID.chatId)
       window.localStorage.setItem("newChat", false)
     }
+    console.log("Done resetting chat!!!")
   }
 
   useEffect(() => {
-    async function getChatID() {
+    async function getHistory() {
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-      const newChat = window.localStorage.getItem("newChat")
+      const newChat = window.localStorage.getItem("newChat");
+      setLoadingHistory(true);
       if (newChat === 'true') {
-        createNewChat();
+        await createNewChat();
       } else if (!chatID) {
         const activeChatID = await Workspace.getActiveChat(googleAuthToken);
         if (activeChatID.chatId === null) {
-          createNewChat()
+          await createNewChat()
         } else {
           window.localStorage.setItem('chatID', activeChatID.chatId)
           setChatID(activeChatID.chatId)
         }
       }
-    }
-    getChatID();
-  }, [chatID]);
-
-  useEffect(() => {
-    async function getHistory() {
-      setLoadingHistory(true)
-      const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+      console.log("Getting chat history!!!")
       const textHistory = await Workspace.chatHistory(googleAuthToken);
+      console.log(chatID)
       if (textHistory.chatId === Number(chatID)) {
         setChatHistory(textHistory.textHistory);
         setLoadingHistory(false);
@@ -113,7 +109,7 @@ export default function ChatContainer() {
 
           console.log('Received: ', value);
 
-          message = message + " " + value;
+          message = message + value;
           chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
           chatResultHeaders['error'] = null;
           chatResultHeaders['type'] = "textResponse";
@@ -149,8 +145,9 @@ export default function ChatContainer() {
       }
       else {
         message = "";
+        const chatResultData = await chatResult.json();
         chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-        chatResultHeaders['error'] = chatResult.headers.get("error");
+        chatResultHeaders['error'] = chatResultData.message;
         chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 

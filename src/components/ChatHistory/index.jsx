@@ -7,7 +7,6 @@ export default function ChatHistory({ history = [], setMessage }) {
   const replyRef = useRef(null);
   const [promptPairs, setPromptPairs] = useState([])
   const [rendered, setRendered] = useState(false)
-  console.log(history)
 
   useEffect(() => {
     var existingData = promptPairs

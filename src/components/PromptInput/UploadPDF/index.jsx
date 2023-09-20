@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import "../../PromptInput/promptinputStyles.css"
 import WarningModals from "../../WarningModals"
+import "../../WarningModals/warningmodalsStyles.css"
 import Workspace from "../../../models/workspace";
+import AcknowledgePdfModal from "../../ChatModals/PdfAcknowledgement"
 
 export default function UploadPDF({ history, disabled, reset, documents, setDocuments, setDocumentStatus }) {
 
     const [errorMessage, setErrorMessage] = useState(null)
     const [clearChat, setClearChat] = useState(false)
+    const [clickedPDFbutton, setClickedPDFbutton] = useState(false)
 
     function updatingButton(disabled) {
         const pdfButton = document.getElementById("uploadPDFbutton")
@@ -39,6 +42,7 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
 
             //event listeners
             inputFile.addEventListener('change', uploadFile);
+            inputFile.addEventListener('blur', () => { console.log("ahhhhhhhhhh") });
             pdfButton.addEventListener('click', openDialog);
         } else {
             updatingButton(true)
@@ -62,10 +66,14 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
         }
     }, [errorMessage])
 
-
     function openDialog() {
         console.log('clicked')
-        if (history.length === 0) {
+        // const backdrop = document.querySelector(".backdrop");
+        if (!window.localStorage.getItem("acknowledgedPdfTerms")) {
+            console.log("clicked no ack")
+            setClickedPDFbutton(true)
+            // backdrop.style.display = "block";
+        } else if (history.length === 0) {
             document.getElementById('uploadPDFinput').click()
         } else {
             setClearChat(true)
@@ -73,6 +81,7 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
     }
 
     function uploadFile() {
+        // const backdrop = document.querySelector(".backdrop");
         var fileList = document.getElementById('uploadPDFinput').files
         var file = fileList[0]
         if (file.type !== "application/pdf") {
@@ -85,6 +94,8 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
             formData.append("File", file, file.name);
             submitPDF(formData, file.name)
         }
+        console.log("upload done")
+        // backdrop.style.display = "none";
     }
 
     async function submitPDF(formData, fileName) {
@@ -103,7 +114,9 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
     }
 
     return (
-        <>
+        <div>
+            <div className="backdrop" />
+            <AcknowledgePdfModal display={clickedPDFbutton} setDisplay={setClickedPDFbutton} />
             <WarningModals display={clearChat} setDisplay={setClearChat} pdf={true} reset={reset} error={true} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             <div title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data">
                 <input type="file" id="uploadPDFinput" name="filename" accept="application/pdf" hidden />
@@ -113,6 +126,6 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
                     </svg>
                 </button>
             </div>
-        </>
+        </div>
     );
 }
