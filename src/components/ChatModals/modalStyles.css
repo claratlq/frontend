@@ -119,3 +119,12 @@
     font-weight: 400;
     line-height: 24px; /* 150% */
 }
+.acknowledgment-task-content-task {
+    width: 472px;
+    color: var(--alert-criticality-text-on-backgrounds-surface-colours-support-text-danger, #DA1E28);
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+}
