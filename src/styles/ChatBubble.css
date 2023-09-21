@@ -115,6 +115,7 @@
 .feedback-container {
     background-color: var(--white);
     border-radius: 10px;
+    min-width: 56vw;
     display: flex;
     flex-direction: row;
     align-items: center;
