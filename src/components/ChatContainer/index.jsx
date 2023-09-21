@@ -13,48 +13,55 @@ export default function ChatContainer() {
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
-  const [documents, setDocuments] = useState([])
-  const userID = window.localStorage.getItem('user')
-  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'))
-  const [documentStatus, setDocumentStatus] = useState(null)
+  const [documents, setDocuments] = useState([]);
+  const userID = window.localStorage.getItem('user');
+  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'));
+  const [documentStatus, setDocumentStatus] = useState(null);
 
   async function createNewChat() {
-
     const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-    var activeChatID =  await Workspace.new(googleAuthToken) 
+    console.log("Resetting chat!!!")
+    var activeChatID = await Workspace.new(googleAuthToken)
     if (activeChatID.chatId === null) { //if error in creating chat
       console.log("Error in creating new chat!!!")
     } else {
-      window.localStorage.setItem('chatID', activeChatID)
-      setChatID(activeChatID)
+      window.localStorage.setItem('chatID', activeChatID.chatId)
+      setChatID(activeChatID.chatId)
+      window.localStorage.setItem("newChat", false)
     }
+    console.log("Done resetting chat!!!")
   }
 
   useEffect(() => {
-    async function getChatID() {
+    async function getHistory() {
       const googleAuthToken = window.localStorage.getItem("googleAuthToken");
-      if (!chatID) {
+      const newChat = window.localStorage.getItem("newChat");
+      setLoadingHistory(true);
+      if (newChat === 'true') {
+        await createNewChat();
+      } else if (!chatID) {
         const activeChatID = await Workspace.getActiveChat(googleAuthToken);
         if (activeChatID.chatId === null) {
-          createNewChat()
+          await createNewChat()
         } else {
-          window.localStorage.setItem('chatID', activeChatID)
-          setChatID(activeChatID)
+          window.localStorage.setItem('chatID', activeChatID.chatId)
+          setChatID(activeChatID.chatId)
         }
       }
-    }
-    getChatID();
-  }, [chatID]);
-
-  useEffect(() => {
-    async function getHistory() {
-      const googleAuthToken = setTimeout(window.localStorage.getItem("googleAuthToken"), 999999);
+      console.log("Getting chat history!!!")
       const textHistory = await Workspace.chatHistory(googleAuthToken);
-      setChatHistory(textHistory);
-      setLoadingHistory(false);
+      console.log(chatID)
+      if (textHistory.chatId === Number(chatID)) {
+        setChatHistory(textHistory.textHistory);
+        setLoadingHistory(false);
+      } else {
+        setChatHistory([]);
+        setLoadingHistory(false);
+      }
+
     }
     getHistory();
-  }, []);
+  }, [chatID]);
 
   useEffect(() => {
     async function fetchReply() {
@@ -76,42 +83,11 @@ export default function ChatContainer() {
       );
       console.log(chatResult)
 
-      // handleChat(
-      //   chatResult,
-      //   setLoadingResponse,
-      //   setChatHistory,
-      //   remHistory,
-      //   _chatHistory
-      // );
-      if (chatResult.status === 200) {
-        const reader = chatResult.body
-          .pipeThrough(new TextDecoderStream())
-          .getReader()
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-
-          console.log('Received: ', value);
-
-          message = message + " " + value;
-          chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-          chatResultHeaders['error'] = null;
-          chatResultHeaders['type'] = chatResult.headers.get("type");
-          chatResultHeaders['close'] = done;
-
-          handleChat(
-            chatResultHeaders,
-            message,
-            setLoadingResponse,
-            setChatHistory,
-            remHistory,
-            _chatHistory
-          );
-        }
-      } else if (chatResult.status === 403) {
+      if (!chatResult) {
+        let date = new Date().toISOString();
         message = "";
-        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-        chatResultHeaders['error'] = "Your session has timed out, please reauthenticate again.";
+        chatResultHeaders['uuid'] = "err0r" + date;
+        chatResultHeaders['error'] = "Error occurred, invalid response from server.";
         chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 
@@ -123,15 +99,38 @@ export default function ChatContainer() {
           remHistory,
           _chatHistory
         );
+      } else if (chatResult.status === 200) {
+        const reader = chatResult.body
+          .pipeThrough(new TextDecoderStream())
+          .getReader()
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          console.log('Received: ', value);
+
+          message = message + value;
+          chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+          chatResultHeaders['error'] = null;
+          chatResultHeaders['type'] = "textResponse";
+          chatResultHeaders['close'] = done;
+
+          handleChat(
+            chatResultHeaders,
+            message,
+            setLoadingResponse,
+            setChatHistory,
+            remHistory,
+            _chatHistory
+          );
+        }
       } else if (chatResult.status === 500) {
         message = "";
-        const chatResultData = await chatResult.json()
-
-        console.log(chatResultData)
+        const chatResultData = await chatResult.json();
         chatResultHeaders['uuid'] = chatResultData.id;
         chatResultHeaders['error'] = chatResultData.error;
-        chatResultHeaders['type'] = chatResultData.type;
-        chatResultHeaders['close'] = chatResultData.close;
+        chatResultHeaders['type'] = "abort";
+        chatResultHeaders['close'] = true;
 
         console.log(chatResultHeaders)
 
@@ -146,9 +145,10 @@ export default function ChatContainer() {
       }
       else {
         message = "";
-        chatResultHeaders['uuid'] = chatResult.headers.get("id");
-        chatResultHeaders['error'] = chatResult.headers.get("error");
-        chatResultHeaders['type'] = chatResult.headers.get("type");
+        const chatResultData = await chatResult.json();
+        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
+        chatResultHeaders['error'] = chatResultData.message;
+        chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 
         console.log(chatResultHeaders)
@@ -195,41 +195,43 @@ export default function ChatContainer() {
 
 
   function resetChat(setDisplay) {
-      setDisplay(false)
-      console.log('resetting')
-      window.localStorage.setItem('newChat', true)
-      location.reload()
+    setDisplay(false)
+    console.log('resetting')
+    window.localStorage.setItem('newChat', true)
+    setChatHistory([])
+    setLoadingHistory(true)
+    location.reload()
   }
 
 
   if (loadingHistory) return <LoadingChat />;
 
-    return (
-      <div className="chat-container">
-        <AcknowledgeTermsModal/>
-        <ChatHeader
-            documents = {documents}
-            history = {chatHistory}
-            reset = {resetChat}
-        />
-        <ChatHistory
-            history = {chatHistory}
-            setMessage={setMessage}
-        />
-        <PromptInput
-          message={message}
-          submit={handleSubmit}
-          onChange={handleMessageChange}
-          inputDisabled={loadingResponse}
-          buttonDisabled={loadingResponse}
-          onClick = {resetChat}
-          documents={documents}
-          setDocuments={setDocuments}
-          history = {chatHistory}
-          resetChat={resetChat}
-          documentStatus ={documentStatus}
-          setDocumentStatus = {setDocumentStatus}
-        />
-      </div>
-    );
+  return (
+    <div className="chat-container">
+      <AcknowledgeTermsModal />
+      <ChatHeader
+        documents={documents}
+        history={chatHistory}
+        reset={resetChat}
+      />
+      <ChatHistory
+        history={chatHistory}
+        setMessage={setMessage}
+      />
+      <PromptInput
+        message={message}
+        submit={handleSubmit}
+        onChange={handleMessageChange}
+        inputDisabled={loadingResponse}
+        buttonDisabled={loadingResponse}
+        onClick={resetChat}
+        documents={documents}
+        setDocuments={setDocuments}
+        history={chatHistory}
+        resetChat={resetChat}
+        documentStatus={documentStatus}
+        setDocumentStatus={setDocumentStatus}
+      />
+    </div>
+  );
 }

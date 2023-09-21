@@ -45,7 +45,7 @@ export default function PromptInput({
     }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     const textarea = promptRef.current;
     adjustTextArea(textarea)
   }, [message])
@@ -56,13 +56,13 @@ export default function PromptInput({
       PromptArea.style.paddingTop = `70px`
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
       document.getElementById('submitBtn').disabled = false;
-    } else if (documentStatus == "Error" ) {
+    } else if (documentStatus == "Error") {
       PromptArea.style.paddingTop = `100px`
-      PromptArea.style.height = `${PromptArea.scrollHeight}px`; 
+      PromptArea.style.height = `${PromptArea.scrollHeight}px`;
       document.getElementById('submitBtn').disabled = true;
     } else if (documentStatus == null) {
       PromptArea.style.paddingTop = `18px`
-      PromptArea.style.height = `50px`; 
+      PromptArea.style.height = `50px`;
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
       document.getElementById('submitBtn').disabled = false;
     } else {
@@ -77,11 +77,11 @@ export default function PromptInput({
         onSubmit={handleSubmit}
       >
         <div className="prompt-container">
-          <UploadPDF reset={resetChat} history={history} disabled={buttonDisabled} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
+          <UploadPDF reset={resetChat} history={history} disabled={buttonDisabled} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus} />
           <div className="prompt-box">
             <textarea
               onKeyDown={captureEnter}
-              onChange={e => {onChange(e)}}
+              onChange={e => { onChange(e) }}
               required={true}
               disabled={inputDisabled}
               onFocus={() => setFocused(true)}
@@ -89,13 +89,13 @@ export default function PromptInput({
                 setFocused(false);
                 adjustTextArea(e);
               }}
-              ref = {promptRef}
+              ref={promptRef}
               value={message}
               id="text-input"
               className="text-input"
               placeholder="Enter a prompt (Shift + Enter for newline)"
             />
-            <PDFStatus documentstatus={documentStatus} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus}/>
+            <PDFStatus documentstatus={documentStatus} documents={documents} setDocuments={setDocuments} setDocumentStatus={setDocumentStatus} />
           </div>
           <button
             className="send-message"
@@ -105,13 +105,13 @@ export default function PromptInput({
             id="submitBtn"
             disabled={buttonDisabled}
           >
-              <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled ? `var(--inactive_button)` : `var(--active_button)`}/>
-                <path fillRule="evenodd" clipRule="evenodd" d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled  ? `var(--inactive_button)`: `var(--active_button)`}/>
-              </svg>
+            <svg width="50" height="50" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fillRule="evenodd" clipRule="evenodd" d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled ? `var(--inactive_button)` : `var(--active_button)`} />
+              <path fillRule="evenodd" clipRule="evenodd" d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z" fill={message.length < 1 || document.getElementById('submitBtn').disabled ? `var(--inactive_button)` : `var(--active_button)`} />
+            </svg>
           </button>
         </div>
-        <Disclaimer/>
+        <Disclaimer />
       </form>
     </div>
   );
@@ -121,14 +121,14 @@ const Disclaimer = memo(() => {
   return (
     <div className="disclaimer-container">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fillRule="evenodd" clipRule="evenodd" d="M7.99992 2.00016C4.68621 2.00016 1.99992 4.68645 1.99992 8.00016C1.99992 11.3139 4.68621 14.0002 7.99992 14.0002C11.3136 14.0002 13.9999 11.3139 13.9999 8.00016C13.9999 4.68645 11.3136 2.00016 7.99992 2.00016ZM1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335C11.6818 1.3335 14.6666 4.31826 14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016Z" fill="#1B65F8"/>
-        <path fillRule="evenodd" clipRule="evenodd" d="M7.99992 13.3335C10.9454 13.3335 13.3333 10.9457 13.3333 8.00016C13.3333 5.05464 10.9454 2.66683 7.99992 2.66683C5.0544 2.66683 2.66659 5.05464 2.66659 8.00016C2.66659 10.9457 5.0544 13.3335 7.99992 13.3335ZM14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335C11.6818 1.3335 14.6666 4.31826 14.6666 8.00016Z" fill="#1B65F8"/>
-        <path fillRule="evenodd" clipRule="evenodd" d="M8.66059 4.66943V9.33609H7.32725V4.66943H8.66059Z" fill="#1B65F8"/>
-        <path fillRule="evenodd" clipRule="evenodd" d="M8.66659 11.3361H7.32725V10.0028H8.66659V11.3361Z" fill="#1B65F8"/>
+        <path fillRule="evenodd" clipRule="evenodd" d="M7.99992 2.00016C4.68621 2.00016 1.99992 4.68645 1.99992 8.00016C1.99992 11.3139 4.68621 14.0002 7.99992 14.0002C11.3136 14.0002 13.9999 11.3139 13.9999 8.00016C13.9999 4.68645 11.3136 2.00016 7.99992 2.00016ZM1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335C11.6818 1.3335 14.6666 4.31826 14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016Z" fill="#1B65F8" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M7.99992 13.3335C10.9454 13.3335 13.3333 10.9457 13.3333 8.00016C13.3333 5.05464 10.9454 2.66683 7.99992 2.66683C5.0544 2.66683 2.66659 5.05464 2.66659 8.00016C2.66659 10.9457 5.0544 13.3335 7.99992 13.3335ZM14.6666 8.00016C14.6666 11.6821 11.6818 14.6668 7.99992 14.6668C4.31802 14.6668 1.33325 11.6821 1.33325 8.00016C1.33325 4.31826 4.31802 1.3335 7.99992 1.3335C11.6818 1.3335 14.6666 4.31826 14.6666 8.00016Z" fill="#1B65F8" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M8.66059 4.66943V9.33609H7.32725V4.66943H8.66059Z" fill="#1B65F8" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M8.66659 11.3361H7.32725V10.0028H8.66659V11.3361Z" fill="#1B65F8" />
       </svg>
       <div className="msg-container">
         <p className="disclaimer-msg">
-          Only for information classified up to CONFIDENTIAL. 
+          Only for information classified up to CONFIDENTIAL.
         </p>
         <p className="disclaimer-msg">
           AIDE may give inaccurate or invalid responses. Please vet through all AI-generated work.

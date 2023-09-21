@@ -2,9 +2,10 @@
     background-color: var(--light_gray);
     display: flex;
     flex-direction: row;
-    margin: 0px 20vw 0px 20vw ;
+    margin: 0px 20vw 0px 20vw;
     scroll-margin-bottom: 50px;
 }
+
 .user-query-container {
     color: var(--black);
     display: flex;
@@ -21,9 +22,10 @@
     white-space: pre-wrap;
     word-break: break-word;
 }
+
 .user-icon {
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     margin-right: 32px;
 }
@@ -33,26 +35,28 @@
     justify-content: center;
     align-items: center;
     background-color: var(--active_button);
-    width:40px;
-    height:40px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
     color: var(--white);
     font: 600 16px 'Open Sans';
     border-radius: 50%;
     letter-spacing: 1px;
 }
+
 .llm-reply {
     background-color: var(--hover_button_light_gray);
     display: flex;
     flex-direction: column;
     scroll-margin-bottom: 25px;
 }
-.llm-reply-container{
+
+.llm-reply-container {
     color: var(--black);
-    margin: 12px 20vw 0px 20vw ;
+    margin: 12px 20vw 0px 20vw;
 }
 
-.llm-reply-content{
+.llm-reply-content {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -75,18 +79,19 @@
     justify-content: center;
     align-items: center;
     background-color: var(--dark_blue);
-    width:40px;
-    height:40px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 32px;
 }
+
 .llm-icon-content {
     width: 24px;
     height: 24px;
     object-fit: contain;
 }
 
-.llm-feedback{
+.llm-feedback {
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
@@ -103,20 +108,21 @@
     margin-right: 4px;
 }
 
-.rate-button:hover{
+.rate-button:hover {
     background-color: var(--hover_button_light_gray);
 }
 
 .feedback-container {
     background-color: var(--white);
     border-radius: 10px;
+    min-width: 56vw;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
 }
 
-.feedback-text{
+.feedback-text {
     font: 600 16px "Open Sans";
     color: var(--black);
     padding: 16px 4px 16px 32px;
