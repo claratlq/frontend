@@ -1,12 +1,7 @@
 FROM node:latest as build
 
-USER root
+WORKDIR /llm-frontend
+COPY --chown=node:0 . /llm-frontend
+RUN npm install ci --legacy-peer-deps
 
-RUN apt-get update
-
-WORKDIR /llm_frontend/
-
-COPY . ./
-RUN npm install --legacy-peer-deps
-# RUN npm install react-scripts@3.4.1 -g --silent
-# RUN npm install dotenv --save
+ENTRYPOINT ["npx", "vite", "serve", "--port", "3000"]
