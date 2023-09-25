@@ -8,9 +8,6 @@ services:
       - "80:80"
     volumes:
       - ./haproxy:/usr/local/etc/haproxy
-    networks:
-      - frontend-network
-      - host-network
     depends_on:
       - frontend
 
@@ -19,8 +16,6 @@ services:
     build:
       context: ../
       dockerfile: Dockerfile
-    networks:
-      - frontend-network
 
   frontend-cadvisor:
     container_name: frontend-cadvisor
@@ -31,14 +26,3 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - frontend-network
-      - monitoring-network
-
-networks:
-  host-network:
-    name: host-network
-  frontend-network:
-    name: frontend-network
-  monitoring-network:
-    name: monitoring-network
