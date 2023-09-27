@@ -7,6 +7,8 @@ services:
       - "80:80"
     volumes:
       - ./mock-f5:/usr/local/etc/haproxy
+    depends_on:
+      - frontend-proxy
 
   frontend-proxy:
     container_name: frontend-proxy
@@ -21,9 +23,11 @@ services:
 
   frontend:
     container_name: frontend
-        build:
+    image: llm-frontend:1.0.0-alpha
+    build:
       context: ../
       dockerfile: Dockerfile
+    command: npx serve /dist/
 
   frontend-cadvisor:
     container_name: frontend-cadvisor
