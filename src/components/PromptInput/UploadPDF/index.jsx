@@ -99,12 +99,12 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
     }
 
     async function submitPDF(formData, fileName) {
-        const googleAuthToken = window.localStorage.getItem("googleAuthToken");
+        const currentUser = window.localStorage.getItem("AUTH_USER");
         const chatID = window.localStorage.getItem("chatID");
         formData.append("chatId", chatID)
         setDocumentStatus('Uploading')
         setDocuments(fileName)
-        const response = await Workspace.uploadFile(formData, googleAuthToken);
+        const response = await Workspace.uploadFile(formData, currentUser);
         if (response.ok) {
             setDocumentStatus('Success')
         } else {

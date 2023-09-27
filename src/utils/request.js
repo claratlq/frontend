@@ -1,5 +1,3 @@
-import { AUTH_TOKEN, AUTH_USER } from "./constants";
-
 // Sets up the base headers for all authenticated requests so that we are able to prevent
 // basic spoofing since a valid token is required and that cannot be spoofed
 export function userFromStorage() {
@@ -21,17 +19,7 @@ export function userFromStorage() {
 
 export function baseHeaders(providedToken = null) {
   console.log(`Header: ${providedToken}`)
-  const token = providedToken ? providedToken : window.localStorage.getItem(AUTH_TOKEN);
   return {
-    Authorization: token ? `Bearer ${token}` : null,
+    Authorization: "",
   };
-}
-
-
-export function reAuthenticate() {
-  window.localStorage.removeItem('googleAuthToken')
-  window.localStorage.removeItem(AUTH_TOKEN)
-  window.localStorage.removeItem('user')
-  location.reload()
-  console.log('reauthenticated!')
 }

@@ -1,6 +1,5 @@
 import { API_BASE } from "../utils/constants";
 import { baseHeaders } from "../utils/request";
-import { reAuthenticate } from "../utils/request";
 
 const Workspace = {
   new: async function (googleAuthToken) {
@@ -10,10 +9,7 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return { chatId: null }
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
@@ -35,10 +31,7 @@ const Workspace = {
       // body: JSON.stringify(slug)
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return { "textHistory": [] }
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
@@ -60,10 +53,7 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return null
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
@@ -88,10 +78,7 @@ const Workspace = {
       headers: header,
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return null
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res
         } else {
           console.log('error', res)
@@ -116,10 +103,7 @@ const Workspace = {
       }
     )
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return null
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res
         } else {
           console.log('error', res)
@@ -141,10 +125,7 @@ const Workspace = {
       // body: JSON.stringify(slug)
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return { chatId: null }
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res.json()
         } else {
           console.log('error', res)
@@ -166,10 +147,7 @@ const Workspace = {
       headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
-        if (res.status === 403) {
-          reAuthenticate()
-          return null
-        } else if (res.status === 200) {
+        if (res.status === 200) {
           return res
         } else {
           console.log('error', res)
