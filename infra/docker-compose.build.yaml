@@ -15,7 +15,6 @@ services:
   frontend-proxy:
     container_name: frontend-proxy
     image: haproxy:2.8
-    # image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31 # harden
     ports:
       - "8080:8080"
     volumes:
@@ -27,18 +26,24 @@ services:
   frontend:
     container_name: frontend
     image: llm-frontend:1.0.0-alpha
+    build:
+      context: ../
+      dockerfile: Dockerfile.production
     networks:
       - host
   
   frontend-cadvisor:
     container_name: frontend-cadvisor
-    image: registry1.dso.mil/ironbank/opensource/google/cadvisor:0.45.0 
+    image: registry1.dso.mil/ironbank/opensource/google/cadvisor:0.45.0
+    ports:
+      - 9090:9090
     command: --port=9090
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
+      - /run/user/1000/docker.sock:/var/run/docker.sock:ro
+      - ~/.local/share/docker:/var/lib/docker:ro
     networks:
       - host
 
