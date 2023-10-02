@@ -74,7 +74,6 @@ Configure the `.env` file as follow:
 BACKEND_HOST= # localhost
 VITE_API_BASE= # http://${BACKEND_HOST}:3001/api 
 NODE_ENV= # development | production
-VITE_GOOGLE_CLIENT_ID= # XXXX.apps.googleusercontent.com
 ```
 
 To run the Docker container and serve the Node application:
