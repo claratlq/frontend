@@ -1,23 +1,23 @@
 version: '3'
 
 services:
-  mock-f5:
-    container_name: mock-f5
-    image: haproxy:2.8
-    ports:
-      - "80:80"
-    volumes:
-      - ./mock-f5/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - ./mock-f5/cors.lua:/usr/local/etc/haproxy/cors.lua
-    networks:
-      - host
+  # mock-f5:
+  #   container_name: mock-f5
+  #   image: haproxy:2.8
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./mock-f5/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  #     - ./mock-f5/cors.lua:/usr/local/etc/haproxy/cors.lua
+  #   networks:
+  #     - host
 
   frontend-proxy:
     container_name: frontend-proxy
-    image: haproxy:2.8
-    # image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31 # harden
+    # image: haproxy:2.8
+    image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31 # harden
     ports:
-      - "8080:8080"
+      - "80:80"
     volumes:
       - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
       - ./haproxy/cors.lua:/usr/local/etc/haproxy/cors.lua
