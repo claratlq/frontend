@@ -22,13 +22,13 @@ export default function ChatContainer() {
     const currentUser = window.localStorage.getItem("AUTH_USER");
     var activeChatID = await Workspace.new(currentUser)
     if (activeChatID.chatId === null) { //if error in creating chat
-      console.log("Error in creating new chat!!!")
+      console.debug("Error in creating new chat!!!")
     } else {
       window.localStorage.setItem('chatID', activeChatID.chatId)
       setChatID(activeChatID.chatId)
       window.localStorage.setItem("newChat", false)
     }
-    console.log("Done resetting chat!!!")
+    console.debug("Done resetting chat!!!")
   }
 
   useEffect(() => {
@@ -47,9 +47,9 @@ export default function ChatContainer() {
           setChatID(activeChatID.chatId)
         }
       }
-      console.log("Getting chat history!!!")
+      console.debug("Getting chat history!!!")
       const textHistory = await Workspace.chatHistory(currentUser);
-      console.log(chatID)
+      console.debug(chatID)
       if (textHistory.chatId === Number(chatID)) {
         setChatHistory(textHistory.textHistory);
         setLoadingHistory(false);
@@ -80,7 +80,7 @@ export default function ChatContainer() {
         { "chatId": chatID, "text": promptMessage.userMessage },
         currentUser
       );
-      console.log(chatResult)
+      console.debug(chatResult)
 
       if (!chatResult) {
         let date = new Date().toISOString();
@@ -100,15 +100,18 @@ export default function ChatContainer() {
         );
       } else if (chatResult.status === 200) {
         const reader = chatResult.body
-          .pipeThrough(new TextDecoderStream())
+          .pipeThrough(new TextDecoderStream('utf-8'))
           .getReader()
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
 
-          console.log('Received: ', value);
+          console.debug('Received: ', value);
 
           message = message + value;
+
+          console.debug('message: ', message);
+
           chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
           chatResultHeaders['error'] = null;
           chatResultHeaders['type'] = "textResponse";
@@ -131,7 +134,7 @@ export default function ChatContainer() {
         chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 
-        console.log(chatResultHeaders)
+        console.debug(chatResultHeaders)
 
         handleChat(
           chatResultHeaders,
@@ -150,7 +153,7 @@ export default function ChatContainer() {
         chatResultHeaders['type'] = "abort";
         chatResultHeaders['close'] = true;
 
-        console.log(chatResultHeaders)
+        console.debug(chatResultHeaders)
 
         handleChat(
           chatResultHeaders,
@@ -195,7 +198,7 @@ export default function ChatContainer() {
 
   function resetChat(setDisplay) {
     setDisplay(false)
-    console.log('resetting')
+    console.debug('resetting')
     window.localStorage.setItem('newChat', true)
     setChatHistory([])
     setLoadingHistory(true)

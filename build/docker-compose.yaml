@@ -6,4 +6,11 @@ services:
       - 3000:3000
     volumes:
       - ../src:/llm_frontend/src
+      - ../.env:/llm_frontend/.env
     command: ['npx', 'vite', 'serve', '--port', '3000']
+    networks:
+      - host-network
+
+networks:
+  host-network:
+    name: host-network

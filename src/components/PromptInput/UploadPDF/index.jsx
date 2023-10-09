@@ -42,7 +42,7 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
 
             //event listeners
             inputFile.addEventListener('change', uploadFile);
-            inputFile.addEventListener('blur', () => { console.log("ahhhhhhhhhh") });
+            inputFile.addEventListener('blur', () => { console.debug("ahhhhhhhhhh") });
             pdfButton.addEventListener('click', openDialog);
         } else {
             updatingButton(true)
@@ -67,10 +67,10 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
     }, [errorMessage])
 
     function openDialog() {
-        console.log('clicked')
+        console.debug('clicked')
         // const backdrop = document.querySelector(".backdrop");
         if (!window.localStorage.getItem("acknowledgedPdfTerms")) {
-            console.log("clicked no ack")
+            console.debug("clicked no ack")
             setClickedPDFbutton(true)
             // backdrop.style.display = "block";
         } else if (history.length === 0) {
@@ -94,7 +94,7 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
             formData.append("File", file, file.name);
             submitPDF(formData, file.name)
         }
-        console.log("upload done")
+        console.debug("upload done")
         // backdrop.style.display = "none";
     }
 
@@ -109,14 +109,14 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
             setDocumentStatus('Success')
         } else {
             setDocumentStatus('Error')
-            console.log("PDF Upload Failed", response.json().error)
+            console.debug("PDF Upload Failed", response.json().error)
         }
     }
 
     return (
         <div>
             <div className="backdrop" />
-            <AcknowledgePdfModal display={clickedPDFbutton} setDisplay={setClickedPDFbutton} />
+            <AcknowledgePdfModal display={clickedPDFbutton} setDisplay={setClickedPDFbutton} history={history} setWarning={setClearChat}/>
             <WarningModals display={clearChat} setDisplay={setClearChat} pdf={true} reset={reset} error={true} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             <div title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data">
                 <input type="file" id="uploadPDFinput" name="filename" accept="application/pdf" hidden />

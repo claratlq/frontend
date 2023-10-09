@@ -1,4 +1,4 @@
-.chat-container{
+.chat-container {
     background-color: var(--light_gray);
     margin: 0;
     padding: 0;
@@ -8,22 +8,22 @@
     flex-shrink: 1;
 }
 
-.header-text{
+.header-text {
     font: 400 36px "Open Sans";
     color: var(--black);
     padding-bottom: 8px;
 }
 
-.sticky-header{
+.sticky-header {
     position: sticky;
     width: 60vw;
-    margin: 40px 20vw 0 20vw;
+    margin: 40px 20vw 20px 20vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.clear-chat{
+.clear-chat {
     background-color: var(--active_button);
     border-radius: 5px;
     height: 45px;
@@ -32,17 +32,17 @@
     font: 400 16px "Open Sans"
 }
 
-.clear-chat:hover{
+.clear-chat:hover {
     background-color: var(--hover_button_blue);
 }
 
-.PDF-attachment{
+.PDF-attachment {
     background-color: var(--white);
     max-width: 280px;
     width: fit-content;
     padding: 8px;
     height: 32px;
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
@@ -50,7 +50,3 @@
     margin-top: 8px;
     border-radius: 5px;
 }
-
-
-
-

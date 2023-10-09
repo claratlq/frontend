@@ -11,14 +11,19 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function AcknowledgePdfModal({ display, setDisplay }) {
+export default function AcknowledgePdfModal({ display, setDisplay, history, setWarning }) {
     const classes = useStyles();
     const [acknowledgedTerms, setAcknowledgedTerms] = useState(window.localStorage.getItem("acknowledgedPdfTerms") ? true : false);
 
     const acknowledgeTerms = (event) => {
         setDisplay(event.target.value);
         setAcknowledgedTerms(event.target.value);
-        document.getElementById('uploadPDFinput').click();
+        // document.getElementById('uploadPDFinput').click();
+        if (history.length === 0) {
+            document.getElementById('uploadPDFinput').click()
+        } else {
+            setWarning(event.target.value)
+        }
     };
 
     if (!acknowledgedTerms && display) {
@@ -56,7 +61,7 @@ function AcknowledgePdf({ acknowledgedTerms }) {
                                 <img className="acknowledgment-task-content-image" src="../../public/document.svg" />
                                 <div className="acknowledgment-task-content-task">Upload a PDF and ask me anything</div>
                             </div>
-                            <div className="acknowledgment-task-content-description">AIDE can analyse and summarise your document for you</div>
+                            <div className="acknowledgment-task-content-description">GAIA can analyse and summarise your document for you</div>
                         </div>
                         <div className="acknowledgment-task-content">
                             <div className="acknowledgment-task-content-header">

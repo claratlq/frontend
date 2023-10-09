@@ -12,7 +12,7 @@ import "../../styles/App.css"
 export default function Main() {
   const [authenticated, setAuthentication] = useState(false)
   const [userId, setUserId] = useState(null);
-  
+
   useEffect(() => {
     async function checkAuth() {
       await Authentication.checkAuth()
@@ -26,7 +26,7 @@ export default function Main() {
 
   useEffect(() => {
     const userExists = window.localStorage.getItem("user");
-    if(userExists){
+    if (userExists) {
       setAuthentication(true)
     }
   }, []);
@@ -35,8 +35,8 @@ export default function Main() {
   if (authenticated) {
     return (
       <div className="chat-page">
-        <ChatHeader/>
-        <ChatContainer/>
+        <ChatHeader />
+        <ChatContainer />
       </div>
     );
   }
@@ -45,8 +45,8 @@ export default function Main() {
     <div className="chat-page">
       <header className="login-header">
       </header>
-      <LoadingChat/>
+      <LoadingChat />
     </div>
   );
-  
+
 }

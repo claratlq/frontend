@@ -12,12 +12,12 @@ const Workspace = {
         if (res.status === 200) {
           return res.json()
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return { chatId: null }
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return { chatId: null }
       }
       );
@@ -34,12 +34,12 @@ const Workspace = {
         if (res.status === 200) {
           return res.json()
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return { "textHistory": [] }
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return { "textHistory": [] }
       }
       );
@@ -56,12 +56,12 @@ const Workspace = {
         if (res.status === 200) {
           return res.json()
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return res.json()
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return null
       }
       );
@@ -69,7 +69,7 @@ const Workspace = {
   },
 
   streamingSendChat: async function (data, googleAuthToken) {
-    console.log(API_BASE)
+    console.debug(API_BASE)
     var header = baseHeaders(googleAuthToken);
     header["Content-Type"] = "application/json";
     const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
@@ -81,7 +81,7 @@ const Workspace = {
         if (res.status === 200) {
           return res
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return res
         }
       })
@@ -106,12 +106,12 @@ const Workspace = {
         if (res.status === 200) {
           return res
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return res
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return null
       }
       );
@@ -128,12 +128,12 @@ const Workspace = {
         if (res.status === 200) {
           return res.json()
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return { chatId: null }
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return { chatId: null }
       }
       );
@@ -150,17 +150,41 @@ const Workspace = {
         if (res.status === 200) {
           return res
         } else {
-          console.log('error', res)
+          console.debug('error', res)
           return res
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.debug(e)
         return e
       }
       );
     return response;
   },
+  removeFile: async function (chatID, googleAuthToken) {
+    const response = await fetch(`${API_BASE}/pdf_delete`, {
+      method: "POST",
+      body: JSON.stringify({ "chatId": chatID }),
+      headers: baseHeaders(googleAuthToken),
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          reAuthenticate()
+          return null
+        } else if (res.status === 200) {
+          return res
+        } else {
+          console.debug('error', res)
+          return res
+        }
+      })
+      .catch((e) => {
+        console.debug(e)
+        return e
+      }
+      );
+    return response;
+  }
 };
 
 export default Workspace;

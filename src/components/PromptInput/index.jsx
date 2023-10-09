@@ -131,7 +131,7 @@ const Disclaimer = memo(() => {
           Only for information classified up to CONFIDENTIAL.
         </p>
         <p className="disclaimer-msg">
-          AIDE may give inaccurate or invalid responses. Please vet through all AI-generated work.
+          GAIA may give inaccurate or invalid responses. Please vet through all AI-generated work.
         </p>
       </div>
     </div>

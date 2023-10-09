@@ -18,7 +18,7 @@ export function userFromStorage() {
 }
 
 export function baseHeaders(providedToken = null) {
-  console.log(`Header: ${providedToken}`)
+  console.debug(`Header: ${providedToken}`)
   return {
     Authorization: "",
   };

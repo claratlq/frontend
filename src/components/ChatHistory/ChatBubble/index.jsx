@@ -29,7 +29,7 @@ const PromptReply = forwardRef(
         currentUser
       );
       if (success.ok) {
-        console.log('success')
+        console.debug('success')
       }
     };
 
@@ -47,7 +47,7 @@ const PromptReply = forwardRef(
         currentUser
       );
       if (success.ok) {
-        console.log('success')
+        console.debug('success')
       }
     };
 

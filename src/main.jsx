@@ -7,6 +7,7 @@ import "./index.css";
 const isDev = import.meta.NODE_ENV !== "production";
 const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <REACTWRAP>
     <Router>

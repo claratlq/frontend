@@ -24,14 +24,14 @@ if (!!user) {
 
 export default function ChatHeader() {
     return (
-      <div className="chat-header">
-        <div className="left-container">
-            <div className="AIDE-logo"></div>
-            <p className="AIDE">AIDE</p>
+        <div className="chat-header">
+            <div className="left-container">
+                <div className="AIDE-logo"></div>
+                <p className="AIDE">GAIA</p>
+            </div>
+            <a className="initials-logo" title={user}>
+                {getInitials(firstName, lastName)}
+            </a>
         </div>
-        <a className="initials-logo" title={user}>
-            {getInitials(firstName,lastName)}
-        </a>
-      </div>
     );
 }
