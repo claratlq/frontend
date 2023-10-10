@@ -85,9 +85,8 @@ export default function PromptInput({
               required={true}
               disabled={inputDisabled}
               onFocus={() => setFocused(true)}
-              onBlur={(e) => {
+              onBlur={() => {
                 setFocused(false);
-                adjustTextArea(e);
               }}
               ref={promptRef}
               value={message}
