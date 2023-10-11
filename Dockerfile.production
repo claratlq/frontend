@@ -3,8 +3,7 @@ FROM registry1.dso.mil/ironbank/opensource/nodejs/debian/nodejs:18.18.0 as build
 WORKDIR /llm-frontend
 COPY --chown=node:node . /llm-frontend
 RUN npm install --legacy-peer-deps
-RUN npm run build \
- && mv /llm-frontend/public/ /llm-frontend/dist/public/
+RUN npm run build
 
 
 FROM registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.2-distroless
