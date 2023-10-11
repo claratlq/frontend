@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     networks:
       - host
-  
+
   frontend-cadvisor:
     container_name: frontend-cadvisor
     image: gcr.io/cadvisor/cadvisor:v0.47.2

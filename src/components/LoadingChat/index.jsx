@@ -1,7 +1,7 @@
 import "../PromptInput/promptinputStyles.css"
 
 export default function LoadingChat() {
-  
+
 
   return (
     <div>
@@ -13,4 +13,3 @@ export default function LoadingChat() {
     </div>
   );
 }
-

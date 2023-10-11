@@ -69,10 +69,10 @@ docker build . -t llm-frontend:latest
 ```
 
 ## Run Locally
-Configure the `.env` file as follow: 
+Configure the `.env` file as follow:
 ```
 BACKEND_HOST= # localhost
-VITE_API_BASE= # http://${BACKEND_HOST}:3001/api 
+VITE_API_BASE= # http://${BACKEND_HOST}:3001/api
 NODE_ENV= # development | production
 ```
 
@@ -90,5 +90,5 @@ docker run -d -p 3000:3000 llm-frontend:latest npx vite serve
 | /pdf_upload | `POST` | user_id: `str`<br>chat_id: `str`<br>file: `bytes` (utf-8) | - |
 | /send_message | `POST` | user_id: `str`<br>chat_Id: `str`<br>text: `str` | response_id: `str`<br>text_response: `str` |
 | /rate_response | `POST` | response_Id: `str`<br>rating: `int8` (1 or -1 only) | - |
-| /get_chat_history | `GET` | user_id: `str` | chat_id: `str`<br>text_history: `List[{`<br>&nbsp;`response_id: str`<br>&nbsp;`text_response: str`<br>`}]` 
+| /get_chat_history | `GET` | user_id: `str` | chat_id: `str`<br>text_history: `List[{`<br>&nbsp;`response_id: str`<br>&nbsp;`text_response: str`<br>`}]`
 | /get_active_chat | `GET` | user_id: `str` | chat_id:`str` or `null` |

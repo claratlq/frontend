@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile.production
     networks:
       - host
-  
+
   frontend-cadvisor:
     container_name: frontend-cadvisor
     image: registry1.dso.mil/ironbank/opensource/google/cadvisor:0.45.0

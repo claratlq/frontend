@@ -14,7 +14,7 @@ export default function Main() {
     async function checkAuth() {
       await Authentication.checkAuth()
       const userId = window.localStorage.getItem("user");
-      
+
       if (userId === 'null') {
         setAuthentication(false)
       } else {
