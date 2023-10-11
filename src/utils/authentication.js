@@ -1,6 +1,4 @@
-import { Buffer } from 'buffer';
 import System from "../models/system";
-const isDev = import.meta.NODE_ENV !== "production";
 
 const Authentication = {
     checkAuth: async function () {
@@ -8,6 +6,9 @@ const Authentication = {
         if (authenticated) {
             window.localStorage.setItem("user", userId);
             window.localStorage.setItem("AUTH_USER", userId);
+        } else {
+            window.localStorage.setItem("user", null);
+            window.localStorage.setItem("AUTH_USER", null);
         }
     },
 };

@@ -1,12 +1,9 @@
 import { API_BASE } from "../utils/constants";
-import { baseHeaders } from "../utils/request";
 
 const Workspace = {
-  new: async function (googleAuthToken) {
+  new: async function () {
     const chatId = await fetch(`${API_BASE}/reset_chat`, {
       method: "GET",
-      // body: JSON.stringify(data),
-      headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
         if (res.status === 200) {
@@ -24,11 +21,9 @@ const Workspace = {
     return chatId;
   },
 
-  chatHistory: async function (googleAuthToken) {
+  chatHistory: async function () {
     const history = await fetch(`${API_BASE}/get_chat_history`, {
       method: "GET",
-      headers: baseHeaders(googleAuthToken),
-      // body: JSON.stringify(slug)
     })
       .then((res) => {
         if (res.status === 200) {
@@ -46,32 +41,31 @@ const Workspace = {
     return history;
   },
 
-  sendChat: async function (data, googleAuthToken) {
-    const chatResult = await fetch(`${API_BASE}/send_message`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: baseHeaders(googleAuthToken),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json()
-        } else {
-          console.debug('error', res)
-          return res.json()
-        }
-      })
-      .catch((e) => {
-        console.debug(e)
-        return null
-      }
-      );
-    return chatResult;
-  },
+  // sendChat: async function (data) {
+  //   const chatResult = await fetch(`${API_BASE}/send_message`, {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         return res.json()
+  //       } else {
+  //         console.debug('error', res)
+  //         return res.json()
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.debug(e)
+  //       return null
+  //     }
+  //     );
+  //   return chatResult;
+  // },
 
-  streamingSendChat: async function (data, googleAuthToken) {
-    console.debug(API_BASE)
-    var header = baseHeaders(googleAuthToken);
-    header["Content-Type"] = "application/json";
+  streamingSendChat: async function (data) {
+    const header = {
+      "Content-Type": "application/json"
+    }
     const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -93,13 +87,12 @@ const Workspace = {
     return chatResult;
   },
 
-  rateResponse: async function (ratings = {}, googleAuthToken) {
+  rateResponse: async function (ratings = {}) {
     const status = await fetch(
       `${API_BASE}/rate_response`,
       {
         method: "POST",
         body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: baseHeaders(googleAuthToken),
       }
     )
       .then((res) => {
@@ -118,11 +111,9 @@ const Workspace = {
     return status;
   },
 
-  getActiveChat: async function (googleAuthToken) {
+  getActiveChat: async function () {
     const workspace = await fetch(`${API_BASE}/get_active_chat`, {
       method: "GET",
-      headers: baseHeaders(googleAuthToken),
-      // body: JSON.stringify(slug)
     })
       .then((res) => {
         if (res.status === 200) {
@@ -140,11 +131,10 @@ const Workspace = {
     return workspace;
   },
 
-  uploadFile: async function (formData, googleAuthToken) {
+  uploadFile: async function (formData) {
     const response = await fetch(`${API_BASE}/pdf_upload`, {
       method: "POST",
       body: formData,
-      headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
         if (res.status === 200) {
@@ -161,11 +151,10 @@ const Workspace = {
       );
     return response;
   },
-  removeFile: async function (chatID, googleAuthToken) {
+  removeFile: async function (chatID) {
     const response = await fetch(`${API_BASE}/pdf_delete`, {
       method: "POST",
       body: JSON.stringify({ "chatId": chatID }),
-      headers: baseHeaders(googleAuthToken),
     })
       .then((res) => {
         if (res.status === 403) {

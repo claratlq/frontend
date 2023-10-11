@@ -23,11 +23,7 @@ const PromptReply = forwardRef(
         response_id: uuid,
         rating: 1,
       };
-      const currentUser = window.localStorage.getItem("AUTH_USER");
-      const success = await Workspace.rateResponse(
-        ratingJson,
-        currentUser
-      );
+      const success = await Workspace.rateResponse(ratingJson);
       if (success.ok) {
         console.debug('success')
       }
@@ -41,11 +37,7 @@ const PromptReply = forwardRef(
         rating: -1,
       };
 
-      const currentUser = window.localStorage.getItem("AUTH_USER");
-      const success = await Workspace.rateResponse(
-        ratingJson,
-        currentUser
-      );
+      const success = await Workspace.rateResponse(ratingJson);
       if (success.ok) {
         console.debug('success')
       }

@@ -19,8 +19,7 @@ export default function ChatContainer() {
   const [documentStatus, setDocumentStatus] = useState(null);
 
   async function createNewChat() {
-    const currentUser = window.localStorage.getItem("AUTH_USER");
-    var activeChatID = await Workspace.new(currentUser)
+    var activeChatID = await Workspace.new()
     if (activeChatID.chatId === null) { //if error in creating chat
       console.debug("Error in creating new chat!!!")
     } else {
@@ -33,13 +32,12 @@ export default function ChatContainer() {
 
   useEffect(() => {
     async function getHistory() {
-      const currentUser = window.localStorage.getItem("AUTH_USER");
       const newChat = window.localStorage.getItem("newChat");
       setLoadingHistory(true);
       if (newChat === 'true') {
         await createNewChat();
       } else if (!chatID) {
-        const activeChatID = await Workspace.getActiveChat(currentUser);
+        const activeChatID = await Workspace.getActiveChat();
         if (activeChatID.chatId === null) {
           await createNewChat()
         } else {
@@ -48,8 +46,8 @@ export default function ChatContainer() {
         }
       }
       console.debug("Getting chat history!!!")
-      const textHistory = await Workspace.chatHistory(currentUser);
-      console.debug(chatID)
+      const textHistory = await Workspace.chatHistory();
+      console.debug(`current chatID: ${chatID}`)
       if (textHistory.chatId === Number(chatID)) {
         setChatHistory(textHistory.textHistory);
         setLoadingHistory(false);
@@ -75,10 +73,8 @@ export default function ChatContainer() {
         return false;
       }
 
-      const currentUser = window.localStorage.getItem("AUTH_USER");
       const chatResult = await Workspace.streamingSendChat(
         { "chatId": chatID, "text": promptMessage.userMessage },
-        currentUser
       );
       console.debug(chatResult)
 

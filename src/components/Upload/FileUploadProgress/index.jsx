@@ -25,9 +25,8 @@ function FileUploadProgressComponent({
         setTimerMs(Number(new Date()) - start);
       }, 100);
 
-      const currentUser = window.localStorage.getItem("AUTH_USER");
       // Chunk streaming not working in production so we just sit and wait
-      const response = await Workspace.uploadFile(formData, currentUser);
+      const response = await Workspace.uploadFile(formData);
       if (!response.ok) {
         setStatus("failed");
         clearInterval(timer);

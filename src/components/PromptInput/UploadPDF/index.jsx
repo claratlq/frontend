@@ -99,12 +99,11 @@ export default function UploadPDF({ history, disabled, reset, documents, setDocu
     }
 
     async function submitPDF(formData, fileName) {
-        const currentUser = window.localStorage.getItem("AUTH_USER");
         const chatID = window.localStorage.getItem("chatID");
         formData.append("chatId", chatID)
         setDocumentStatus('Uploading')
         setDocuments(fileName)
-        const response = await Workspace.uploadFile(formData, currentUser);
+        const response = await Workspace.uploadFile(formData);
         if (response.ok) {
             setDocumentStatus('Success')
         } else {

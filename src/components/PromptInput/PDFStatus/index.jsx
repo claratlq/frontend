@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "../PDFStatus/PDFstatusStyles.css"
 import Workspace from "../../../models/workspace";
 
@@ -29,9 +28,8 @@ export default function PDFStatus({ documentstatus, documents, setDocuments, set
 
 
     const removePDF = async () => {
-        const currentUser = window.localStorage.getItem("AUTH_USER");
         const chatID = window.localStorage.getItem("chatID");
-        const response = await Workspace.removeFile(chatID, currentUser);
+        const response = await Workspace.removeFile(chatID);
         console.debug(response)
 
         setDocumentStatus(null)
