@@ -2,21 +2,24 @@
 <g id="g1905">
 <g id="g1907">
 <g id="Clip path group">
-<mask id="mask0_198_115" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
+<mask id="mask0_220_118" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
 <g id="clipPath1913">
-<path id="path1911" d="M0.0012207 0.00166893H24.0012V24.0018H0.0012207V0.00166893Z" fill="white"/>
+<path id="path1911" d="M0.0012207 0.001688H24.0012V24.0018H0.0012207V0.001688Z" fill="white"/>
 </g>
 </mask>
-<g mask="url(#mask0_198_115)">
+<g mask="url(#mask0_220_118)">
 <g id="g1909">
+<g id="line">
+<path id="path1925" d="M2.00018 11.4902H15.0002" stroke="#022B7F" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 <g id="g1915">
-<path id="path1917" d="M12.5176 0.9393C6.69409 0.9393 1.97316 5.66119 1.97316 11.486C1.97316 13.6365 2.61723 15.6362 3.72212 17.3039L0.937134 23.0644L6.69502 20.2795C8.36359 21.387 10.3651 22.0327 12.5176 22.0327C18.3412 22.0327 23.0621 17.3108 23.0621 11.486C23.0621 5.66119 18.3412 0.9393 12.5176 0.9393Z" stroke="url(#paint0_linear_198_115)" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="path1917" d="M12.5177 0.939319C6.69415 0.939319 1.97323 5.66121 1.97323 11.486C1.97323 13.6365 2.61729 15.6362 3.72218 17.3039L0.937195 23.0645L6.69509 20.2795C8.36365 21.387 10.3651 22.0327 12.5177 22.0327C18.3412 22.0327 23.0622 17.3108 23.0622 11.486C23.0622 5.66121 18.3412 0.939319 12.5177 0.939319Z" stroke="url(#paint0_linear_220_118)" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <g id="g1919">
-<path id="path1921" d="M12.5244 0.938885C9.81049 0.938885 7.60254 5.66724 7.60254 11.4793C7.60254 17.2912 9.81049 22.0196 12.5244 22.0196C15.2383 22.0196 17.4463 17.2912 17.4463 11.4793C17.4463 5.66724 15.2383 0.938885 12.5244 0.938885Z" stroke="url(#paint1_linear_198_115)" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="path1921" d="M12.5245 0.93895C9.81055 0.93895 7.6026 5.66731 7.6026 11.4793C7.6026 17.2913 9.81055 22.0197 12.5245 22.0197C15.2384 22.0197 17.4464 17.2913 17.4464 11.4793C17.4464 5.66731 15.2384 0.93895 12.5245 0.93895Z" stroke="url(#paint1_linear_220_118)" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
-<g id="g1923">
-<path id="path1925" d="M1.97083 11.486H23.0621" stroke="url(#paint2_linear_198_115)" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="line_2">
+<path id="path1925_2" d="M12.0622 11.4863L23.0622 11.4863" stroke="#022B7F" stroke-width="1.87501" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </g>
 </g>
@@ -24,15 +27,11 @@
 </g>
 </g>
 <defs>
-<linearGradient id="paint0_linear_198_115" x1="23.5001" y1="23.5" x2="6.50012" y2="2.99998" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_220_118" x1="23.5002" y1="23.5" x2="6.50018" y2="3" gradientUnits="userSpaceOnUse">
 <stop stop-color="#8BD4F8"/>
 <stop offset="1" stop-color="#0950E1"/>
 </linearGradient>
-<linearGradient id="paint1_linear_198_115" x1="22.5" y1="23.5001" x2="8" y2="4.00006" gradientUnits="userSpaceOnUse">
-<stop stop-color="#8BD4F8"/>
-<stop offset="1" stop-color="#0950E1"/>
-</linearGradient>
-<linearGradient id="paint2_linear_198_115" x1="12.5001" y1="24.9997" x2="12.5001" y2="-0.000289697" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint1_linear_220_118" x1="22.5001" y1="23.5001" x2="8.00006" y2="4.00012" gradientUnits="userSpaceOnUse">
 <stop stop-color="#8BD4F8"/>
 <stop offset="1" stop-color="#0950E1"/>
 </linearGradient>
