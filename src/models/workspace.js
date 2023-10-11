@@ -88,11 +88,15 @@ const Workspace = {
   },
 
   rateResponse: async function (ratings = {}) {
+    const header = {
+      "Content-Type": "application/json"
+    }
     const status = await fetch(
       `${API_BASE}/rate_response`,
       {
         method: "POST",
         body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
+        headers: header,
       }
     )
       .then((res) => {
