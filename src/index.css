@@ -26,7 +26,7 @@ a {
 
 @font-face {
   font-family: "AvenirNextW10-Bold";
-  src: url("../public/fonts/AvenirNext.ttf");
+  src: url("/fonts/AvenirNext.ttf");
 }
 
 .Avenir {

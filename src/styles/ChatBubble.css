@@ -34,7 +34,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--active_button);
+    background: linear-gradient(83deg, #009689 0%, #7DF6CF 127.13%);
     width: 40px;
     height: 40px;
     object-fit: contain;
@@ -78,17 +78,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--dark_blue);
+    background: linear-gradient(88deg, #0950E1 0%, #8BD4F8 118.97%);
+    margin-right: 32px;
+    border-radius: 50%;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    margin-right: 32px;
+    flex-shrink: 0;
 }
 
 .llm-icon-content {
+    display: flex;
     width: 24px;
     height: 24px;
-    object-fit: contain;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    max-width: fit-content;
 }
 
 .llm-feedback {

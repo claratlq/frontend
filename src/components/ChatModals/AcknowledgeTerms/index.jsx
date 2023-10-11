@@ -96,21 +96,21 @@ function AcknowledgementPages() {
                 <div className="acknowledgment-tasks">
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/pencil.svg" />
+                            <img className="acknowledgment-task-content-image" src="/pencil.svg" />
                             <div className="acknowledgment-task-content-task">Writing Tasks</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Summarise content, highlight key points, adjust tone</div>
                     </div>
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/bulb.svg" />
+                            <img className="acknowledgment-task-content-image" src="/bulb.svg" />
                             <div className="acknowledgment-task-content-task">Research & Brainstorming</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Generate ideas, draw from existing reference material</div>
                     </div>
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/document.svg" />
+                            <img className="acknowledgment-task-content-image" src="/document.svg" />
                             <div className="acknowledgment-task-content-task">Document Analysis</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Quickly understand and summarise the content of your documents</div>
@@ -126,21 +126,21 @@ function AcknowledgementPages() {
                 <div className="acknowledgment-tasks">
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/alert.svg" />
+                            <img className="acknowledgment-task-content-image" src="/alert.svg" />
                             <div className="acknowledgment-task-content-task">GAIA may give inaccurate responses</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Please vet through all AI-generated work</div>
                     </div>
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/alert.svg" />
+                            <img className="acknowledgment-task-content-image" src="/alert.svg" />
                             <div className="acknowledgment-task-content-task">No knowledge of DSTA policies</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Do not ask questions specific to DSTA</div>
                     </div>
                     <div className="acknowledgment-task-content">
                         <div className="acknowledgment-task-content-header">
-                            <img className="acknowledgment-task-content-image" src="../../public/alert.svg" />
+                            <img className="acknowledgment-task-content-image" src="/alert.svg" />
                             <div className="acknowledgment-task-content-task">Only 1 chat session is allowed each time</div>
                         </div>
                         <div className="acknowledgment-task-content-description">Please clear the chat history to create a new chat</div>

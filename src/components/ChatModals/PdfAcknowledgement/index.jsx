@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from '@mui/material/styles';
 import Backdrop from "@material-ui/core/Backdrop";
 import "../modalStyles.css"
 
@@ -58,14 +57,14 @@ function AcknowledgePdf({ acknowledgedTerms }) {
                     <div className="acknowledgment-tasks">
                         <div className="acknowledgment-task-content">
                             <div className="acknowledgment-task-content-header">
-                                <img className="acknowledgment-task-content-image" src="../../public/document.svg" />
+                                <img className="acknowledgment-task-content-image" src="/document.svg" />
                                 <div className="acknowledgment-task-content-task">Upload a PDF and ask me anything</div>
                             </div>
                             <div className="acknowledgment-task-content-description">GAIA can analyse and summarise your document for you</div>
                         </div>
                         <div className="acknowledgment-task-content">
                             <div className="acknowledgment-task-content-header">
-                                <img className="acknowledgment-task-content-image" src="../../public/error.svg" />
+                                <img className="acknowledgment-task-content-image" src="/error.svg" />
                                 <div className="acknowledgment-task-content-task-critical">Limitations</div>
                             </div>
                             <div className="acknowledgment-task-content-description">Max 5MB size PDF allowed, no images or diagrams in PDF</div>

@@ -22,8 +22,6 @@
     width: 24px;
     height:24px;
     object-fit: cover;
-    background-color: var(--inactive_button);
-    border-radius: 50%;
     margin: 0 0.5vw 0 1.5vw;
 }
 
@@ -38,7 +36,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--active_button);
+    border-radius: 100px;
+    background: linear-gradient(83deg, #009689 0%, #7DF6CF 127.13%);
     width:32px;
     height:32px;
     object-fit: contain;

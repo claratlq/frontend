@@ -94,7 +94,7 @@ const PromptReply = forwardRef(
         <div className="llm-reply-container">
           <div className="llm-reply-content">
             <div className="llm-icon">
-              <img src="../../../public/llm.svg" alt="LLM SVG" className="llm-icon-content" />
+              <img alt="LLM SVG" className="llm-icon-content" src="/llm.svg" />
             </div>
             <div className="llm-feedback">
               <span
