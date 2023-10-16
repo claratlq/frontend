@@ -1,19 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Varela+Round&display=swap');
-:root{
-    --red: #DA1E28;
-    --red_hover: #9F0711;
-    --light_gray: #F0F0F0;
-    --medium_gray: #6E6E6E;
-    --dark_gray: #525252;
-    --white: #FFFFFF;
-    --black: #121212;
-    --button_border: #898989;
-    --pdf_button: #525252;
-    --inactive_button: #A3A3A3;
-    --active_button: #1B65F8;
-    --hover_button_blue: #0645C5;
-    --hover_button_light_gray: #E5E5E5;
-    --hover_button_dark_gray: #3D3D3D;
-    --dark_blue: #022B7F;
-    --pdf_line: #C2C2C2;
-} 
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-VariableFont_wdth,wght.ttf") format("tff");
+}
+
+@font-face {
+  font-family: "Open Sans Italic";
+  src: url("/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf") format("tff");
+}
+
+:root {
+  --red: #da1e28;
+  --red_hover: #9f0711;
+  --light_gray: #f0f0f0;
+  --medium_gray: #6e6e6e;
+  --dark_gray: #525252;
+  --white: #ffffff;
+  --black: #121212;
+  --button_border: #898989;
+  --pdf_button: #525252;
+  --inactive_button: #a3a3a3;
+  --active_button: #1b65f8;
+  --hover_button_blue: #0645c5;
+  --hover_button_light_gray: #e5e5e5;
+  --hover_button_dark_gray: #3d3d3d;
+  --dark_blue: #022b7f;
+  --pdf_line: #c2c2c2;
+}
