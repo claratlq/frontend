@@ -7,17 +7,16 @@ const Workspace = {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res.json()
+          return res.json();
         } else {
-          console.debug('error', res)
-          return { chatId: null }
+          console.debug("error", res);
+          return { chatId: null };
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return { chatId: null }
-      }
-      );
+        console.debug(e);
+        return { chatId: null };
+      });
     return chatId;
   },
 
@@ -27,17 +26,16 @@ const Workspace = {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res.json()
+          return res.json();
         } else {
-          console.debug('error', res)
-          return { "textHistory": [] }
+          console.debug("error", res);
+          return { textHistory: [] };
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return { "textHistory": [] }
-      }
-      );
+        console.debug(e);
+        return { textHistory: [] };
+      });
     return history;
   },
 
@@ -64,8 +62,8 @@ const Workspace = {
 
   streamingSendChat: async function (data) {
     const header = {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    };
     const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -73,10 +71,10 @@ const Workspace = {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res
+          return res;
         } else {
-          console.debug('error', res)
-          return res
+          console.debug("error", res);
+          return res;
         }
       })
       .catch((e) => {
@@ -89,29 +87,25 @@ const Workspace = {
 
   rateResponse: async function (ratings = {}) {
     const header = {
-      "Content-Type": "application/json"
-    }
-    const status = await fetch(
-      `${API_BASE}/rate_response`,
-      {
-        method: "POST",
-        body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: header,
-      }
-    )
+      "Content-Type": "application/json",
+    };
+    const status = await fetch(`${API_BASE}/rate_response`, {
+      method: "POST",
+      body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
+      headers: header,
+    })
       .then((res) => {
         if (res.status === 200) {
-          return res
+          return res;
         } else {
-          console.debug('error', res)
-          return res
+          console.debug("error", res);
+          return res;
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return null
-      }
-      );
+        console.debug(e);
+        return null;
+      });
     return status;
   },
 
@@ -121,17 +115,16 @@ const Workspace = {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res.json()
+          return res.json();
         } else {
-          console.debug('error', res)
-          return { chatId: null }
+          console.debug("error", res);
+          return { chatId: null };
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return { chatId: null }
-      }
-      );
+        console.debug(e);
+        return { chatId: null };
+      });
     return workspace;
   },
 
@@ -142,42 +135,44 @@ const Workspace = {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res
+          return res;
         } else {
-          console.debug('error', res)
-          return res
+          console.debug("error", res);
+          return res;
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return e
-      }
-      );
+        console.debug(e);
+        return e;
+      });
     return response;
   },
   removeFile: async function (chatID) {
+    const header = {
+      "Content-Type": "application/json",
+    };
     const response = await fetch(`${API_BASE}/pdf_delete`, {
       method: "POST",
-      body: JSON.stringify({ "chatId": chatID }),
+      body: JSON.stringify({ chatId: chatID }),
+      headers: header,
     })
       .then((res) => {
         if (res.status === 403) {
-          reAuthenticate()
-          return null
+          reAuthenticate();
+          return null;
         } else if (res.status === 200) {
-          return res
+          return res;
         } else {
-          console.debug('error', res)
-          return res
+          console.debug("error", res);
+          return res;
         }
       })
       .catch((e) => {
-        console.debug(e)
-        return e
-      }
-      );
+        console.debug(e);
+        return e;
+      });
     return response;
-  }
+  },
 };
 
 export default Workspace;
