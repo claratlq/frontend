@@ -1,174 +1,164 @@
 .modal {
-    display: inline-flex;
-    padding: 16px;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    border-radius: 4px;
-    border: 1px solid var(--others-border-strong-01, #898989);
-    background: var(--background-colours-core-layer-00, #FDFDFD);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: inline-flex;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-radius: 4px;
+  border: 1px solid var(--others-border-strong-01, #898989);
+  background: var(--background-colours-core-layer-00, #fdfdfd);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .acknowledgement-modal-base {
-    display: flex;
-    padding-bottom: 0px;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  padding-bottom: 0px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
 .acknowledgement-modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
 }
 
 .acknowledgement-heading {
-    flex: 1 0 0;
-    color: var(--alert-criticality-ui-components-graphical-elements-support-ui-information, #0950E1);
-    /* Heading/$heading-01 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 22px;
-    /* 137.5% */
+  flex: 1 0 0;
+  color: var(
+    --alert-criticality-ui-components-graphical-elements-support-ui-information,
+    #0950e1
+  );
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
 }
 
 .acknowledgement-intro {
-    width: 472px;
-    color: var(--type-text-styles-text-primary, #121212);
+  width: 472px;
+  color: var(--type-text-styles-text-primary, #121212);
 
-    /* Body/$body-long-02 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    /* 150% */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .acknowledgment-tasks {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .acknowledgment-task-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .acknowledgment-task-content-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .acknowledgment-task-content-image {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .acknowledgment-task-content-task {
-    width: 472px;
-    color: var(--type-text-styles-text-primary, #121212);
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    /* 150% */
+  width: 472px;
+  color: var(--type-text-styles-text-primary, #121212);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
 }
 
 .acknowledgment-task-content-description {
-    width: 472px;
-    color: var(--type-text-styles-text-primary, #121212);
+  width: 472px;
+  color: var(--type-text-styles-text-primary, #121212);
 
-    /* Body/$body-long-02 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    /* 150% */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .carousel {
-    display: flex;
-    width: 504px;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 8px;
+  display: flex;
+  width: 504px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .acknowledgment-button {
-    display: flex;
-    height: 40px;
-    padding: 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    flex: 1 0 0;
-    width: 88px;
-    flex-shrink: 0;
-    border-radius: 4px;
-    background: var(--buttons-default-button-contained-secondary-bg, #898989);
+  display: flex;
+  height: 40px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex: 1 0 0;
+  width: 88px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: var(--buttons-default-button-contained-secondary-bg, #898989);
 }
 
 .acknowledgement-disclaimer {
-    display: flex;
-    align-items: flex-start;
-    width: 472px;
-    color: var(--type-text-styles-text-primary, #121212);
+  display: flex;
+  align-items: flex-start;
+  width: 472px;
+  color: var(--type-text-styles-text-primary, #121212);
 
-    /* Body/$body-long-02 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    /* 150% */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .acknowledgment-task-content-task-critical {
-    width: 472px;
-    color: var(--alert-criticality-text-on-backgrounds-surface-colours-support-text-danger, #DA1E28);
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    /* 150% */
+  width: 472px;
+  color: var(
+    --alert-criticality-text-on-backgrounds-surface-colours-support-text-danger,
+    #da1e28
+  );
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
 }
 
 .acknowledgment-button-pdf {
-    display: flex;
-    height: 40px;
-    padding: 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    flex: 1 0 0;
-    width: 88px;
-    flex-shrink: 0;
-    border-radius: 4px;
-    background: var(--buttons-default-button-contained-secondary-bg, #898989);
+  display: flex;
+  height: 40px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex: 1 0 0;
+  width: 88px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: var(--buttons-default-button-contained-secondary-bg, #898989);
 }
 
 .acknowledgement-modal-content-pdf {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 48px;
 }

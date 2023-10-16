@@ -1,49 +1,78 @@
-.chat-header{
-    background-color: var(--white);
-    box-shadow: 0 6px 3px -3px rgba(0, 0, 0, 0.2);
-    padding: 0;
+.chat-header {
+  background: var(--background-colours-core-layer-00, #fdfdfd);
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+  display: flex;
+  padding: 16px 24px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  z-index: 1;
+  /* padding: 0;
     margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5vh 0;
-    z-index: 1;
+    padding: 16px 24px;
+    z-index: 1; */
 }
 
-.left-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+.chat-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
 }
 
-.AIDE-logo{
-    width: 24px;
-    height:24px;
-    object-fit: cover;
-    margin: 0 0.5vw 0 1.5vw;
+.logo-container {
+  display: flex;
+  padding: 8px 0px;
+  align-items: center;
+  gap: 6px;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+  /* display: flex; */
+  /* flex-direction: row; */
 }
 
-.AIDE{
-    color: var(--dark_blue);
-    font-family: "Varela Round";
-    font-size: 22px;
-    line-height: 22px;
+.logo-image {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.initials-logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    background: linear-gradient(83deg, #009689 0%, #7DF6CF 127.13%);
-    width:32px;
-    height:32px;
-    object-fit: contain;
-    margin: 0 1.5vw;
-    color: var(--white);
-    font: 700 12px 'Open Sans';
-    border-radius: 50%;
-    letter-spacing: 1px;
+.chat-profile {
+  display: flex;
+  padding-right: 0px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-logo {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  background: linear-gradient(83deg, #009689 0%, #7df6cf 127.13%);
+  color: var(--type-text-styles-text-on-colour, #fdfdfd);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.chat-profile-name {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
 }

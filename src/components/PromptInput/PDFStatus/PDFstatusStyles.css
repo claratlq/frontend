@@ -1,86 +1,89 @@
-.PDF-container{
-    background-color: var(--light_gray);
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    padding: 10px 8px 10px 16px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.PDF-container {
+  background-color: var(--light_gray);
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  padding: 10px 8px 10px 16px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.PDF-name{
-    font: 400 14px "Open Sans";
-    color: var(--black);
-    padding-right: 10px;
-    max-width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.PDF-name {
+  color: var(--black);
+  padding-right: 10px;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
 }
 
-.Remove-PDF{
-    border-radius: 50%;
-    padding: 6px;
+.Remove-PDF {
+  border-radius: 50%;
+  padding: 6px;
 }
 
-.Remove-PDF:hover{
-    cursor: pointer;
-    background-color: var(--hover_button_light_gray);
+.Remove-PDF:hover {
+  cursor: pointer;
+  background-color: var(--hover_button_light_gray);
 }
 
-.error-container{
-    background-color: var(--light_gray);
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
+.error-container {
+  background-color: var(--light_gray);
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
-.error-icons{
-    padding: 8px 8px 4px 16px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.error-icons {
+  padding: 8px 8px 4px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.error{
-    padding-right: 12px;
+.error {
+  padding-right: 12px;
 }
 
-.border-line{
-    display: flex;
-    border: 0.5px solid var(--pdf_line);
+.border-line {
+  display: flex;
+  border: 0.5px solid var(--pdf_line);
 }
 
-.error-message{
-    font: 400 12px "Open Sans";
-    color: var(--red);
-    padding: 4px 16px 4px 16px;
+.error-message {
+  color: var(--red);
+  padding: 4px 16px 4px 16px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
 }
 
 .loadermain {
-    display: flex;
+  display: flex;
 }
 
 .loader {
-    border: 3px solid var(--pdf_line); /* Light grey */
-    border-top: 3px solid var(--active_button); /* Blue */
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    animation: animate 2s linear infinite;
+  border: 3px solid var(--pdf_line); /* Light grey */
+  border-top: 3px solid var(--active_button); /* Blue */
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: animate 2s linear infinite;
 }
 
-
 @keyframes animate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
