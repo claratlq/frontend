@@ -5,8 +5,8 @@ import PromptInput from "../PromptInput";
 import LoadingChat from "../LoadingChat";
 import Workspace from "../../models/workspace";
 import handleChat from "../../utils/chat";
-import AcknowledgeTermsModal from "../ChatModals/AcknowledgeTerms"
-import "../ChatContainer/chatcontainerStyles.css"
+import AcknowledgeTermsModal from "../ChatModals/AcknowledgeTerms";
+import "../ChatContainer/chatcontainerStyles.css";
 
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
@@ -14,40 +14,41 @@ export default function ChatContainer() {
   const [chatHistory, setChatHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [documents, setDocuments] = useState([]);
-  const userID = window.localStorage.getItem('user');
-  const [chatID, setChatID] = useState(window.localStorage.getItem('chatID'));
+  const userID = window.localStorage.getItem("user");
+  const [chatID, setChatID] = useState(window.localStorage.getItem("chatID"));
   const [documentStatus, setDocumentStatus] = useState(null);
 
   async function createNewChat() {
-    var activeChatID = await Workspace.new()
-    if (activeChatID.chatId === null) { //if error in creating chat
-      console.debug("Error in creating new chat!!!")
+    var activeChatID = await Workspace.new();
+    if (activeChatID.chatId === null) {
+      //if error in creating chat
+      console.debug("Error in creating new chat!!!");
     } else {
-      window.localStorage.setItem('chatID', activeChatID.chatId)
-      setChatID(activeChatID.chatId)
-      window.localStorage.setItem("newChat", false)
+      window.localStorage.setItem("chatID", activeChatID.chatId);
+      setChatID(activeChatID.chatId);
+      window.localStorage.setItem("newChat", false);
     }
-    console.debug("Done resetting chat!!!")
+    console.debug("Done resetting chat!!!");
   }
 
   useEffect(() => {
     async function getHistory() {
       const newChat = window.localStorage.getItem("newChat");
       setLoadingHistory(true);
-      if (newChat === 'true') {
+      if (newChat === "true") {
         await createNewChat();
       } else if (!chatID) {
         const activeChatID = await Workspace.getActiveChat();
         if (activeChatID.chatId === null) {
-          await createNewChat()
+          await createNewChat();
         } else {
-          window.localStorage.setItem('chatID', activeChatID.chatId)
-          setChatID(activeChatID.chatId)
+          window.localStorage.setItem("chatID", activeChatID.chatId);
+          setChatID(activeChatID.chatId);
         }
       }
-      console.debug("Getting chat history!!!")
+      console.debug("Getting chat history!!!");
       const textHistory = await Workspace.chatHistory();
-      console.debug(`current chatID: ${chatID}`)
+      console.debug(`current chatID: ${chatID}`);
       if (textHistory.chatId === Number(chatID)) {
         setChatHistory(textHistory.textHistory);
         setLoadingHistory(false);
@@ -55,14 +56,14 @@ export default function ChatContainer() {
         setChatHistory([]);
         setLoadingHistory(false);
       }
-
     }
     getHistory();
   }, [chatID]);
 
   useEffect(() => {
     async function fetchReply() {
-      const promptMessage = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+      const promptMessage =
+        chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
       const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
       var _chatHistory = [...remHistory];
       var message = "";
@@ -73,18 +74,20 @@ export default function ChatContainer() {
         return false;
       }
 
-      const chatResult = await Workspace.streamingSendChat(
-        { "chatId": chatID, "text": promptMessage.userMessage },
-      );
-      console.debug(chatResult)
+      const chatResult = await Workspace.streamingSendChat({
+        chatId: chatID,
+        text: promptMessage.userMessage,
+      });
+      console.debug(chatResult);
 
       if (!chatResult) {
         let date = new Date().toISOString();
         message = "";
-        chatResultHeaders['uuid'] = "err0r" + date;
-        chatResultHeaders['error'] = "Error occurred, invalid response from server.";
-        chatResultHeaders['type'] = "abort";
-        chatResultHeaders['close'] = true;
+        chatResultHeaders["uuid"] = "err0r" + date;
+        chatResultHeaders["error"] =
+          "Error occurred, invalid response from server.";
+        chatResultHeaders["type"] = "abort";
+        chatResultHeaders["close"] = true;
 
         handleChat(
           chatResultHeaders,
@@ -92,26 +95,26 @@ export default function ChatContainer() {
           setLoadingResponse,
           setChatHistory,
           remHistory,
-          _chatHistory
+          _chatHistory,
         );
       } else if (chatResult.status === 200) {
         const reader = chatResult.body
-          .pipeThrough(new TextDecoderStream('utf-8'))
-          .getReader()
+          .pipeThrough(new TextDecoderStream("utf-8"))
+          .getReader();
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
 
-          console.debug('Received: ', value);
+          console.debug("Received: ", value);
 
           message = message + value;
 
-          console.debug('message: ', message);
+          console.debug("message: ", message);
 
-          chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-          chatResultHeaders['error'] = null;
-          chatResultHeaders['type'] = "textResponse";
-          chatResultHeaders['close'] = done;
+          chatResultHeaders["uuid"] = chatResult.headers.get("uuid");
+          chatResultHeaders["error"] = null;
+          chatResultHeaders["type"] = "textResponse";
+          chatResultHeaders["close"] = done;
 
           handleChat(
             chatResultHeaders,
@@ -119,18 +122,18 @@ export default function ChatContainer() {
             setLoadingResponse,
             setChatHistory,
             remHistory,
-            _chatHistory
+            _chatHistory,
           );
         }
       } else if (chatResult.status === 500) {
         message = "";
         const chatResultData = await chatResult.json();
-        chatResultHeaders['uuid'] = chatResultData.id;
-        chatResultHeaders['error'] = chatResultData.error;
-        chatResultHeaders['type'] = "abort";
-        chatResultHeaders['close'] = true;
+        chatResultHeaders["uuid"] = chatResultData.id;
+        chatResultHeaders["error"] = chatResultData.error;
+        chatResultHeaders["type"] = "abort";
+        chatResultHeaders["close"] = true;
 
-        console.debug(chatResultHeaders)
+        console.debug(chatResultHeaders);
 
         handleChat(
           chatResultHeaders,
@@ -138,18 +141,17 @@ export default function ChatContainer() {
           setLoadingResponse,
           setChatHistory,
           remHistory,
-          _chatHistory
+          _chatHistory,
         );
-      }
-      else {
+      } else {
         message = "";
         const chatResultData = await chatResult.json();
-        chatResultHeaders['uuid'] = chatResult.headers.get("uuid");
-        chatResultHeaders['error'] = chatResultData.message;
-        chatResultHeaders['type'] = "abort";
-        chatResultHeaders['close'] = true;
+        chatResultHeaders["uuid"] = chatResult.headers.get("uuid");
+        chatResultHeaders["error"] = chatResultData.message;
+        chatResultHeaders["type"] = "abort";
+        chatResultHeaders["close"] = true;
 
-        console.debug(chatResultHeaders)
+        console.debug(chatResultHeaders);
 
         handleChat(
           chatResultHeaders,
@@ -157,10 +159,9 @@ export default function ChatContainer() {
           setLoadingResponse,
           setChatHistory,
           remHistory,
-          _chatHistory
+          _chatHistory,
         );
       }
-
     }
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, userID, chatID]);
@@ -171,7 +172,7 @@ export default function ChatContainer() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setDocumentStatus(null)
+    setDocumentStatus(null);
     if (!message || message === "") return false;
 
     const prevChatHistory = [
@@ -191,16 +192,14 @@ export default function ChatContainer() {
     setLoadingResponse(true);
   };
 
-
   function resetChat(setDisplay) {
-    setDisplay(false)
-    console.debug('resetting')
-    window.localStorage.setItem('newChat', true)
-    setChatHistory([])
-    setLoadingHistory(true)
-    location.reload()
+    setDisplay(false);
+    console.debug("resetting");
+    window.localStorage.setItem("newChat", true);
+    setChatHistory([]);
+    setLoadingHistory(true);
+    location.reload();
   }
-
 
   if (loadingHistory) return <LoadingChat />;
 
@@ -212,10 +211,7 @@ export default function ChatContainer() {
         history={chatHistory}
         reset={resetChat}
       />
-      <ChatHistory
-        history={chatHistory}
-        setMessage={setMessage}
-      />
+      <ChatHistory history={chatHistory} setMessage={setMessage} />
       <PromptInput
         message={message}
         submit={handleSubmit}

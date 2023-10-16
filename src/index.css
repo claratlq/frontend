@@ -6,8 +6,18 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
   background-color: var(--light_gray);
 }
 
@@ -254,9 +264,9 @@ a {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-#chat-history, 
+#chat-history,
 #chat-container,
-.no-scroll { 
+.no-scroll {
   -ms-overflow-style: none !important;
   /* IE and Edge */
   scrollbar-width: none !important;

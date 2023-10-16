@@ -3,10 +3,10 @@
 export function userFromStorage() {
   //ideal fix is to get the authetication token instead
   try {
-    const userString = window.localStorage.getItem('user')
+    const userString = window.localStorage.getItem("user");
     if (!userString) return null;
-    if (userString === 'null') return null;
-    return { 'username': userString }
-  } catch { }
+    if (userString === "null") return null;
+    return { username: userString };
+  } catch {}
   return {};
 }

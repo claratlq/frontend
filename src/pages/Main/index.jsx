@@ -4,36 +4,35 @@ import ChatHeader from "../../components/Header";
 import LoadingChat from "../../components/LoadingChat";
 import Authentication from "../../utils/authentication";
 import "../../styles/normal.css";
-import "../../styles/App.css"
+import "../../styles/App.css";
 
 export default function Main() {
-  const [authenticated, setAuthentication] = useState(false)
+  const [authenticated, setAuthentication] = useState(false);
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     async function checkAuth() {
-      await Authentication.checkAuth()
+      await Authentication.checkAuth();
       const userId = window.localStorage.getItem("user");
 
-      if (userId === 'null') {
-        setAuthentication(false)
+      if (userId === "null") {
+        setAuthentication(false);
       } else {
-        setUserId(userId)
-        setAuthentication(true)
+        setUserId(userId);
+        setAuthentication(true);
       }
     }
     checkAuth();
-  }, [userId])
+  }, [userId]);
 
   useEffect(() => {
     const userId = window.localStorage.getItem("user");
-    if (userId === 'null') {
-      setAuthentication(false)
+    if (userId === "null") {
+      setAuthentication(false);
     } else {
-      setAuthentication(true)
+      setAuthentication(true);
     }
   }, []);
-
 
   if (authenticated) {
     return (
@@ -49,5 +48,4 @@ export default function Main() {
       <LoadingChat />
     </div>
   );
-
 }
