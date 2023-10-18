@@ -1,16 +1,15 @@
-version: '3'
+version: "3"
 
 services:
   frontend-proxy:
     container_name: frontend-proxy
-    # image: haproxy:2.8
-    image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31 # harden
+    image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31
     ports:
       - "80:80"
     restart: unless-stopped
     volumes:
-      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - ./haproxy/cors.lua:/usr/local/etc/haproxy/cors.lua
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/cors.lua:/usr/local/etc/haproxy/cors.lua:ro
     networks:
       - host
 
@@ -18,22 +17,6 @@ services:
     container_name: frontend
     image: llm-frontend:1.0.0-alpha
     restart: unless-stopped
-    networks:
-      - host
-
-  frontend-cadvisor:
-    container_name: frontend-cadvisor
-    image: gcr.io/cadvisor/cadvisor:v0.47.2
-    command: --port=9090
-    ports:
-      - 9090:9090
-    restart: unless-stopped
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /home/dhuser/.local/share/docker/:/var/lib/docker:ro
-      - //run/user/1000/docker.sock:/var/run/docker.sock
     networks:
       - host
 
