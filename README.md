@@ -2,6 +2,12 @@
 
 AIDE, the invaluable companion to defense engineers, accelerates projects by providing instant expertise, technical insights, and precise problem-solving. With a deep understanding of defense technology and processes, AIDE empowers engineers to navigate complexities effortlessly, enabling them to innovate and contribute to the defense industry's continued progress with confidence and precision.
 
+## Version Information
+
+- **haproxy**: v2.4.22
+- **node**: 18.18.2
+- **nginx**: 1.25.3-distroless
+
 ### Authentication
 
 ![Alt text](./docs/authentication/login.PNG "a title")

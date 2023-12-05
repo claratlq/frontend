@@ -3,19 +3,16 @@ version: "3"
 services:
   frontend-proxy:
     container_name: frontend-proxy
-    image: registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31
+    image: gaia/haproxy24:v2.4.22
     ports:
       - "80:80"
     restart: unless-stopped
-    volumes:
-      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-      - ./haproxy/cors.lua:/usr/local/etc/haproxy/cors.lua:ro
     networks:
       - host
 
   frontend:
     container_name: frontend
-    image: llm-frontend:1.0.0-alpha
+    image: gaia/frontend:1.1.0
     restart: unless-stopped
     networks:
       - host
