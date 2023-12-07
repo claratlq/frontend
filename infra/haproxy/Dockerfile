@@ -1,4 +1,4 @@
-FROM registry1.dso.mil/ironbank/opensource/haproxy/haproxy24:v2.4.22
+FROM registry1.dso.mil/ironbank/opensource/haproxy/haproxy22:v2.2.31
 
 COPY --chown=haproxy:haproxy haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 COPY --chown=haproxy:haproxy cors.lua /usr/local/etc/haproxy/cors.lua
