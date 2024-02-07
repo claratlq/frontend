@@ -11,7 +11,8 @@
     "prepare": "husky install",
     "prettier-check": "prettier --check ./src",
     "prettier-fix": "prettier --write ./src",
-    "lint-eslint": "eslint . --ext js,jsx,ts,tsx --max-warnings=0 --config .eslintrc.json --no-eslintrc"
+    "lint-eslint": "eslint . --ext js,jsx,ts,tsx --max-warnings=0 --config .eslintrc.json --no-eslintrc",
+    "eslint-gitlab": "eslint . --ext js,jsx,ts,tsx --max-warnings=0 --config .eslintrc.json --no-eslintrc --format junit --output-file eslint_result.xml"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

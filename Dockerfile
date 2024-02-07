@@ -1,12 +1,23 @@
-FROM node:latest as build
+FROM registry.gitlab.com/gaia6974605/images/nodejs:18.18.2 as dependencies
 
 WORKDIR /llm-frontend
-COPY --chown=node:0 . /llm-frontend
-RUN npm install ci --legacy-peer-deps
-RUN npm run build \
- && mv /llm-frontend/public/ /llm-frontend/dist/public/
+COPY --chown=node:node . /llm-frontend
+RUN npm install --legacy-peer-deps
 
-FROM node:latest
+FROM registry.gitlab.com/gaia6974605/images/nodejs:18.18.2 as build
 
-RUN npm install --global serve
-COPY --from=build --chown=node:0 /llm-frontend/dist /dist
+WORKDIR /llm-frontend
+COPY --chown=node:node . /llm-frontend
+COPY --from=dependencies /llm-frontend/node_modules /llm-frontend/node_modules
+RUN npm run build
+
+FROM registry.gitlab.com/gaia6974605/images/nginx:1.25.3-distroless
+
+COPY --from=build /llm-frontend/dist /usr/share/nginx/html
+COPY ../infra/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD nginx -t || exit 1
