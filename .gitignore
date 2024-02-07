@@ -26,3 +26,5 @@ bundleinspector.html
 .env
 .env.production
 .env.development
+.npm/
+*_result.html

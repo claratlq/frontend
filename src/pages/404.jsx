@@ -1,5 +1,5 @@
+import React from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export default function Contact() {
   return (
@@ -17,8 +17,7 @@ export default function Contact() {
           Return Home
         </a>
       </div>
-      <div className="mt-64"></div>
-      <Footer />
+      <div className="mt-64" />
     </div>
   );
 }

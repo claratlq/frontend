@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ContextWrapper } from "./AuthContext";
 import { ToastContainer } from "react-toastify";
-import "../src/components/Global.css";
+import { ContextWrapper } from "./AuthContext";
+import "./components/Global.css";
 
 const Main = lazy(() => import("./pages/Main"));
 

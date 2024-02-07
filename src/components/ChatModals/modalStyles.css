@@ -31,10 +31,7 @@
 
 .acknowledgement-heading {
   flex: 1 0 0;
-  color: var(
-    --alert-criticality-ui-components-graphical-elements-support-ui-information,
-    #0950e1
-  );
+  color: var(--alert-criticality-ui-components-graphical-elements-support-ui-information, #0950e1);
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -131,10 +128,7 @@
 
 .acknowledgment-task-content-task-critical {
   width: 472px;
-  color: var(
-    --alert-criticality-text-on-backgrounds-surface-colours-support-text-danger,
-    #da1e28
-  );
+  color: var(--alert-criticality-text-on-backgrounds-surface-colours-support-text-danger, #da1e28);
   font-size: 16px;
   font-style: normal;
   font-weight: 700;

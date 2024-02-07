@@ -1,6 +1,6 @@
-import { useState, useRef, memo, useEffect } from "react";
-import UploadPDF from "./UploadPDF/index.jsx";
-import "../PromptInput/promptinputStyles.css";
+import { useRef, memo, useEffect, React } from "react";
+import UploadPDF from "./UploadPDF/index";
+import "./promptinputStyles.css";
 import PDFStatus from "./PDFStatus";
 
 export default function PromptInput({
@@ -14,20 +14,18 @@ export default function PromptInput({
   history,
   resetChat,
   documentStatus,
-  setDocumentStatus,
+  setDocumentStatus
 }) {
   // const [documentStatus, setDocumentStatus] = useState(null)
   const formRef = useRef(null);
   const promptRef = useRef(null);
-  const [_, setFocused] = useState(false);
 
   const handleSubmit = (e) => {
-    setFocused(false);
     submit(e);
   };
   const captureEnter = (event) => {
-    if (documentStatus != "Error" || documentStatus != "Uploading") {
-      if (event.keyCode == 13) {
+    if (documentStatus !== "Error" || documentStatus !== "Uploading") {
+      if (event.keyCode === 13) {
         if (!event.shiftKey) {
           submit(event);
         }
@@ -36,11 +34,12 @@ export default function PromptInput({
   };
 
   const adjustTextArea = (textarea) => {
-    textarea.style.height = "50px";
+    const updatedTextarea = { ...textarea.style }; // Clone the style object
+    updatedTextarea.height = "50px";
     if (textarea.scrollHeight > 150) {
-      textarea.style.height = `150px`;
+      updatedTextarea.height = `150px`;
     } else {
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      updatedTextarea.height = `${textarea.scrollHeight}px`;
     }
   };
 
@@ -51,11 +50,11 @@ export default function PromptInput({
 
   useEffect(() => {
     const PromptArea = document.getElementById("text-input");
-    if (documentStatus == "Uploading" || documentStatus == "Success") {
+    if (documentStatus === "Uploading" || documentStatus === "Success") {
       PromptArea.style.paddingTop = `70px`;
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
       document.getElementById("submitBtn").disabled = false;
-    } else if (documentStatus == "Error") {
+    } else if (documentStatus === "Error") {
       PromptArea.style.paddingTop = `100px`;
       PromptArea.style.height = `${PromptArea.scrollHeight}px`;
       document.getElementById("submitBtn").disabled = true;
@@ -87,12 +86,8 @@ export default function PromptInput({
               onChange={(e) => {
                 onChange(e);
               }}
-              required={true}
+              required
               disabled={inputDisabled}
-              onFocus={() => setFocused(true)}
-              onBlur={() => {
-                setFocused(false);
-              }}
               ref={promptRef}
               value={message}
               id="text-input"
@@ -108,6 +103,7 @@ export default function PromptInput({
           </div>
           <button
             className="send-message"
+            aria-label="Submit"
             title="Submit"
             ref={formRef}
             type="submit"
@@ -126,8 +122,7 @@ export default function PromptInput({
                 clipRule="evenodd"
                 d="M19.0631 19.5819L27.3279 11.3728L28.6561 12.692L20.3913 20.9012L19.0631 19.5819Z"
                 fill={
-                  message.length < 1 ||
-                  document.getElementById("submitBtn").disabled
+                  message.length < 1 || document.getElementById("submitBtn").disabled
                     ? `var(--inactive_button)`
                     : `var(--active_button)`
                 }
@@ -137,8 +132,7 @@ export default function PromptInput({
                 clipRule="evenodd"
                 d="M29.5 10.5L22.8462 29.5L19.0403 20.9462L10.5 17.1426L29.5 10.5ZM15.56 17.3515L20.4668 19.5369L22.6378 24.4162L26.4445 13.5461L15.56 17.3515Z"
                 fill={
-                  message.length < 1 ||
-                  document.getElementById("submitBtn").disabled
+                  message.length < 1 || document.getElementById("submitBtn").disabled
                     ? `var(--inactive_button)`
                     : `var(--active_button)`
                 }
@@ -188,12 +182,9 @@ const Disclaimer = memo(() => {
         />
       </svg>
       <div className="msg-container">
+        <p className="disclaimer-msg">Only for information classified up to CONFIDENTIAL.</p>
         <p className="disclaimer-msg">
-          Only for information classified up to CONFIDENTIAL.
-        </p>
-        <p className="disclaimer-msg">
-          GAIA may give inaccurate or invalid responses. Please vet through all
-          AI-generated work.
+          GAIA may give inaccurate or invalid responses. Please vet through all AI-generated work.
         </p>
       </div>
     </div>

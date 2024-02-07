@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import usePrefersDarkMode from "../hooks/usePrefersDarkMode";
 
-const showToast = (message, type = "default") => {
+const ShowToast = (message, type = "default") => {
   const prefersDarkMode = usePrefersDarkMode();
   const options = {
     position: "bottom-center",
@@ -10,7 +10,7 @@ const showToast = (message, type = "default") => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    theme: prefersDarkMode ? "dark" : "light",
+    theme: prefersDarkMode ? "dark" : "light"
   };
 
   switch (type) {
@@ -31,4 +31,4 @@ const showToast = (message, type = "default") => {
   }
 };
 
-export default showToast;
+export default ShowToast;

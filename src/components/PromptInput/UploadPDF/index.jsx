@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import "../../PromptInput/promptinputStyles.css";
+import { useEffect, useState, useCallback, React } from "react";
+import "../promptinputStyles.css";
 import WarningModals from "../../WarningModals";
 import "../../WarningModals/warningmodalsStyles.css";
 import Workspace from "../../../models/workspace";
 import AcknowledgePdfModal from "../../ChatModals/PdfAcknowledgement";
+
+const logger = require("../../../utils/logger");
 
 export default function UploadPDF({
   history,
@@ -11,30 +13,73 @@ export default function UploadPDF({
   reset,
   documents,
   setDocuments,
-  setDocumentStatus,
+  setDocumentStatus
 }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [clearChat, setClearChat] = useState(false);
   const [clickedPDFbutton, setClickedPDFbutton] = useState(false);
 
-  function updatingButton(disabled) {
+  function updatingButton(buttonDisabled) {
     const pdfButton = document.getElementById("uploadPDFbutton");
 
-    if (disabled) {
+    if (buttonDisabled) {
       if (pdfButton.classList.contains("pdf-upload-enabled")) {
-        pdfButton.classList.remove("pdf-upload-enabled"); //changing styles
+        pdfButton.classList.remove("pdf-upload-enabled"); // changing styles
       }
       pdfButton.classList.add("pdf-upload-disabled");
-      pdfButton.replaceWith(pdfButton.cloneNode(true)); //reset event listeners on buttons
-      pdfButton.disabled = true; //disable button
+      pdfButton.replaceWith(pdfButton.cloneNode(true)); // reset event listeners on buttons
+      pdfButton.disabled = true; // disable button
     } else {
       if (pdfButton.classList.contains("pdf-upload-disabled")) {
-        pdfButton.classList.remove("pdf-upload-disabled"); //changing styles
+        pdfButton.classList.remove("pdf-upload-disabled"); // changing styles
       }
       pdfButton.classList.add("pdf-upload-enabled");
-      pdfButton.disabled = false; //enable button
+      pdfButton.disabled = false; // enable button
     }
   }
+
+  const submitPDF = useCallback(
+    async (formData, fileName) => {
+      const chatID = window.localStorage.getItem("chatID");
+
+      formData.append("chatId", chatID);
+      setDocumentStatus("Uploading");
+      setDocuments(fileName);
+      const response = await Workspace.uploadFile(formData);
+      if (response.ok) {
+        setDocumentStatus("Success");
+      } else {
+        setDocumentStatus("Error");
+        logger.debug("PDF Upload Failed", response.json().error);
+      }
+    },
+    [setDocumentStatus, setDocuments]
+  );
+
+  const uploadFile = useCallback(() => {
+    const fileList = document.getElementById("uploadPDFinput").files;
+    const file = fileList[0];
+    if (file.type !== "application/pdf") {
+      setErrorMessage("File uploaded is not a valid PDF. Please re-upload a PDF.");
+    } else if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage("File size cannot exceed 5mb. Please re-upload a smaller file.");
+    } else if (fileList.length === 1) {
+      setErrorMessage(null);
+      const formData = new FormData();
+      formData.append("File", file, file.name);
+      submitPDF(formData, file.name);
+    }
+  }, [setErrorMessage, submitPDF]);
+
+  const openDialog = useCallback(() => {
+    if (!window.localStorage.getItem("acknowledgedPdfTerms")) {
+      setClickedPDFbutton(true);
+    } else if (history.length === 0) {
+      document.getElementById("uploadPDFinput").click();
+    } else {
+      setClearChat(true);
+    }
+  }, [history]);
 
   useEffect(() => {
     const inputFile = document.getElementById("uploadPDFinput");
@@ -42,85 +87,31 @@ export default function UploadPDF({
 
     if (documents.length === 0) {
       updatingButton(false);
-      inputFile.value = null; //remove file name such that can reupload same file
+      inputFile.value = null; // remove file name such that can reupload same file
 
-      //event listeners
+      // event listeners
       inputFile.addEventListener("change", uploadFile);
-      inputFile.addEventListener("blur", () => {
-        console.debug("ahhhhhhhhhh");
-      });
+      inputFile.addEventListener("blur", () => {});
       pdfButton.addEventListener("click", openDialog);
     } else {
       updatingButton(true);
     }
-  }, [documents]);
+  }, [documents, uploadFile, openDialog]);
 
   useEffect(() => {
     if (!disabled) {
       updatingButton(disabled);
-      document
-        .getElementById("uploadPDFbutton")
-        .addEventListener("click", openDialog);
+      document.getElementById("uploadPDFbutton").addEventListener("click", openDialog);
     } else {
       updatingButton(disabled);
     }
-  }, [disabled]);
+  }, [disabled, openDialog]);
 
   useEffect(() => {
     if (document.getElementById("Reupload")) {
       document.getElementById("Reupload").addEventListener("click", openDialog);
     }
-  }, [errorMessage]);
-
-  function openDialog() {
-    console.debug("clicked");
-    // const backdrop = document.querySelector(".backdrop");
-    if (!window.localStorage.getItem("acknowledgedPdfTerms")) {
-      console.debug("clicked no ack");
-      setClickedPDFbutton(true);
-      // backdrop.style.display = "block";
-    } else if (history.length === 0) {
-      document.getElementById("uploadPDFinput").click();
-    } else {
-      setClearChat(true);
-    }
-  }
-
-  function uploadFile() {
-    // const backdrop = document.querySelector(".backdrop");
-    var fileList = document.getElementById("uploadPDFinput").files;
-    var file = fileList[0];
-    if (file.type !== "application/pdf") {
-      setErrorMessage(
-        "File uploaded is not a valid PDF. Please re-upload a PDF.",
-      );
-    } else if (file.size > 5 * 1024 * 1024) {
-      setErrorMessage(
-        "File size cannot exceed 5mb. Please re-upload a smaller file.",
-      );
-    } else if (fileList.length == 1) {
-      setErrorMessage(null);
-      const formData = new FormData();
-      formData.append("File", file, file.name);
-      submitPDF(formData, file.name);
-    }
-    console.debug("upload done");
-    // backdrop.style.display = "none";
-  }
-
-  async function submitPDF(formData, fileName) {
-    const chatID = window.localStorage.getItem("chatID");
-    formData.append("chatId", chatID);
-    setDocumentStatus("Uploading");
-    setDocuments(fileName);
-    const response = await Workspace.uploadFile(formData);
-    if (response.ok) {
-      setDocumentStatus("Success");
-    } else {
-      setDocumentStatus("Error");
-      console.debug("PDF Upload Failed", response.json().error);
-    }
-  }
+  }, [errorMessage, openDialog]);
 
   return (
     <div>
@@ -134,23 +125,17 @@ export default function UploadPDF({
       <WarningModals
         display={clearChat}
         setDisplay={setClearChat}
-        pdf={true}
+        pdf
         reset={reset}
-        error={true}
+        error
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
       />
       <div
         title="• 1-page PDF only &#10;• No images or diagrams &#10;• Do not upload any PDF &#10;   with personal data"
       >
-        <input
-          type="file"
-          id="uploadPDFinput"
-          name="filename"
-          accept="application/pdf"
-          hidden
-        />
-        <button type="button" id="uploadPDFbutton">
+        <input type="file" id="uploadPDFinput" name="filename" accept="application/pdf" hidden />
+        <button type="button" aria-label="Upload PDF" id="uploadPDFbutton">
           <svg
             width="36"
             height="36"

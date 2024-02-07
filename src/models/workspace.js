@@ -1,20 +1,20 @@
 import { API_BASE } from "../utils/constants";
 
+const logger = require("../utils/logger");
+
 const Workspace = {
   new: async function () {
     const chatId = await fetch(`${API_BASE}/reset_chat`, {
-      method: "GET",
+      method: "GET"
     })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
-        } else {
-          console.debug("error", res);
-          return { chatId: null };
         }
+        return { chatId: null };
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return { chatId: null };
       });
     return chatId;
@@ -22,18 +22,16 @@ const Workspace = {
 
   chatHistory: async function () {
     const history = await fetch(`${API_BASE}/get_chat_history`, {
-      method: "GET",
+      method: "GET"
     })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
-        } else {
-          console.debug("error", res);
-          return { textHistory: [] };
         }
+        return { textHistory: [] };
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return { textHistory: [] };
       });
     return history;
@@ -62,23 +60,21 @@ const Workspace = {
 
   streamingSendChat: async function (data) {
     const header = {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     };
     const chatResult = await fetch(`${API_BASE}/send_message_stream`, {
       method: "POST",
       body: JSON.stringify(data),
-      headers: header,
+      headers: header
     })
       .then((res) => {
         if (res.status === 200) {
           return res;
-        } else {
-          console.debug("error", res);
-          return res;
         }
+        return res;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return null;
       });
 
@@ -87,23 +83,21 @@ const Workspace = {
 
   rateResponse: async function (ratings = {}) {
     const header = {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     };
     const status = await fetch(`${API_BASE}/rate_response`, {
       method: "POST",
       body: JSON.stringify(ratings), // contains 'adds' and 'removes' keys that are arrays of filepaths
-      headers: header,
+      headers: header
     })
       .then((res) => {
         if (res.status === 200) {
           return res;
-        } else {
-          console.debug("error", res);
-          return res;
         }
+        return res;
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return null;
       });
     return status;
@@ -111,18 +105,16 @@ const Workspace = {
 
   getActiveChat: async function () {
     const workspace = await fetch(`${API_BASE}/get_active_chat`, {
-      method: "GET",
+      method: "GET"
     })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
-        } else {
-          console.debug("error", res);
-          return { chatId: null };
         }
+        return { chatId: null };
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return { chatId: null };
       });
     return workspace;
@@ -131,48 +123,44 @@ const Workspace = {
   uploadFile: async function (formData) {
     const response = await fetch(`${API_BASE}/pdf_upload`, {
       method: "POST",
-      body: formData,
+      body: formData
     })
       .then((res) => {
         if (res.status === 200) {
           return res;
-        } else {
-          console.debug("error", res);
-          return res;
         }
+        return res;
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return e;
       });
     return response;
   },
   removeFile: async function (chatID) {
     const header = {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     };
     const response = await fetch(`${API_BASE}/pdf_delete`, {
       method: "POST",
       body: JSON.stringify({ chatId: chatID }),
-      headers: header,
+      headers: header
     })
       .then((res) => {
         if (res.status === 403) {
-          reAuthenticate();
           return null;
-        } else if (res.status === 200) {
-          return res;
-        } else {
-          console.debug("error", res);
+        }
+        if (res.status === 200) {
           return res;
         }
+        return res;
       })
       .catch((e) => {
-        console.debug(e);
+        logger.debug(e);
         return e;
       });
     return response;
-  },
+  }
 };
 
 export default Workspace;

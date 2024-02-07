@@ -1,17 +1,13 @@
+import { useState, React } from "react";
 import "../chatcontainerStyles.css";
 import WarningModals from "../../WarningModals";
-import { useState } from "react";
 
 export default function ChatHeader({ documents, history, reset }) {
   const [clearChat, setClearChat] = useState(false);
 
   return (
     <>
-      <WarningModals
-        display={clearChat}
-        setDisplay={setClearChat}
-        reset={reset}
-      />
+      <WarningModals display={clearChat} setDisplay={setClearChat} reset={reset} />
 
       <div>
         {documents.length > 0 && history.length >= 1 ? (
@@ -22,6 +18,7 @@ export default function ChatHeader({ documents, history, reset }) {
                 title="Clear Chat"
                 className="clear-chat"
                 onClick={() => setClearChat(true)}
+                type="button"
               >
                 {" "}
                 Clear Chat
@@ -49,14 +46,13 @@ export default function ChatHeader({ documents, history, reset }) {
           </div>
         ) : (
           <div className="sticky-header">
-            <p className="header-text">
-              Welcome to GAIA, your Generative AI Assistant!
-            </p>
+            <p className="header-text">Welcome to GAIA, your Generative AI Assistant!</p>
             {history.length >= 1 ? (
               <button
                 title="Clear Chat"
                 className="clear-chat"
                 onClick={() => setClearChat(true)}
+                type="button"
               >
                 {" "}
                 Clear Chat

@@ -1,40 +1,36 @@
-import { forwardRef, memo, useState } from "react";
+import { forwardRef, memo, useState, React } from "react";
 import { AlertTriangle } from "react-feather";
 import renderMarkdown from "../../../utils/chat/markdown";
 import Workspace from "../../../models/workspace";
 import UserIcon from "../../UserIcon";
 import "../../../styles/ChatBubble.css";
 
-const PromptReply = forwardRef(
-  ({ uuid, message, pending, role, error, closed = true }, ref) => {
+const PromptReply = memo(
+  forwardRef(({ uuid, message, pending, role, error }, ref) => {
     const [selectup, setSelectUp] = useState(false);
     const [selectdown, setSelectDown] = useState(false);
 
-    const thumbsUp = async (uuid) => {
+    const thumbsUp = async (providedUuid) => {
       setSelectDown(false);
       setSelectUp(!selectup);
       const ratingJson = {
-        response_id: uuid,
-        rating: 1,
+        response_id: providedUuid,
+        rating: 1
       };
       const success = await Workspace.rateResponse(ratingJson);
-      if (success.ok) {
-        console.debug("success");
-      }
+      return success;
     };
 
-    const thumbsDown = async (uuid) => {
+    const thumbsDown = async (providedUuid) => {
       setSelectDown(!selectdown);
       setSelectUp(false);
       const ratingJson = {
-        response_id: uuid,
-        rating: -1,
+        response_id: providedUuid,
+        rating: -1
       };
 
       const success = await Workspace.rateResponse(ratingJson);
-      if (success.ok) {
-        console.debug("success");
-      }
+      return success;
     };
 
     if (!message && !pending && !error) return null;
@@ -47,8 +43,8 @@ const PromptReply = forwardRef(
               className="ml-18 my-4 px-8 w-fit md:max-w-[75%] rounded-t-2xl rounded-br-2xl rounded-bl-sm"
               style={{ backgroundColor: `var(--light_gray)` }}
             >
-              <span className={`inline-block p-2`}>
-                <div className="dot-falling"></div>
+              <span className="inline-block p-2">
+                <div className="dot-falling" />
               </span>
             </div>
           </div>
@@ -61,9 +57,9 @@ const PromptReply = forwardRef(
         <div className="llm-reply">
           <div className="llm-reply-container pb-14 pt-10">
             <div className="bg-red-50 text-red-500 rounded-lg w-fit flex flex-col p-2">
-              <span className={`inline-block`}>
-                <AlertTriangle className="h-4 w-4 mb-1 inline-block" /> Could
-                not respond to message.
+              <span className="inline-block">
+                <AlertTriangle className="h-4 w-4 mb-1 inline-block" /> Could not respond to
+                message.
               </span>
               <span className="text-xs">Reason: {error || "unknown"}</span>
             </div>
@@ -93,12 +89,11 @@ const PromptReply = forwardRef(
             <div className="llm-feedback">
               <span
                 className="llm-reply-text"
+                // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(message) }}
               />
               <div className="feedback-container">
-                <p className="feedback-text">
-                  Your feedback will help me improve:
-                </p>
+                <p className="feedback-text">Your feedback will help me improve:</p>
                 <button
                   title="This answers my question"
                   className="rate-button"
@@ -171,9 +166,9 @@ const PromptReply = forwardRef(
         </div>
       </div>
     );
-  },
+  })
 );
 
 PromptReply.displayName = "PromptReply";
 
-export default memo(PromptReply);
+export default PromptReply;

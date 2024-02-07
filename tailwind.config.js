@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        "black-900": "#141414",
-      },
-    },
+        "black-900": "#141414"
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };

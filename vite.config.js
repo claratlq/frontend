@@ -12,14 +12,14 @@ export default defineConfig({
     port: 3000,
     host: "0.0.0.0",
     watch: {
-      usePolling: true,
-    },
+      usePolling: true
+    }
   },
   define: {
-    "process.env": process.env,
+    "process.env": process.env
   },
   css: {
-    postcss,
+    postcss
   },
   plugins: [
     react(),
@@ -28,8 +28,8 @@ export default defineConfig({
       open: false,
       gzipSize: true,
       brotliSize: true,
-      filename: "bundleinspector.html", // will be saved in project's root
-    }),
+      filename: "bundleinspector.html" // will be saved in project's root
+    })
   ],
   resolve: {
     alias: [
@@ -41,21 +41,21 @@ export default defineConfig({
         find: /^~.+/,
         replacement: (val) => {
           return val.replace(/^~/, "");
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   build: {
     commonjsOptions: {
-      transformMixedEsModules: true,
-    },
+      transformMixedEsModules: true
+    }
   },
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: "globalThis",
+        global: "globalThis"
       },
-      plugins: [],
-    },
-  },
+      plugins: []
+    }
+  }
 });

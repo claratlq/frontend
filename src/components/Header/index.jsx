@@ -1,26 +1,16 @@
-import "../Header/headerStyles.css";
+import React from "react";
+import "./headerStyles.css";
 
-let firstName, lastName;
-
-const getInitials = (firstName) => {
-  return firstName.charAt(0).toUpperCase();
+const getInitials = (name) => {
+  return name.charAt(0).toUpperCase();
 };
 
 const user = window.localStorage.getItem("user");
+let firstName = "Unknown";
 
-if (!!user) {
-  const nameArr = user.split(" ");
-  if (nameArr.length < 2) {
-    firstName = nameArr[0];
-    lastName = firstName.split("").pop();
-  } else {
-    firstName = nameArr[0];
-    lastName = nameArr[1];
-    console.log(firstName, lastName);
-  }
-} else {
-  firstName = "U";
-  lastName = "S";
+if (user) {
+  const first = user.split(" ")[0];
+  firstName = first;
 }
 
 export default function ChatHeader() {
@@ -28,7 +18,7 @@ export default function ChatHeader() {
     <div className="chat-header">
       <div className="chat-content">
         <div className="logo-container">
-          <img className="logo-image" src="/logo.svg" />
+          <img className="logo-image" src="/logo.svg" alt="chat logo" />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="59"
@@ -55,11 +45,11 @@ export default function ChatHeader() {
           </svg>
         </div>
         <div className="chat-profile">
-          <a className="avatar-logo" title={user}>
+          <a className="avatar-logo" title={user} href="https://www.dsta.gov.sg/">
             {getInitials(firstName)}
           </a>
           <p className="chat-profile-name">{user}</p>
-          <p></p>
+          <p />
         </div>
       </div>
     </div>

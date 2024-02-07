@@ -10,7 +10,7 @@ const Authentication = {
       window.localStorage.setItem("user", null);
       window.localStorage.setItem("AUTH_USER", null);
     }
-  },
+  }
 };
 
 export default Authentication;

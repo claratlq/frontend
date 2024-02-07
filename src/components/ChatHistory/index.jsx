@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState, React } from "react";
 import ChatBubble from "./ChatBubble";
-import { useEffect, useRef, useState } from "react";
-import "../ChatHistory/chathistoryStyles.css";
+import "./chathistoryStyles.css";
 import SamplePromptsJson from "../../data/samplePrompts.json";
 
 export default function ChatHistory({ history = [], setMessage }) {
@@ -9,16 +9,18 @@ export default function ChatHistory({ history = [], setMessage }) {
   const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
-    var existingData = promptPairs;
+    const existingData = promptPairs;
+    let pairKey = 0;
     for (let i = 0; i < SamplePromptsJson.length; i += 2) {
       if (promptPairs.length < 2) {
-        const pair = [SamplePromptsJson[i], SamplePromptsJson[i + 1]];
+        const pair = { key: pairKey, pair: [SamplePromptsJson[i], SamplePromptsJson[i + 1]] };
         existingData.push(pair);
+        pairKey += 1;
       }
     }
     setPromptPairs(existingData);
     setRendered(true);
-  }, []);
+  }, [promptPairs]);
 
   useEffect(() => {
     if (replyRef.current) {
@@ -29,7 +31,7 @@ export default function ChatHistory({ history = [], setMessage }) {
   }, [history]);
 
   const inputPrompt = (key) => {
-    const promptMessage = SamplePromptsJson[key - 1]["prompt"];
+    const promptMessage = SamplePromptsJson[key - 1].prompt;
     setMessage(promptMessage);
   };
 
@@ -38,6 +40,10 @@ export default function ChatHistory({ history = [], setMessage }) {
       className="sample-prompt"
       key={entry.key}
       onClick={() => inputPrompt(entry.key)}
+      onKeyUp={() => {}}
+      tabIndex="0"
+      aria-label="Sample Prompt"
+      role="button"
     >
       <p className="header-prompt">{entry.header}</p>
       <p className="para-prompt">{entry.paragraph}</p>
@@ -49,9 +55,9 @@ export default function ChatHistory({ history = [], setMessage }) {
       <div className="welcome-container">
         <p className="para-text">Try some sample prompts to get you started:</p>
         <div className="sample-container">
-          {promptPairs.map((pair, index) => (
-            <div key={index} className="data-pair">
-              {pair.map(renderSamplePrompts)}
+          {promptPairs.map((pair) => (
+            <div key={pair.key} className="data-pair">
+              {pair.pair.map(renderSamplePrompts)}
             </div>
           ))}
         </div>
@@ -64,6 +70,7 @@ export default function ChatHistory({ history = [], setMessage }) {
       <div className="chat-log-container">
         {history.map((props, index) => {
           const isLastMessage = index === history.length - 1;
+          const bubbleID = index;
           if (props.role === "assistant" && props.animate) {
             return (
               <ChatBubble
@@ -74,21 +81,19 @@ export default function ChatHistory({ history = [], setMessage }) {
                 pending={props.pending}
                 role={props.role}
                 error={props.error}
-                closed={props.closed}
               />
             );
           }
 
           return (
             <ChatBubble
-              key={index}
+              key={bubbleID}
               ref={isLastMessage ? replyRef : null}
               uuid={props.uuid}
               message={props.content}
               pending={false}
               role={props.role}
               error={props.error}
-              closed={true}
             />
           );
         })}

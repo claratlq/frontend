@@ -25,7 +25,7 @@ export default {
   workspace: {
     chat: (slug) => {
       return `/workspace/${slug}`;
-    },
+    }
   },
   exports: () => {
     return `${API_BASE.replace("/api", "")}/system/data-exports`;
@@ -54,6 +54,6 @@ export default {
     },
     apiKeys: () => {
       return "/admin/api-keys";
-    },
-  },
+    }
+  }
 };

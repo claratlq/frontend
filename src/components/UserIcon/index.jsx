@@ -1,31 +1,22 @@
+import React from "react";
 import "../../styles/ChatBubble.css";
 
-let firstName, lastName;
-
-const getInitials = (firstName) => {
-  return firstName.charAt(0).toUpperCase();
+const getInitials = (name) => {
+  return name.charAt(0).toUpperCase();
 };
 
 const user = window.localStorage.getItem("user");
+let firstName = "Unknown";
 
-if (!!user) {
-  const nameArr = user.split(" ");
-  if (nameArr.length < 2) {
-    firstName = nameArr[0];
-    lastName = firstName.split("").pop();
-  } else {
-    firstName = nameArr[0];
-    lastName = nameArr[1];
-  }
-} else {
-  firstName = "U";
-  lastName = "S";
+if (user) {
+  const first = user.split(" ")[0];
+  firstName = first;
 }
 
 export default function UserIcon() {
   return (
     <div className="user-icon">
-      <a className="user-icon-content" title={user}>
+      <a className="user-icon-content" title={user} href="https://www.dsta.gov.sg/">
         {getInitials(firstName)}
       </a>
     </div>

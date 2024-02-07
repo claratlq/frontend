@@ -8,17 +8,42 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "ecmaFeatures": { "jsx": true }
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
-  "settings": { "react": { "version": "18.2" } },
+  "settings": {
+    "react": {
+      "version": "18.2"
+    }
+  },
   "plugins": ["react-refresh", "react-hooks"],
+  "ignorePatterns": [
+    "vite.config.js",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "commitlint.config.js"
+  ],
   "rules": {
     "react-refresh/only-export-components": "warn",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "object-shorthand": ["error", "never"],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "func-names": ["warn", "as-needed"],
+    "complexity": ["warn", 20]
   }
 }

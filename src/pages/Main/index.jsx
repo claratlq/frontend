@@ -13,12 +13,12 @@ export default function Main() {
   useEffect(() => {
     async function checkAuth() {
       await Authentication.checkAuth();
-      const userId = window.localStorage.getItem("user");
+      const storedUserId = window.localStorage.getItem("user");
 
-      if (userId === "null") {
+      if (storedUserId === "null") {
         setAuthentication(false);
       } else {
-        setUserId(userId);
+        setUserId(storedUserId);
         setAuthentication(true);
       }
     }
@@ -26,8 +26,8 @@ export default function Main() {
   }, [userId]);
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("user");
-    if (userId === "null") {
+    const storedUserId = window.localStorage.getItem("user");
+    if (storedUserId === "null") {
       setAuthentication(false);
     } else {
       setAuthentication(true);
