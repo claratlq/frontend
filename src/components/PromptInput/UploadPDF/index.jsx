@@ -5,8 +5,6 @@ import "../../WarningModals/warningmodalsStyles.css";
 import Workspace from "../../../models/workspace";
 import AcknowledgePdfModal from "../../ChatModals/PdfAcknowledgement";
 
-const logger = require("../../../utils/logger");
-
 export default function UploadPDF({
   history,
   disabled,
@@ -50,7 +48,6 @@ export default function UploadPDF({
         setDocumentStatus("Success");
       } else {
         setDocumentStatus("Error");
-        logger.debug("PDF Upload Failed", response.json().error);
       }
     },
     [setDocumentStatus, setDocuments]

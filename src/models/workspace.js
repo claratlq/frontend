@@ -1,7 +1,5 @@
 import { API_BASE } from "../utils/constants";
 
-const logger = require("../utils/logger");
-
 const Workspace = {
   new: async function () {
     const chatId = await fetch(`${API_BASE}/reset_chat`, {
@@ -13,8 +11,7 @@ const Workspace = {
         }
         return { chatId: null };
       })
-      .catch((e) => {
-        logger.debug(e);
+      .catch(() => {
         return { chatId: null };
       });
     return chatId;
@@ -30,33 +27,11 @@ const Workspace = {
         }
         return { textHistory: [] };
       })
-      .catch((e) => {
-        logger.debug(e);
+      .catch(() => {
         return { textHistory: [] };
       });
     return history;
   },
-
-  // sendChat: async function (data) {
-  //   const chatResult = await fetch(`${API_BASE}/send_message`, {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         return res.json()
-  //       } else {
-  //         console.debug('error', res)
-  //         return res.json()
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.debug(e)
-  //       return null
-  //     }
-  //     );
-  //   return chatResult;
-  // },
 
   streamingSendChat: async function (data) {
     const header = {
@@ -73,8 +48,7 @@ const Workspace = {
         }
         return res;
       })
-      .catch((e) => {
-        logger.error(e);
+      .catch(() => {
         return null;
       });
 
@@ -96,8 +70,7 @@ const Workspace = {
         }
         return res;
       })
-      .catch((e) => {
-        logger.debug(e);
+      .catch(() => {
         return null;
       });
     return status;
@@ -113,8 +86,7 @@ const Workspace = {
         }
         return { chatId: null };
       })
-      .catch((e) => {
-        logger.debug(e);
+      .catch(() => {
         return { chatId: null };
       });
     return workspace;
@@ -124,17 +96,12 @@ const Workspace = {
     const response = await fetch(`${API_BASE}/pdf_upload`, {
       method: "POST",
       body: formData
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res;
-        }
+    }).then((res) => {
+      if (res.status === 200) {
         return res;
-      })
-      .catch((e) => {
-        logger.debug(e);
-        return e;
-      });
+      }
+      return res;
+    });
     return response;
   },
   removeFile: async function (chatID) {
@@ -145,20 +112,15 @@ const Workspace = {
       method: "POST",
       body: JSON.stringify({ chatId: chatID }),
       headers: header
-    })
-      .then((res) => {
-        if (res.status === 403) {
-          return null;
-        }
-        if (res.status === 200) {
-          return res;
-        }
+    }).then((res) => {
+      if (res.status === 403) {
+        return null;
+      }
+      if (res.status === 200) {
         return res;
-      })
-      .catch((e) => {
-        logger.debug(e);
-        return e;
-      });
+      }
+      return res;
+    });
     return response;
   }
 };

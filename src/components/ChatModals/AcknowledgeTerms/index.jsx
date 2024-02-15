@@ -112,7 +112,7 @@ function AcknowledgementPages() {
 export default function AcknowledgeTermsModal() {
   const classes = useStyles();
   const [acknowledgedTerms, setAcknowledgedTerms] = useState(
-    !!window.localStorage.getItem("acknowledgedPdfTerms")
+    !!window.localStorage.getItem("acknowledgedTerms")
   );
   const acknowledgementPages = AcknowledgementPages();
 

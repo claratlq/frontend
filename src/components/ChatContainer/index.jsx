@@ -8,8 +8,6 @@ import handleChat from "../../utils/chat";
 import AcknowledgeTermsModal from "../ChatModals/AcknowledgeTerms";
 import "./chatcontainerStyles.css";
 
-const logger = require("../../utils/logger");
-
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -22,9 +20,7 @@ export default function ChatContainer() {
 
   async function createNewChat() {
     const activeChatID = await Workspace.new();
-    if (activeChatID.chatId === null) {
-      logger.debug("Error in creating new chat, chatId is null.");
-    } else {
+    if (activeChatID.chatId !== null) {
       window.localStorage.setItem("chatID", activeChatID.chatId);
       setChatID(activeChatID.chatId);
       window.localStorage.setItem("newChat", false);
@@ -186,15 +182,15 @@ export default function ChatContainer() {
 
   function resetChat(setDisplay) {
     setDisplay(false);
-    logger.debug("resetting");
+    // logger.debug("resetting");
     window.localStorage.setItem("newChat", true);
     setChatHistory([]);
     setLoadingHistory(true);
     window.location.reload();
   }
 
-  const handleResetChat = () => {
-    resetChat();
+  const handleResetChat = (setDisplay) => {
+    resetChat(setDisplay);
   };
 
   if (loadingHistory) return <LoadingChat />;

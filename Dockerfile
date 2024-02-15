@@ -8,7 +8,7 @@ FROM registry.gitlab.com/gaia6974605/images/nodejs:18.18.2 as build
 
 WORKDIR /llm-frontend
 COPY --chown=node:node . /llm-frontend
-COPY --from=dependencies /llm-frontend/node_modules /llm-frontend/node_modules
+COPY --from=dependencies --chown=node:node /llm-frontend/node_modules /llm-frontend/node_modules
 RUN npm run build
 
 FROM registry.gitlab.com/gaia6974605/images/nginx:1.25.3-distroless
