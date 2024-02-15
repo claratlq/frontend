@@ -64,9 +64,6 @@ stages:
 checkov:
   stage: check
   allow_failure: true
-  only:
-    changes:
-      - Dockerfile
   image:
     name: bridgecrew/checkov:3.2.5@sha256:1f4696fd69e4f188e8220bfa366e03f8c4a71078518d6c5fe7c4c56b28d65c88
     entrypoint:
