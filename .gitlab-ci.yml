@@ -21,12 +21,12 @@ cache:
 stages:
   - check
   - build
-  - post-check
+  - container-scanning
   - deploy
 
 .standard-rules: # Make hidden job to hold commmon rules
   rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_MESSAGE =~ /-wip/ || $CI_COMMIT_MESSAGE =~ /-skip-check/
+    - if: $CI_COMMIT_MESSAGE =~ /-wip/ || $CI_COMMIT_MESSAGE =~ /-skip-check/
       when: never
     - if: ($CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH) && $CI_COMMIT_MESSAGE !~ /-wip/ && $CI_COMMIT_MESSAGE !~ /-skip-check/
       when: always
@@ -38,8 +38,8 @@ stages:
     paths:
       - .cache/pip/
     before_script:
-      - python -m pip install -r requirements.txt
-      - python -m pip install -r requirements-dev.txt
+      - python3 -m pip install -r requirements.txt
+      - python3 -m pip install -r requirements-dev.txt
 
 .node-image:
   image: registry.gitlab.com/gaia6974605/images/nodejs:18.18.2
@@ -48,10 +48,15 @@ stages:
     paths:
       - .npm/
   before_script:
-    - npm ci clean
+    - npm ci clean --legacy-peer-deps
     - npm ci --cache .npm --prefer-offline --legacy-peer-deps # front-end dependencies requires --legacy-peer-deps flag
 
 .handle-ssh:
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /-wip/ || $CI_COMMIT_MESSAGE =~ /-skip-check/
+      when: never
+    - if: ($CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH) && $CI_COMMIT_MESSAGE !~ /-wip/ && $CI_COMMIT_MESSAGE !~ /-skip-check/
+      when: manual
   # https://gitlab.com/gitlab-examples/ssh-private-key/-/blob/master/.gitlab-ci.yml?ref_type=heads
   before_script:
     - eval $(ssh-agent -s)
@@ -72,7 +77,7 @@ checkov:
   extends:
     - .standard-rules
   script:
-    - checkov -f Dockerfile -o junitxml -f checkov_results.xml | tee checkov_results.xml
+    - checkov -f Dockerfile -o cli -o junitxml --output-file-path console,checkov_results.xml
   artifacts:
     reports:
       junit:
@@ -85,8 +90,6 @@ eslint:
   extends:
     - .standard-rules
     - .node-image
-  before_script:
-    - npm install ci
   script:
     - npm run prettier-check
     - npm run eslint-gitlab
@@ -99,18 +102,20 @@ eslint:
 
 build-image:
   stage: build
-  rules:
-    - if: $CI_COMMIT_BRANCH == $PRODUCTION_BRANCH
-      when: manual
+  allow_failure: true
+  extends:
+    - .standard-rules
   script:
     - echo $CI_DEPLOY_PASSWORD | docker login $CI_REGISTRY -u $CI_DEPLOY_USER --password-stdin
-    - docker pull $CI_REGISTRY/$GROUP_NAME/images/$CI_PROJECT_NAME:latest || true
-    - docker build --cache-from $CI_REGISTRY/$GROUP_NAME/images//$CI_PROJECT_NAME:latest --tag $CI_REGISTRY/$GROUP_NAME/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA .
-    - docker push $CI_REGISTRY/gaia6974605/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    - docker pull $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:latest || true
+    - docker build --cache-from $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:latest --tag $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA -f Dockerfile .
+    - docker push $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
 
 container-scanning:
-  stage: post-check
+  stage: container-scanning
   allow_failure: true
+  extends:
+    - .standard-rules
   image:
     name: docker.io/aquasec/trivy:latest
     entrypoint: [""]
@@ -121,7 +126,7 @@ container-scanning:
     TRIVY_AUTH_URL: "$CI_REGISTRY"
     TRIVY_NO_PROGRESS: "true"
     TRIVY_CACHE_DIR: ".trivycache/"
-    FULL_IMAGE_NAME: $CI_REGISTRY/$GROUP_NAME/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    FULL_IMAGE_NAME: $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
   script:
     - trivy --version
     # cache cleanup is needed when scanning images with the same tags, it does not remove the database
@@ -133,8 +138,8 @@ container-scanning:
       --output "$CI_PROJECT_DIR/trivy_report.xml" "$FULL_IMAGE_NAME"
     # Prints full report
     - time trivy image --exit-code 0 "$FULL_IMAGE_NAME"
-    # Display high, critical vulnerabilities
-    - time trivy image --exit-code 0 --severity HIGH, CRITICAL "$FULL_IMAGE_NAME"
+    # Display critical vulnerabilities
+    - time trivy image --exit-code 0 --severity HIGH,CRITICAL "$FULL_IMAGE_NAME"
     # Display docker cis
     - time trivy image --exit-code 0 --compliance docker-cis --report all "$FULL_IMAGE_NAME"
   cache:
@@ -148,8 +153,9 @@ container-scanning:
 
 deploy:
   stage: deploy
+  tags:
+    - gaia-1
   extends:
-    - .standard-rules
     - .handle-ssh
   script:
     - >
@@ -157,5 +163,5 @@ deploy:
       "
         cd '$DEPLOY_PATH';
         echo $CI_DEPLOY_PASSWORD | docker login $CI_REGISTRY -u $CI_DEPLOY_USER --password-stdin;
-        docker pull $CI_REGISTRY/$GROUP_NAME/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA;
+        docker pull $CI_REGISTRY/$GROUP/images/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA;
       "
