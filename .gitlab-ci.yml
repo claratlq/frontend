@@ -9,7 +9,7 @@ workflow:
     - when: always
 
 variables:
-  GROUP_NAME: gaia6974605
+  GROUP: gaia6974605
   NPM_CACHE_DIR: "$CI_PROJECT_DIR/.npm/"
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
